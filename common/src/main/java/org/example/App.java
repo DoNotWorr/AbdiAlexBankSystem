@@ -8,10 +8,9 @@ public class App
 {
     public static void main( String[] args )
     {
-        Account acc = new Account("Hej", "Hej", "Hej");
-    }
-
-    public static void saveToDataFile() {
+        Account acc = new Account(123, "Hej", "Hej");
 
     }
+    
+
 }

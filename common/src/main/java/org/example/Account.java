@@ -1,25 +1,31 @@
 package org.example;
 
+/**
+ * @author Abdi
+ *
+ */
+
 public class Account {
 
-    private String accountNumber;
+    private Integer accountNumber;
     private String ownerID;
-    private String amount;
+    private String balance;
 
-    public Account(String accountNumber, String ownerID, String amount ){
+    public Account(Integer accountNumber, String ownerID, String balance ){
         this.accountNumber = accountNumber;
         this.ownerID = ownerID;
-        this.amount = amount;
+        this.balance = balance;
     }
 
 
-public String getAccountNumber(){
+public Integer getAccountNumber(){
     return accountNumber;
 }
 public String getOwnerID(){
         return ownerID;
 }
-public String getAmount(){
-        return amount;
+public String getBalance(){
+        return balance;
 }
+
 }
