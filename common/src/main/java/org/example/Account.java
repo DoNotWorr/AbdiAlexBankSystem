@@ -1,17 +1,11 @@
 package org.example;
 
-import org.omg.CORBA.INTERNAL;
+import java.util.ArrayList;
 
 /**
  * @author Abdi
  *
  */
-// Metod addTransfer (från konto: till konto, belopp, överföringsdatum)
-    // metod removeTransfer
-    // metod insertMoney
-    // metod withrawMoney
-    // Kolla så att personen finns
-
 
 public class Account {
 
@@ -19,12 +13,13 @@ public class Account {
     private String ownerID;
     private int balance;
 
-    public Account(String accountNumber, String ownerID, int balance ){
+
+    public Account(String accountNumber, Customer customer, int balance){
         this.accountNumber = accountNumber;
-        this.ownerID = ownerID;
+        customer.addNewAccount(accountNumber); //Alex: Lägger nytt kontonummer i kundens lista med kontonummer
+        this.ownerID = customer.getOwnerID();
         this.balance = balance;
     }
-
 
 public String getAccountNumber(){
     return accountNumber;
@@ -34,6 +29,11 @@ public String getOwnerID(){
 }
 public int getBalance(){
         return balance;
+}
+
+public void printAccount(ArrayList<String> allAccounts) {
+    //for loop som går igenom alla konton
+    //printar ut info som vi vill printa ut för varje konto
 }
 
 }
