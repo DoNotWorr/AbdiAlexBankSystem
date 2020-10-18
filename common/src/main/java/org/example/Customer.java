@@ -9,7 +9,7 @@ public class Customer {
     private String firstName;
     private String lastName;
     private String ownerID;
-    private ArrayList<String> yourAccounts = new ArrayList<>();
+    private ArrayList<String> yourAccounts;
 
     /**
      * Konstruktor som kräver alla parametrar. En tom ArrayList med konton skapas i varje instans
@@ -22,6 +22,7 @@ public class Customer {
         this.firstName = firstName;
         this.lastName = lastName;
         this.ownerID = ownerID;
+        this.yourAccounts = new ArrayList<>();
     }
 
     /**
