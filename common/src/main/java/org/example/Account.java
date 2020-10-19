@@ -14,11 +14,11 @@ public class Account {
     private int balance;
 
 
-    public Account(String accountNumber, Customer customer, int balance) {
+    public Account(String accountNumber, Customer customer) {
         this.accountNumber = accountNumber;
         customer.addNewAccount(accountNumber); //Alex: Lägger nytt kontonummer i kundens lista med kontonummer
         this.ownerID = customer.getOwnerID();
-        this.balance = balance;
+        this.balance = 0; //Alex: Ändrar så man inte kan välja balance när man skapar ett konto
     }
 
     public String getAccountNumber() {
@@ -35,7 +35,7 @@ public class Account {
 
     /**
      * Metod för att skapa bankuppdrag.
-     * @Author Alex
+     * @author Alex
      * @param toAccount kontonummer betalning ska ske till
      * @param amount antal ören (inte SEK)
      * @param transferDate datum i format YYYY-MM-DD för överföringen
