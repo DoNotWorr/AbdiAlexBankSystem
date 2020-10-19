@@ -47,8 +47,19 @@ public class Customer {
     }
 
     /**
+     * @return en kopia av ArrayList yourAccounts. Kopian refererar inte till orginalet.
+     */
+    public ArrayList<String> getYourAccounts() {
+        ArrayList<String> copyYourAccounts = new ArrayList<String>(this.yourAccounts);
+        return copyYourAccounts;
+    }
+
+    /**
      * @param newAccountNumber det nya kontots kontonummer som ska läggas i Customer ArrayList yourAccounts
      */
+    //todo fråga Jon om tips på accessmodifier. Tills vidare public. Lägger som bug i Trello
+    //Jag testade protected, men man kommer åt metoden i andra moduler.
+    //Det verkar som att den räknar org.example som samma paket oavsett vilken modul.
     public void addNewAccount(String newAccountNumber) {
         this.yourAccounts.add(newAccountNumber);
     }
