@@ -59,7 +59,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>org.example.FileService</mainClass>
+                                    <mainClass>org.example.App</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
