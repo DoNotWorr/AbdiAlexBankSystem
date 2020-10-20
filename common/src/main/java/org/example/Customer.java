@@ -24,7 +24,7 @@ public class Customer {
         this.ownerID = ownerID;
         this.yourAccounts = new ArrayList<>();
     }
-
+        
     /**
      * @return förnamn (String)
      */
