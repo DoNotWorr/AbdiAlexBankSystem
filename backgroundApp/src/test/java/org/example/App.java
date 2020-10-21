@@ -7,14 +7,13 @@ import org.junit.Test;
 /**
  * Unit test for simple App.
  */
-public class FileServiceTest
-{
+public class App {
     /**
      * Rigorous Test :-)
      */
     @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
+    public void shouldAnswerWithTrue() {
+
+        assertTrue(ValidationService.INSTANCE.isValidOwnerID("19920317-0577"));
     }
 }

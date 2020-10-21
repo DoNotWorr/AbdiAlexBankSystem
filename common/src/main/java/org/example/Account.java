@@ -103,6 +103,4 @@ public class Account {
         //for loop som går igenom alla konton
         //printar ut info som vi vill printa ut för varje konto
     }
-
-
 }
