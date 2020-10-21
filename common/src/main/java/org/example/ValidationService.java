@@ -34,19 +34,18 @@ public enum ValidationService {
      * @author Alex
      */
     public boolean isValidOwnerID(String ownerID) {
-        boolean isCorrectOwnerID = false;
-        //1. Kontrollera att ownerID är 13 tecken lång
+        boolean isCorrectOwnerID = false; // Kommer returneras i slutet. För att den ska ändras till "true" måste String ownerID klara alla kontroller.
+        //1. Kontrollerar att ownerID är 13 tecken lång
         if(ownerID.length() == 13) {
-            //2. Kontrollera att tecken på index 8 är '-'
+            //2. Kontrollerar att tecken på index 8 är '-'
             if(ownerID.charAt(8) == '-') {
-                //3. Kontrollera att yyyyMMdd är ett giltigt datum genom att försöka parsa till LocalDate.
+                //3. Kontrollerar att yyyyMMdd är ett giltigt datum genom att försöka parsa till LocalDate
                 StringBuilder stringBuilderOwnerID = new StringBuilder();
                 stringBuilderOwnerID.append(ownerID.substring(0,4));
                 stringBuilderOwnerID.append('-');
                 stringBuilderOwnerID.append(ownerID.substring(4,6));
                 stringBuilderOwnerID.append('-');
                 stringBuilderOwnerID.append(ownerID.substring(6,8));
-
                 try {
                     LocalDate.parse(stringBuilderOwnerID.toString());
                 } catch (Exception e) {
@@ -59,15 +58,25 @@ public enum ValidationService {
                 //5. Kontrollera att XXXX är ett heltal. Denna kontroll behöver inte göras på
                 try {
                     Integer.parseInt(ownerID.substring(9));
-                    System.out.println(ownerID.substring(9) + "är en siffra");
                 } catch (Exception e) {
-                    System.out.println(ownerID.substring(9) + "är inte en siffra");
                     return false;
                 }
-                //6. Lägger till XXXX i StringBuilderOwnerID, vars innehåll nu yyyyMMddXXXX
+                //6. Lägger till XXXX i StringBuilderOwnerID, vars innehåll nu är yyyyMMddXXXX
                 stringBuilderOwnerID.append(ownerID.substring(9));
 
-                //7. todo kontrollera kontrollsiffran
+                //7. Kontrollerar kontrollsiffran todo fortsätt
+                int sum = 0;
+                int LuhnAlgorithmSum;
+                char[] ownerIDarray = stringBuilderOwnerID.toString().toCharArray();
+                for (int i = 0; i < ownerIDarray.length -1; i++) {
+                    int value = Character.getNumericValue(ownerIDarray[i]);
+
+                    if (i % 2 == 0) { //multiplicera med 2
+                        value = value * 2;
+                    }
+                    sum = sum + value / 10 + value % 10;
+                }
+                LuhnAlgorithmSum = (10 - sum % 10) % 10;
             }
         }
 
