@@ -12,8 +12,7 @@
     <artifactId>common</artifactId>
 
     <name>common</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
+    <url>https://github.com/DoNotWorr/AbdiAlexBankSystem</url>
     <build>
         <plugins>
             <plugin>
