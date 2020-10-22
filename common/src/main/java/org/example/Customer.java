@@ -16,12 +16,29 @@ public class Customer {
      * @param firstName kundens förnamn
      * @param lastName kundens efternamn
      * @param ownerID kundens personnummer
+     * @throws InvalidNameException om namnet ör ogiltigt. Ett giltigt namn måste bestå av minst en bokstav. Den första bokstaven måste vara stor och följande bokstäver måste vara små.
+     * @throws InvalidOwnerIDException om personnumret är ogiltigt. Ett giltigt personnummer måste ha formatet "yyyyMMdd-XXXX".
      */
 
-    public Customer(String firstName, String lastName, String ownerID) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.ownerID = ownerID;
+    public Customer(String firstName, String lastName, String ownerID) throws InvalidNameException, InvalidOwnerIDException {
+        //Kontrollerar att förnamn är ett giltigt namn
+        if(ValidationService.INSTANCE.isValidName(firstName)) {
+            this.firstName = firstName;
+        } else {
+            throw new InvalidNameException("Ogiltigt förnamn.");
+        }
+        //Kontrollerar att efternamn är ett giltigt namn
+        if(ValidationService.INSTANCE.isValidName(firstName)) {
+            this.lastName = lastName;
+        } else {
+            throw new InvalidNameException("Ogiltigt efternamn.");
+        }
+        //Kontrollerar att personnumret är giltigt.
+        if(ValidationService.INSTANCE.isValidOwnerID(ownerID)) {
+            this.ownerID = ownerID;
+        } else {
+            throw new InvalidOwnerIDException("Ogiltigt personnummer.");
+        }
         this.yourAccounts = new ArrayList<>();
     }
         

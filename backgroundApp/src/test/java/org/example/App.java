@@ -13,6 +13,6 @@ public class App {
      */
     @Test
     public void shouldAnswerWithTrue() {
-        assertTrue(ValidationService.INSTANCE.isValidOwnerID("19920317-0577"));
+
     }
 }

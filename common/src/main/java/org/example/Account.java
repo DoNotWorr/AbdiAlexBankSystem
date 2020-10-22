@@ -70,7 +70,7 @@ public class Account {
     /**
      * Metod för att sätta in pengar.
      */
-    public void depositMoney(int amoun){
+    public void depositMoney(int amount){
         //    System.out.println("Enter the Amount you want to Deposit: );
         //    int amount = Scanner.nextInt();
         //     if (balance != 0){
