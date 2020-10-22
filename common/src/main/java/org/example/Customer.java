@@ -17,7 +17,7 @@ public class Customer {
      * @param lastName kundens efternamn
      * @param ownerID kundens personnummer
      */
-    //todo validering av inmatning (kan inte skapa en person med som heter "123" eller ett ogiltigt personnummer)
+
     public Customer(String firstName, String lastName, String ownerID) {
         this.firstName = firstName;
         this.lastName = lastName;

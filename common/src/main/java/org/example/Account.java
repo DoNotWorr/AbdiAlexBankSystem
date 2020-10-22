@@ -77,8 +77,7 @@ public class Account {
         //     balance = balance + amount;
     }
 
-    // TODO Vi kanske behöver skapa en till metod som vi kan skriva ut sen
-    //  TODO hur mycket penagr som man har tagit ut eller lagt in.
+    // TODO Vi kanske behöver skapa en till metod som vi kan skriva ut sen hur mycket penagr som man har tagit ut eller lagt in.
 
     /**
      * Metod för att direktövering.
