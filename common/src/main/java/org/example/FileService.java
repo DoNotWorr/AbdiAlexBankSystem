@@ -62,7 +62,7 @@ public enum FileService {
      *
      * @return HashMap med accounts, inlästa från datafil
      */
-    public HashMap<String, Customer> loadAccounts() {
+    public HashMap<String, Account> loadAccounts() {
         return gson.fromJson(load(filepathAccounts), HashMap.class);
     }
 

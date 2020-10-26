@@ -1,77 +1,80 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * @author Abdi
- *
  */
-public class App
-{
-    public static void main( String[] args )
-    {
+public class App {
+    public static void main(String[] args) {
+        HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers(); //HashMap K: ownerID (String), V: customer (Customer)
+        HashMap<String, Account> allAccounts = FileService.INSTANCE.loadAccounts(); //HashMap K: accountNumber (String), V: account (Account)
+        ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
+
         System.out.println("--------Välkommen till Newton bank--------");
+        menuNavigation();
 
-        boolean avslut = true;
-        while(avslut){
+    }
 
-            System.out.println("" +
-                    "[1] Skapa konto "
-                    + "\n[2] Lista konto "
-                    + "\n[3] Sätta in pengar på konto "
-                    + "\n[4] Ta ut pengar från konto "
-                    + "\n[5] Lägg upp betalningsuppdrag i en textfil "
-                    + "\n[6] Ta bort betalningsuppdrag "
-                    + "\n[7] Visa kassavalv (totalt insatt belopp på banken )"
-                    + "\n[8] Gör överföring mellan två konton. "
-                    + "\n[0] Avslut ");
+    private static void menuNavigation() {
+        boolean keepRunning = true;
+        while (keepRunning) {
 
-            int svar = Integer.parseInt(SingletonInput.getInstance().scanner.nextLine());
+            System.out.println("[1] Skapa konto"
+                    + "\n[2] Lista konto"
+                    + "\n[3] Sätta in pengar på konto"
+                    + "\n[4] Ta ut pengar från konto"
+                    + "\n[5] Lägg upp betalningsuppdrag i en textfil"
+                    + "\n[6] Ta bort betalningsuppdrag"
+                    + "\n[7] Visa kassavalv"
+                    + "\n[8] Gör överföring mellan två konton"
+                    + "\n[0] Avsluta program");
+
+            int menuChoice = Integer.parseInt(SingletonInput.getInstance().scanner.nextLine());
             //Skapade ett Singleton klass för att försöka fatta mig på hur det funkar och jag lyckades. Plon Jon har kollat genom koden och det är rätt.
 
-            switch (svar){
-
+            switch (menuChoice) {
                 case 1:
-                    System.out.println("hej"); // Skrev det här bara för att se om inmatningen funkade
-                    //Här skapar man konto
+                    //metod ör att skapa
                     break;
 
                 case 2:
-                    System.out.println("heeej"); // Skrev det här bara för att se om inmatningen funkade
-                    // Här ska vi kunna lista dom olika konton som finns
-                    // Det ska vara sorterad och klart
+                    //Metod för att lista konto
                     break;
 
                 case 3:
-                    // Här ska vi kunna referara till metoden som vi har skrivit i Account
+                    //Sätta in pengar på konto
                     break;
 
                 case 4:
-                    // Här ska vi kunna referara till metoden som vi har skrivit i Account
+                    //Ta ut pengar från konto
                     break;
 
                 case 5:
-                    // Här ska vi kunna referara till metoden som vi har skrivit
+                    //Lägg upp betalningsuppdrag
                     break;
 
                 case 6:
-                    // Här ska vi kunna referara till metoden som vi har.
+                    //Ta bort betalningsuppdrag
                     break;
 
                 case 7:
-                    // Här ska metoden som räknar allt som finns i allas konton vara.
+                    //Visa kassavalv
                     break;
 
                 case 8:
-                    // Här ska vi kunna överföra mellan konton och kunna överföra mellan dom olika anvndaren.
-                    // Alltså Abdi ska kunna skicka pengar till Alex.
+                    //Överföring mellan två konton
                     break;
 
                 case 0:
-                    avslut = false;
+                    //Avsluta program
+                    keepRunning = false;
                     break;
 
                 default:
-                    System.out.println("Felaktig inmatning! "
-                            + "\n Vänligen välj mellan det som finns i menyn! ");
+                    System.out.println("Felaktig inmatning.\n");
+                    break;
             }
         }
     }

@@ -17,7 +17,8 @@ public class CustomerApp extends Application {
         Parent root = loader.load();
 
         primaryStage.setTitle("Logga in");
-        primaryStage.setScene(new Scene(root, 400.0, 600.0));
+        primaryStage.setScene(new Scene(root, 400.0, 200.0));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
