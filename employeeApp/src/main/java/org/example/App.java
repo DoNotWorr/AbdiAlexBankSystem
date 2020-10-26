@@ -3,12 +3,10 @@ package org.example;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * @author Abdi
- */
+
 public class App {
-    public static HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers(); //HashMap K: ownerID (String), V: customer (Customer)
-    public static HashMap<String, Account> allAccounts = FileService.INSTANCE.loadAccounts(); //HashMap K: accountNumber (String), V: account (Account)
+    public static HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers();
+    public static HashMap<String, Account> allAccounts = FileService.INSTANCE.loadAccounts();
     public static ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
 
     public static void main(String[] args) {
@@ -16,6 +14,10 @@ public class App {
 
     }
 
+    /**
+     * Metod för menyhantering
+     * @author Abdi
+     */
     private static void menuNavigation() {
         System.out.println("--------Välkommen till Newton bank--------");
         boolean keepRunning = true;
@@ -87,9 +89,16 @@ public class App {
         }
     }
 
+    /**
+     * @author Alex
+     * Metod som visar innehållet i kassavalvet.
+     */
     private static void inspectSafe() {
-        allAccounts.forEach((ownerID, account) -> {
-            System.out.println(ownerID);
-        });
+        int totalBalance = 0;
+        for(Account account : allAccounts.values()) {
+            totalBalance += account.getBalance();
+        }
+        System.out.println("Det finns " + totalBalance + " ören i kassavalvet.\n");
+
     }
 }
