@@ -22,14 +22,12 @@ public class Account {
     /**
      * @param accountNumber kundens kontonummer
      * @param customer      kundens ownerID/personnummer
-     * @param balance       belopp i kontot
      */
 
-    public Account(String accountNumber, Customer customer, int balance) {
+    public Account(String accountNumber, Customer customer) {
         this.accountNumber = accountNumber;
         customer.addNewAccount(accountNumber);
         this.ownerID = customer.getOwnerID();
-        this.balance = balance;
         this.balance = 0; // vet inte vad du menar här Alex...
     }
     
@@ -48,7 +46,7 @@ public class Account {
     }
 
     /**
-     *@return Balace/Belopp på kontot (int)
+     *@return saldo på konto i ören.
      */
     public int getBalance() {
         return balance;

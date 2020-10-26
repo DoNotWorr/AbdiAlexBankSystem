@@ -1,13 +1,16 @@
 package org.example;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -27,7 +30,11 @@ public enum FileService {
      * @param allCustomers HashMap med alla kunder som ska sparas
      */
     public void saveCustomers(HashMap<String, Customer> allCustomers) {
-        save(filepathCustomers, gson.toJson(allCustomers));
+        if (allCustomers.size() == 0) {
+            System.out.println("Det finns inga kunder att spara.");
+        } else {
+            save(filepathCustomers, gson.toJson(allCustomers));
+        }
     }
 
     /**
@@ -36,7 +43,11 @@ public enum FileService {
      * @param allAccounts HashMap med alla konton som ska sparas
      */
     public void saveAccounts(HashMap<String, Account> allAccounts) {
-        save(filepathAccounts, gson.toJson(allAccounts));
+        if (allAccounts.size() == 0) {
+            System.out.println("Det finns inga konton att spara.");
+        } else {
+            save(filepathAccounts, gson.toJson(allAccounts));
+        }
     }
 
     /**
@@ -45,7 +56,11 @@ public enum FileService {
      * @param allTransfers ArrayList med alla bankuppdrag som ska sparas
      */
     public void saveTransfers(ArrayList<Transfer> allTransfers) {
-        save(filepathTransfers, gson.toJson(allTransfers));
+        if (allTransfers.size() == 0) {
+            System.out.println("Det finns inga betalningsuppdrag att spara.");
+        } else {
+            save(filepathTransfers, gson.toJson(allTransfers));
+        }
     }
 
     /**
@@ -54,7 +69,13 @@ public enum FileService {
      * @return HashMap med customers, inlästa från datafil
      */
     public HashMap<String, Customer> loadCustomers() {
-        return gson.fromJson(load(filepathCustomers), HashMap.class);
+        String jsonFromFile = load(filepathCustomers);
+        if (jsonFromFile == null) {
+            System.out.println("Hittade inga sparade kunder.");
+            return new HashMap<>();
+        }
+        Type allCustomersType = new TypeToken<HashMap<String, Customer>>() {}.getType(); //Från "3. Using TypeToken", https://www.baeldung.com/gson-json-to-map
+        return gson.fromJson(jsonFromFile, allCustomersType);
     }
 
     /**
@@ -63,7 +84,13 @@ public enum FileService {
      * @return HashMap med accounts, inlästa från datafil
      */
     public HashMap<String, Account> loadAccounts() {
-        return gson.fromJson(load(filepathAccounts), HashMap.class);
+        String jsonFromFile = load(filepathAccounts);
+        if (jsonFromFile == null) {
+            System.out.println("Hittade inga sparade konton.");
+            return new HashMap<>();
+        }
+        Type allAccountsType = new TypeToken<HashMap<String, Account>>() {}.getType(); //Från "3. Using TypeToken", https://www.baeldung.com/gson-json-to-map
+        return gson.fromJson(jsonFromFile, allAccountsType);
     }
 
     /**
@@ -72,7 +99,13 @@ public enum FileService {
      * @return ArrayList med transfers, inlästa från datafil
      */
     public ArrayList<Transfer> loadTransfers() {
-        return gson.fromJson(load(filepathTransfers), ArrayList.class);
+        String jsonFromFile = load(filepathTransfers);
+        if (jsonFromFile == null) {
+            System.out.println("Hittade inga sparade betalningsuppdrag.");
+            return new ArrayList<>();
+        }
+        Type allTransfersType = new TypeToken<ArrayList<Transfer>>() {}.getType(); //Från "3. Using TypeToken", https://www.baeldung.com/gson-json-to-map
+        return gson.fromJson(jsonFromFile, allTransfersType);
     }
 
     /**
@@ -84,7 +117,7 @@ public enum FileService {
     private String load(String filepath) {
         File file = new File(filepath);
         String StringToReturn = null;
-        if (file.exists() == false) {                                                            //Om datafil inte existerar skapas ny fil
+        if (!file.exists()) {                                                            //Om datafil inte existerar skapas ny fil
             System.out.println("Försöker skapa datafil " + filepath + ".");
             try {
                 file.createNewFile();
@@ -97,8 +130,11 @@ public enum FileService {
             try {
                 Scanner reader = new Scanner(file);
                 StringToReturn = reader.nextLine();
+                reader.close();
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                System.out.println("Antingen hittades ingen datafil eller så går den inte att läsa ifrån.");
+            } catch (NoSuchElementException e) {
+                System.out.println("Datafil är tom.");
             }
         }
         return StringToReturn;
@@ -106,12 +142,13 @@ public enum FileService {
 
     /**
      * Generell metod som skriver en textrad i en datafil.
+     *
      * @param filepath    sökväg till textfil
      * @param dataToWrite den textrad som skrivs till textfil
      */
     private void save(String filepath, String dataToWrite) {
         File file = new File(filepath);
-        if (file.exists() == false) {                                                            //Om datafil inte existerar skapas ny fil
+        if (!file.exists()) {                                                            //Om datafil inte existerar skapas ny fil
             System.out.println("Försöker skapa datafil " + filepath + ".");
             try {
                 file.createNewFile();
@@ -126,9 +163,10 @@ public enum FileService {
         try {
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write(dataToWrite);
+            fileWriter.close();
+            System.out.println("Sparade data i " + filepath);
         } catch (IOException e) {
             System.out.println("Kunde inte spara data i " + filepath);
-            System.out.println("Datan har inte sparats.");
             e.printStackTrace();
         }
     }

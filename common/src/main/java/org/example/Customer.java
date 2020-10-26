@@ -46,21 +46,21 @@ public class Customer {
      * @return förnamn (String)
      */
     public String getFirstName() {
-        return this.firstName;
+        return firstName;
     }
 
     /**
      * @return efternamn (String)
      */
     public String getLastName() {
-        return this.lastName;
+        return lastName;
     }
 
     /**
      * @return ownerID/personnummer (String)
      */
     public String getOwnerID() {
-        return this.ownerID;
+        return ownerID;
     }
 
     /**
