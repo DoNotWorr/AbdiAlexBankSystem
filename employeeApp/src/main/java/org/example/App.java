@@ -12,13 +12,12 @@ public class App {
     public static ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
 
     public static void main(String[] args) {
-        System.out.println("--------Välkommen till Newton bank--------");
-
         menuNavigation();
 
     }
 
     private static void menuNavigation() {
+        System.out.println("--------Välkommen till Newton bank--------");
         boolean keepRunning = true;
         while (keepRunning) {
 
