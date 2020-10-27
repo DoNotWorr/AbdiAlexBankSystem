@@ -1,1 +1,1 @@
-{"19920317-0577":{"firstName":"Alex","lastName":"Wiklund","ownerID":"19920317-0577","yourAccounts":["123123","123345"]}}
+{"19900811-4614":{"firstName":"Chabbe","lastName":"Atia","ownerID":"19900811-4614","yourAccounts":[]},"19920305-2973":{"firstName":"Abdi","lastName":"Hussein","ownerID":"19920305-2973","yourAccounts":[]}}

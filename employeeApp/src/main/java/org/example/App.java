@@ -1,29 +1,32 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 
+import java.util.*;
+
+/**
+ * @author Abdi
+ */
 
 public class App {
-    public static HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers();
-    public static HashMap<String, Account> allAccounts = FileService.INSTANCE.loadAccounts();
-    public static ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
+    public static HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers(); //HashMap K: ownerID (String), V: customer (Customer)
+    public static HashMap<Customer, Account> allAccounts = FileService.INSTANCE.loadAccounts(); //HashMap K: accountNumber (String), V: account (Account)
+    //public static ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         menuNavigation();
-
     }
 
-    /**
-     * Metod för menyhantering
-     * @author Abdi
-     */
-    private static void menuNavigation() {
+    private static void menuNavigation()  {
+
+
         System.out.println("--------Välkommen till Newton bank--------");
         boolean keepRunning = true;
         while (keepRunning) {
 
-            System.out.println("[1] Skapa kund"
+
+            System.out.println(""
+                    + "\n[0] Avsluta program"
+                    + "\n[1] Skapa kund"
                     + "\n[2] Skapa konto"
                     + "\n[3] Lista konto"
                     + "\n[4] Sätta in pengar på konto"
@@ -32,25 +35,27 @@ public class App {
                     + "\n[7] Ta bort betalningsuppdrag"
                     + "\n[8] Visa kassavalv"
                     + "\n[9] Gör direktöverföring"
-                    + "\n[0] Avsluta program");
+                    );
 
             int menuChoice = Integer.parseInt(SingletonInput.getInstance().scanner.nextLine());
             //Skapade ett Singleton klass för att försöka fatta mig på hur det funkar och jag lyckades. Plon Jon har kollat genom koden och det är rätt.
 
             switch (menuChoice) {
                 case 1:
-                    //skapa kund
+                    addNewCutomer(allCustomers);
                     break;
                 case 2:
                     //skapa konto
-                    break;
+                    addCustomerToNewAccount(allCustomers, allAccounts);
 
                 case 3:
                     //lista konto
+                    printAccounts(allAccounts);
                     break;
 
                 case 4:
                     //Sätta in pengar på konto
+                    // Hantera kunder
                     break;
 
                 case 5:
@@ -67,7 +72,7 @@ public class App {
 
                 case 8:
                     //Visa kassavalv
-                    inspectSafe();
+                   // inspectSafe();
                     break;
 
                 case 9:
@@ -78,7 +83,7 @@ public class App {
                     //Avsluta program
                     FileService.INSTANCE.saveCustomers(allCustomers);
                     FileService.INSTANCE.saveAccounts(allAccounts);
-                    FileService.INSTANCE.saveTransfers(allTransfers);
+                    //FileService.INSTANCE.saveTransfers(allTransfers);
                     keepRunning = false;
                     break;
 
@@ -89,16 +94,97 @@ public class App {
         }
     }
 
-    /**
-     * @author Alex
-     * Metod som visar innehållet i kassavalvet.
-     */
-    private static void inspectSafe() {
-        int totalBalance = 0;
-        for(Account account : allAccounts.values()) {
-            totalBalance += account.getBalance();
+    public static void addCustomerToNewAccount(HashMap<String, Customer> allCustomers, HashMap<Customer, Account> allAccounts) {
+        System.out.println("Vill du skapa ett nytt konto? " + "\n[1] Ja och \n[2] Nej (Tiillbaka till menyn)");
+        int tal = Integer.parseInt(SingletonInput.getInstance().scanner.nextLine());
+
+        switch (tal) {
+
+            case 1:
+
+                System.out.println("Antal kunder i systeemet: " + allCustomers.size() + "\n");
+                int counter = 1;
+                String format = " %-5s %-10s %-10s %-10s \n";
+                System.out.format(format,"Rad ","Förnamn ", "Efternamn ", "Personnumer ");
+                for (Map.Entry<String, Customer> customer: allCustomers.entrySet()) {    // Eftersom jag använde mig av ett forach loop så behövde jag skapa ett varibel som jag kunde numrera raderna som skrivs ut.
+                    System.out.format(format, counter + ". " , customer.getValue().getFirstName() + " " ,
+                            customer.getValue().getLastName() + " ",
+                            customer.getValue().getOwnerID() + " " + "\n");
+                    counter++;
+                }
+
+                System.out.println("Ange personnummret som du vill koppla kontot till:");
+                String socialNumber = SingletonInput.getInstance().scanner.nextLine();
+                if (allCustomers.containsKey(socialNumber)) {
+
+                    Customer customer = allCustomers.get(socialNumber);
+
+                    System.out.println("Lönekonto eller Sparkonto? ");
+                    System.out.println("Namnge Kontot: ");
+                    String accountName = SingletonInput.getInstance().scanner.nextLine();
+
+                    Account newAccount = new Account(accountName, Account.generateAccountNumber(), customer, 0);
+                    allAccounts.put(customer, newAccount);
+
+                }else{
+                    System.out.println("Felaktig personnummer eller så finns inte den personen! ");
+                }
+                break;
+
+            case 2:
+                System.out.println("Tillbaka till menyn ");
+                break;
+
+            default:
+                System.out.println("Felaktg inmatning! "
+                        + "\nVänligen välj mellan dom alternativen som finns...");
+                break;
         }
-        System.out.println("Det finns " + totalBalance + " ören i kassavalvet.\n");
+    }
+
+    public static void printAccounts(HashMap<Customer, Account> allAccounts) {
+        int counter = 1;
+        System.out.println("Kunder: " + allAccounts.size() + "\n");
+        String format = "%-5s %-10s %-14s %-19s %-15s \n";
+        System.out.format(format, "Rad ", "Kontonmamn ", "Kontonummer ", "Personnumer ", "Balance ");
+        for (HashMap.Entry<Customer, Account> customers : allAccounts.entrySet()) {
+        // com.google.gson.internal.LinkedTreeMap
+           System.out.format(format, counter + ".", customers.getValue().accountName + " ",
+                    customers.getValue().getAccountNumber() + " ",
+                    customers.getValue().getOwnerID() + " ", customers.getValue().getBalance() + " " + "\n");
+            counter++;
+        }//com.google.gson.internal.LinkedTreeMap
+
 
     }
+
+    public static void addNewCutomer(HashMap<String, Customer> allCustomers) {
+        try {
+            System.out.println("Förnamn: ");
+            String firstname = SingletonInput.getInstance().scanner.nextLine();
+
+            System.out.println("Efternamn: ");
+            String lastname = SingletonInput.getInstance().scanner.nextLine();
+
+            System.out.println("Personnummer: yyyymmdd-xxxx ");
+            String ownerID = SingletonInput.getInstance().scanner.nextLine();
+
+            Customer newCustomer = new Customer(firstname, lastname, ownerID);
+            allCustomers.put(ownerID, newCustomer);
+
+        }catch (InvalidNameException invalidNameException) {
+            System.out.println("Namnet får inte innehålla siffor! " + "\nVänligen försök igen! ");
+
+        }catch (InvalidOwnerIDException invalidOwnerIDException){
+            System.out.println("Ogiltig personnummer " +"\nVänligen försök igen! ");
+        }
+    }
+
+
+    private static void inspectSafe() {
+        allAccounts.forEach((ownerID, account) -> {
+            System.out.println(ownerID);
+        });
+    }
 }
+
