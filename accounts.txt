@@ -1,1 +1,1 @@
-{"123345":{"accountNumber":"123345","ownerID":"19920317-0577","balance":0},"123123":{"accountNumber":"123123","ownerID":"19920317-0577","balance":0}}
+{"org.example.Customer@25618e91":{"accountName":"Lönekonto","accountNumber":"5598 5602 2850","ownerID":"19920305-2973", "balance":"0"}}
