@@ -1,5 +1,6 @@
 package org.example;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,6 +11,10 @@ public class App {
     public static ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
 
     public static void main(String[] args) {
+        Transfer t1 = new Transfer("123345", "123123", 100, LocalDate.parse("2020-10-29"));
+        allTransfers.add(t1);
+        Transfer t2 = new Transfer("123123", "123345", 200, LocalDate.parse("2020-10-30"));
+        allTransfers.add(t2);
         menuNavigation();
 
     }
@@ -36,6 +41,7 @@ public class App {
 
             int menuChoice = Integer.parseInt(SingletonInput.getInstance().scanner.nextLine());
             //Skapade ett Singleton klass för att försöka fatta mig på hur det funkar och jag lyckades. Plon Jon har kollat genom koden och det är rätt.
+
 
             switch (menuChoice) {
                 case 1:
@@ -93,6 +99,7 @@ public class App {
      * @author Alex
      * Metod som visar innehållet i kassavalvet.
      */
+
     private static void inspectSafe() {
         int totalBalance = 0;
         for(Account account : allAccounts.values()) {

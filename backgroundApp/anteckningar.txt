@@ -1,0 +1,27 @@
+1. Lista med transfers
+
+2. Varje transfer innehåller
+            fromAccountNumber: String
+            toAccountNumber: String
+            amount: int
+            transferDate: LocalDate
+
+3. Sortera lista på transferDate, tidigast datum först
+
+4. Loopa igenom transfer-lista
+            a. radera alla som är mer än 3 månader gamla
+            b. behandla bankuppdrag med dagens datum
+            c. avsluta loop när transferDate är morgondagens datum
+
+
+4b. Bearbetning:
+            I. COMPLETED: Hoppa över
+            II. CANCELLED: Hoppa över
+            III. FAILED: Hoppa över
+            IV. PENDING: Försök göra överföring
+                * Om pengar fattas på kontot, markera som FAILED och gå vidare
+                * Om mottagare inte hittas, markera som FAILED och gå vidare
+                * Annars gör överföring och markera som COMPLETED, gå vidare
+
+5. Gör överföring
+???
