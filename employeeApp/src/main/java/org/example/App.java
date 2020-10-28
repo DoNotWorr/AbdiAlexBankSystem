@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class App {
     public static HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers(); //HashMap K: ownerID (String), V: customer (Customer)
-    public static ArrayList<Account> allAccounts = FileService.INSTANCE.loadAccounts(); //HashMap K: accountNumber (String), V: account (Account)
+    public static HashMap<String, Account> allAccounts = FileService.INSTANCE.loadAccounts(); //HashMap K: accountNumber (String), V: account (Account)
     public static ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
 
     public static void main(String[] args){
@@ -127,7 +127,7 @@ public class App {
                     System.out.println("Namnge Kontot: ");
                     String accountName = SingletonInput.getInstance().scanner.nextLine();
 
-                    Account newAccount = new Account(accountName, Account.generateAccountNumber(), customer, 0);
+                    Account newAccount = new Account(accountName, customer);
                     allAccounts.put(newAccount.getAccountNumber(), newAccount);
 
                 }else{

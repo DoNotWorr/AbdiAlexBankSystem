@@ -84,13 +84,13 @@ public enum FileService {
      *
      * @return HashMap med accounts, inlästa från datafil
      */
-    public ArrayList<Account> loadAccounts() {
+    public HashMap<String, Account> loadAccounts() {
         String jsonFromFile = load(filepathAccounts);
         if (jsonFromFile == null) {
             System.out.println("Hittade inga sparade konton.");
-            return new ArrayList<>();
+            return new HashMap<>();
         }
-        Type allAccountsType = new TypeToken<ArrayList<Account>>() {}.getType(); //Från "3. Using TypeToken", https://www.baeldung.com/gson-json-to-map
+        Type allAccountsType = new TypeToken<HashMap<String, Account>>() {}.getType(); //Från "3. Using TypeToken", https://www.baeldung.com/gson-json-to-map
         return gson.fromJson(jsonFromFile, allAccountsType);
     }
 
