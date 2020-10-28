@@ -9,14 +9,15 @@ import java.util.HashMap;
 
 public class backgroundApp {
 
-    //allCustomers behövs inte?
-    public static HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers();
+    //todo allCustomers behövs inte?
+    private static HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers();
 
-    public static HashMap<String, Account> allAccounts = FileService.INSTANCE.loadAccounts();
-    public static ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
+    private static HashMap<String, Account> allAccounts = FileService.INSTANCE.loadAccounts();
+    private static ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
 
     public static void main(String[] args) {
-        final long monthsBeforeDeletingHistory = 3; //Månader innan historik raderas
+        long monthsBeforeDeletingHistory = 3; //Månader innan historik raderas
+
 
         //TEST SKAPA KUNDER v
         Customer c1 = null;
@@ -38,7 +39,6 @@ public class backgroundApp {
         allAccounts.put(a2.getAccountNumber(), a2);
 
 
-
         Transfer t1 = new Transfer("5593 1426 6562", "5518 0751 1257", 100, LocalDate.parse("2020-10-28"));
         Transfer t2 = new Transfer("5593 1426 6562", "5518 0751 1257", 100, LocalDate.parse("2020-07-28"));
         Transfer t3 = new Transfer("5593 1426 6562", "5518 0751 1257", 100, LocalDate.parse("2020-07-27"));
@@ -58,7 +58,50 @@ public class backgroundApp {
         //Sortera lista på transferDate, tidigast datum först
         Collections.sort(allTransfers, (a, b) -> a.getTransferDate().compareTo(b.getTransferDate()));
 
-        //Tar bort index 0 från listan så länge index 0 har transferDate som är mer än X månader tillbaka i tiden (monthsBeforeDeletingHistory).
+        deleteHistory(monthsBeforeDeletingHistory);
+
+        tempSortAndPrint("Har tagit bort alla som är äldre än 3 månader"); //TEST SKRIVA UT
+
+        for (Transfer transfer : allTransfers) {
+
+            //Om transferDate ska inträffa idag eller tidigare
+            if (transfer.getTransferDate().isBefore(LocalDate.now().plusDays(1))) {
+
+                //Programmet hanterar enbart bankuppdragt som har status "pending"
+                if (transfer.getStatus() == Transfer.TransferStatus.PENDING) {
+
+                    //Kontrollera att avsändaren och mottagarens konton existerar
+                    if (allAccounts.containsKey(transfer.getFromAccountNumber()) && allAccounts.containsKey(transfer.getToAccountNumber())) {
+
+                        //Kontrollera att det finns pengar att betala med
+                        if (transfer.getAmount() <= allAccounts.get(transfer.getFromAccountNumber()).getBalance()) {
+
+                            allAccounts.get(transfer.getFromAccountNumber()).directTransfer();
+                            //transfer.setStatus(Transfer.TransferStatus.COMPLETED);
+                            //todo se över när directTransfer() är färdig.
+                            // Ta bort eventuella kontroller som redan sker i directTransfer.
+                            // Använd return-value i directtransfer
+                        } else {
+                            transfer.setStatus(Transfer.TransferStatus.FAILED);
+                        }
+                    } else {
+                        transfer.setStatus(Transfer.TransferStatus.FAILED);
+                    }
+                }
+            } else {
+                //Eftersom listan är sorterad så avbryts loopen när man kommit till bankuppdrag som ska genomföras imorgon eller senare.
+                break;
+            }
+        }
+
+
+    }
+
+    /**
+     * Raderar gamla transaktioner ifrån historiken
+     * @param monthsBeforeDeletingHistory antal månader som ska passera efter transaktionsdatum innan transaktionen tas bort ifrån historiken.
+     */
+    private static void deleteHistory(long monthsBeforeDeletingHistory) {
         boolean keepDeleting = true;
         while (keepDeleting) {
             if (allTransfers.get(0).getTransferDate().plusMonths(monthsBeforeDeletingHistory).isBefore(LocalDate.now())) {
@@ -67,43 +110,12 @@ public class backgroundApp {
                 keepDeleting = false;
             }
         }
-
-        tempSortAndPrint("Har tagit bort alla som är äldre än 3 månader"); //TEST SKRIVA UT
-
-        for(Transfer transfer : allTransfers) {
-            //Om transferDate ska inträffa idag eller tidigare
-            if (transfer.getTransferDate().isBefore(LocalDate.now().plusDays(1))) {
-                //Programmet hanterar enbart bankuppdragt som har status "pending"
-                if (transfer.getStatus() == Transfer.TransferStatus.PENDING) {
-                    //Försök göra betalning
-
-                    transfer.getFromAccountNumber(); //todo fortsätt
-
-
-
-                }
-            } else {
-                //Om transferDate ska inträffa imorgon eller senare så avbryts loopen
-                break;
-            }
-        }
-
-        //Loopa igenom transfer-lista
-        //a. radera alla som är mer än 3 månader gamla
-        //b. behandla bankuppdrag med dagens datum
-        //
-        //COMPLETED: Hoppa över
-        //CANCELLED: Hoppa över
-        //FAILED: Hoppa över
-        //PENDING: Försök göra överföring
-        // * Om pengar fattas på kontot, markera som FAILED och gå vidare
-        // * Om mottagare inte hittas, markera som FAILED och gå vidare
-        // * Annars gör överföring och markera som COMPLETED, gå vidare
-        //c. avsluta loop när transferDate är morgondagens datum
-
-
     }
 
+    /**
+     * Temporär metod för att skriva ut allTransfers. Används bara för att kolla steg för steg att backgroundApp fungerar som den ska
+     * @param message meddelande före utskrift av allTransfers (till exempel "tog nyss bort alla transfers med belopp större än 500").
+     */
     public static void tempSortAndPrint(String message) {
         System.out.println(message);
         Collections.sort(allTransfers, (a, b) -> a.getTransferDate().compareTo(b.getTransferDate()));
