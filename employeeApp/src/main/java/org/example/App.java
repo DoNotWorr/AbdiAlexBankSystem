@@ -1,9 +1,8 @@
 package org.example;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Abdi
@@ -11,8 +10,8 @@ import java.util.*;
 
 public class App {
     public static HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers(); //HashMap K: ownerID (String), V: customer (Customer)
-    public static HashMap<String, Account> allAccounts = FileService.INSTANCE.loadAccounts(); //HashMap K: accountNumber (String), V: account (Account)
-    //public static ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
+    public static ArrayList<Account> allAccounts = FileService.INSTANCE.loadAccounts(); //HashMap K: accountNumber (String), V: account (Account)
+    public static ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
 
     public static void main(String[] args){
         menuNavigation();
@@ -51,8 +50,8 @@ public class App {
                     addCustomerToNewAccount(allCustomers, allAccounts);
 
                 case 3:
-                    //lista konto
-                    printAccounts(allAccounts);
+                    //lista vald användars konto
+                   printAccounts(allAccounts);
                     break;
 
                 case 4:
@@ -74,7 +73,7 @@ public class App {
 
                 case 8:
                     //Visa kassavalv
-                   // inspectSafe();
+                   inspectSafe();
                     break;
 
                 case 9:
@@ -85,7 +84,7 @@ public class App {
                     //Avsluta program
                     FileService.INSTANCE.saveCustomers(allCustomers);
                     FileService.INSTANCE.saveAccounts(allAccounts);
-                    //FileService.INSTANCE.saveTransfers(allTransfers);
+                    FileService.INSTANCE.saveTransfers(allTransfers);
                     keepRunning = false;
                     break;
 
@@ -96,20 +95,17 @@ public class App {
         }
     }
 
-    /**
-     * @author Alex
-     * Metod som visar innehållet i kassavalvet.
-     */
 
-    public static void addCustomerToNewAccount(HashMap<String, Customer> allCustomers, HashMap<Customer, Account> allAccounts) {
-        System.out.println("Vill du skapa ett nytt konto? " + "\n[1] Ja och \n[2] Nej (Tiillbaka till menyn)");
+
+    private static void addCustomerToNewAccount(HashMap<String, Customer> allCustomers, HashMap<String, Account> allAccounts) {
+        System.out.println("Vill du skapa ett nytt konto? " + "\n[1] Ja \n[2] Nej, Tiillbaka till menyn ");
         int tal = Integer.parseInt(SingletonInput.getInstance().scanner.nextLine());
 
         switch (tal) {
 
             case 1:
 
-                System.out.println("Antal kunder i systeemet: " + allCustomers.size() + "\n");
+                System.out.println("Antal kunder i systemet: " + allCustomers.size() + "\n");
                 int counter = 1;
                 String format = " %-5s %-10s %-10s %-10s \n";
                 System.out.format(format,"Rad ","Förnamn ", "Efternamn ", "Personnumer ");
@@ -122,6 +118,7 @@ public class App {
 
                 System.out.println("Ange personnummret som du vill koppla kontot till:");
                 String socialNumber = SingletonInput.getInstance().scanner.nextLine();
+
                 if (allCustomers.containsKey(socialNumber)) {
 
                     Customer customer = allCustomers.get(socialNumber);
@@ -131,11 +128,13 @@ public class App {
                     String accountName = SingletonInput.getInstance().scanner.nextLine();
 
                     Account newAccount = new Account(accountName, Account.generateAccountNumber(), customer, 0);
-                    allAccounts.put(customer, newAccount);
+                    allAccounts.put(newAccount.getAccountNumber(), newAccount);
 
                 }else{
                     System.out.println("Felaktig personnummer eller så finns inte den personen! ");
                 }
+
+
                 break;
 
             case 2:
@@ -149,23 +148,48 @@ public class App {
         }
     }
 
-    public static void printAccounts(HashMap<Customer, Account> allAccounts) {
+    private static void printAccounts(HashMap<String, Account> allAccounts) {
+        // Skriv kod för att välja kund
+        // Customer customer;
+        // Account.printAccount(allAccounts, customer);
+
+        System.out.println("Antal kunder i systemet: " + allCustomers.size() + "\n");
+        int counter = 1;
+        String format = " %-5s %-10s %-10s %-10s \n";
+        System.out.format(format,"Rad ","Förnamn ", "Efternamn ", "Personnumer ");
+        for (Map.Entry<String, Customer> customers: allCustomers.entrySet()) {    // Eftersom jag använde mig av ett forach loop så behövde jag skapa ett varibel som jag kunde numrera raderna som skrivs ut.
+            System.out.format(format, counter + ". " , customers.getValue().getFirstName() + " " ,
+                    customers.getValue().getLastName() + " ",
+                    customers.getValue().getOwnerID() + " " + "\n");
+            counter++;
+        }
+
+        System.out.println("Vilken kund vill du komma åt? " + "\nVänligen ange personnummer: " );
+        String socialNUmber =  SingletonInput.getInstance().scanner.nextLine();
+
+        if(allCustomers.containsKey(socialNUmber)){
+
+            Account.printAccount(allAccounts);
+        } else{
+            System.out.println("Tyvärr hittar inte kunden! ");
+        }
+/*
         int counter = 1;
         System.out.println("Kunder: " + allAccounts.size() + "\n");
         String format = "%-5s %-10s %-14s %-19s %-15s \n";
         System.out.format(format, "Rad ", "Kontonmamn ", "Kontonummer ", "Personnumer ", "Balance ");
-        for (HashMap.Entry<Customer, Account> customers : allAccounts.entrySet()) {
-        // com.google.gson.internal.LinkedTreeMap
+        for (Map.Entry<String, Account> customers : allAccounts.entrySet()) {
            System.out.format(format, counter + ".", customers.getValue().accountName + " ",
                     customers.getValue().getAccountNumber() + " ",
                     customers.getValue().getOwnerID() + " ", customers.getValue().getBalance() + " " + "\n");
             counter++;
-        }//com.google.gson.internal.LinkedTreeMap
-
-
+        }
     }
 
-    public static void addNewCutomer(HashMap<String, Customer> allCustomers) {
+ */
+    }
+
+    private static void addNewCutomer(HashMap<String, Customer> allCustomers) {
         try {
             System.out.println("Förnamn: ");
             String firstname = SingletonInput.getInstance().scanner.nextLine();
@@ -187,7 +211,10 @@ public class App {
         }
     }
 
-
+    /**
+     * @author Alex
+     * Metod som visar innehållet i kassavalvet.
+     */
     private static void inspectSafe() {
         int totalBalance = 0;
         for(Account account : allAccounts.values()) {

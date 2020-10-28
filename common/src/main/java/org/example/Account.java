@@ -1,6 +1,8 @@
 package org.example;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -24,7 +26,6 @@ public class Account {
     public Account(String accountName, String accountNumber, Customer customer, int balance) {
         this.accountName = accountName;
         this.accountNumber = accountNumber;
-        //customer.addNewAccount(accountNumber);
         this.ownerID = customer.getOwnerID();
         this.balance = 0;
 
@@ -39,7 +40,7 @@ public class Account {
      */
     public Account(String accountName, Customer customer, int balance) {
         this.accountName = accountName;
-        this.accountNumber = getAccountNumber();
+        this.accountNumber = generateAccountNumber();
         this.ownerID = customer.getOwnerID();
         this.balance = 0;
     }
@@ -121,9 +122,20 @@ public class Account {
         Transfer transfer = new Transfer(this.accountNumber, toAccount, amount, transferDate);
     }
 
-    public void printAccount(ArrayList<String> allAccounts) {
-        //for loop som går igenom alla konton
-        //printar ut info som vi vill printa ut för varje konto
+    public static void printAccount(HashMap<String, Account> allAccounts) {
+        int counter = 1;
+        System.out.println("Antal konton i systemet: " + allAccounts.size() + "\n");
+
+                String format = "%-5s %-10s %-14s %-19s %-15s \n";
+                System.out.format(format, "Rad ", "Kontonmamn ", "Kontonummer ", "Personnumer ", "Balance ");
+                for (Map.Entry<String, Account> customers : allAccounts.entrySet()) {
+                        if (allAccounts.containsKey(customers.getKey()))
+                        System.out.format(format, counter + ".", customers.getValue().accountName + " ",
+                                customers.getValue().getAccountNumber() + " ",
+                                customers.getValue().getOwnerID() + " ", customers.getValue().getBalance() + " " + "\n");
+
+                    counter++;
+                }
     }
 
     /**
@@ -154,6 +166,8 @@ public class Account {
         }
         return accountNumber;
     }
+
+
 }
 
 

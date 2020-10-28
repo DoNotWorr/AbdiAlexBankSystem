@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,13 +84,13 @@ public enum FileService {
      *
      * @return HashMap med accounts, inlästa från datafil
      */
-    public HashMap<String, Account> loadAccounts() {
+    public ArrayList<Account> loadAccounts() {
         String jsonFromFile = load(filepathAccounts);
         if (jsonFromFile == null) {
             System.out.println("Hittade inga sparade konton.");
-            return new HashMap<>();
+            return new ArrayList<>();
         }
-        Type allAccountsType = new TypeToken<HashMap<String, Account>>() {}.getType(); //Från "3. Using TypeToken", https://www.baeldung.com/gson-json-to-map
+        Type allAccountsType = new TypeToken<ArrayList<Account>>() {}.getType(); //Från "3. Using TypeToken", https://www.baeldung.com/gson-json-to-map
         return gson.fromJson(jsonFromFile, allAccountsType);
     }
 
@@ -142,7 +143,6 @@ public enum FileService {
 
     /**
      * Generell metod som skriver en textrad i en datafil.
-     *
      * @param filepath    sökväg till textfil
      * @param dataToWrite den textrad som skrivs till textfil
      */

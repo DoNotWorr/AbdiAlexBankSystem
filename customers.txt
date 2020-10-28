@@ -1,1 +1,1 @@
-{"19900811-4614":{"firstName":"Chabbe","lastName":"Atia","ownerID":"19900811-4614","yourAccounts":[]},"19920305-2973":{"firstName":"Abdi","lastName":"Hussein","ownerID":"19920305-2973","yourAccounts":[]}}
+{"19900811-4614":{"firstName":"Chabbe","lastName":"Atia","ownerID":"19900811-4614","yourAccounts":["5565 5371 1521"]},"19920305-2973":{"firstName":"Abdi","lastName":"Hussein","ownerID":"19920305-2973","yourAccounts":["5504 8939 9754","5595 5459 9095"]}}

@@ -1,1 +1,1 @@
-{"org.example.Customer@25618e91":{"accountName":"Lönekonto","accountNumber":"5598 5602 2850","ownerID":"19920305-2973", "balance":"0"}}
+{"5595 5459 9095":{"accountName":"Sparkonto","accountNumber":"5595 5459 9095","ownerID":"19920305-2973"},"5565 5371 1521":{"accountName":"Lönekonto","accountNumber":"5565 5371 1521","ownerID":"19900811-4614"},"5504 8939 9754":{"accountName":"Lönekonto","accountNumber":"5504 8939 9754","ownerID":"19920305-2973"}}
