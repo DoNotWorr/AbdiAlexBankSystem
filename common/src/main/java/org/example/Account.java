@@ -22,27 +22,14 @@ public class Account {
     private String accountNumber;
     private String ownerID;
 
-
-    public Account(String accountName, String accountNumber, Customer customer, int balance) {
-        this.accountName = accountName;
-        this.accountNumber = accountNumber;
-        this.ownerID = customer.getOwnerID();
-        this.balance = 0;
-
-    }
-
     /**
-     * Enbart vid skapande av ny konto. Aldrig vid inläsning av konto från fil.
-     *
      * @param accountName Kontonamn
      * @param customer    kundens ownerID/personnummer
-     * @param balance     belopp i kontot
      */
-    public Account(String accountName, Customer customer, int balance) {
+    public Account(String accountName, Customer customer) {
         this.accountName = accountName;
         this.accountNumber = generateAccountNumber();
         this.ownerID = customer.getOwnerID();
-        this.balance = 0;
     }
 
     /**
