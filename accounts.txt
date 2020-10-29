@@ -1,1 +1,1 @@
-{"5585 0070 0688":{"accountName":"Lönekonto","accountNumber":"5585 0070 0688","ownerID":"19920317-0577"}}
+{"5536 6790 0831":{"accountName":"Lönekonto","accountNumber":"5536 6790 0831","ownerID":"19900811-4614"},"5590 5430 0646":{"accountName":"Sparkonto","accountNumber":"5590 5430 0646","ownerID":"19920305-2973"},"5541 5050 0529":{"accountName":"Lönekonto","accountNumber":"5541 5050 0529","ownerID":"19920305-2973"}}
