@@ -61,4 +61,18 @@ public class Transfer {
     public void setStatus(TransferStatus newStatus) {
         this.status = newStatus;
     }
+
+    /**
+     *
+     * @return
+     */
+    public boolean setCompleted() {
+        if(this.status == TransferStatus.PENDING) {
+            this.status = TransferStatus.COMPLETED;
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }

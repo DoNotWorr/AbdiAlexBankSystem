@@ -18,7 +18,7 @@ public class App {
         menuNavigation();
     }
 
-    @SuppressWarnings("DuplicateBranchesInSwitch")
+    //@SuppressWarnings("DuplicateBranchesInSwitch")
     private static void menuNavigation() {
 
 
@@ -288,6 +288,6 @@ public class App {
         for(Account account : allAccounts.values()) {
             totalBalance += account.getBalance();
         }
-        System.out.println("Det finns " + totalBalance + " ören i kassavalvet.\n");
+        System.out.println("Det finns " + Account.getBalanceInSEK(totalBalance) + " kronor i kassavalvet.\n");
     }
 }

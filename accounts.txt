@@ -1,1 +1,1 @@
-{"5505 5023 3139":{"accountName":"Abdis konto","accountNumber":"5505 5023 3139","ownerID":"20000723-2382"},"5579 3237 7830":{"accountName":"Alex konto","accountNumber":"5579 3237 7830","ownerID":"19920317-0577"}}
+{"5565 3892 2406":{"accountName":"Alex konto","accountNumber":"5565 3892 2406","ownerID":"19920317-0577","balance":0,"previousTransaction":0},"5521 1306 6173":{"accountName":"Abdis konto","accountNumber":"5521 1306 6173","ownerID":"20000723-2382","balance":0,"previousTransaction":0}}

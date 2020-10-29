@@ -67,6 +67,23 @@ public static Scanner scanner = new Scanner(System.in);
         return balance;
     }
 
+    //todo gör färdigt metoder
+    public double getBalanceInSEK() {
+        //2020 ören -> 20 kr + 0,20 kr
+        return (this.getBalance() / 100) + ((double)(this.getBalance() % 100) / 100.0); //balance i kronor och ören
+    }
+
+    public static double getBalanceInSEK(int amount) {
+        //2020 ören -> 20 kr + 0,20 kr
+        return (amount / 100) + ((double)(amount % 100) / 100.0); //balance i kronor och ören
+    }
+/*
+    public static int convertBalanceFromSEK(double amountInSEK) {
+
+    }
+
+ */
+
     /**
      * @author Abdi
      * Metod för att ta fram just det konto som jag ska ändra balance på
@@ -103,6 +120,10 @@ public static Scanner scanner = new Scanner(System.in);
         if (sign == 1)
         {
             System.out.println("Hur mycket vill du sätta in: ");
+            /*
+            double amountInSek = blablabla
+            int amount = Account.getAmountFromSek(amountInSek)
+             */
             int amount = Integer.parseInt(scanner.nextLine());
             if (amount != 0) {
                 balance = balance + amount;
@@ -158,7 +179,7 @@ public static Scanner scanner = new Scanner(System.in);
      * @author Abdi
      * Den här metoden visar historiken i alla insättningar och kontantuttag.
      */
-    public void previousTansaction(){
+    public void previousTransaction(){
         if (previousTransaction > 0){
             System.out.println("Insätningar: " + previousTransaction);
         } else if (previousTransaction < 0){
@@ -171,9 +192,13 @@ public static Scanner scanner = new Scanner(System.in);
     /**
      * Metod för direktövering.
      */
-    public void directTransfer(){
+    /*
+    public boolean directTransfer(){
+
 
     }
+    */
+
 
     /**
      * Metod för att skapa bankuppdrag.

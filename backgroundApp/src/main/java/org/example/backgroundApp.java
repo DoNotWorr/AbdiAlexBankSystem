@@ -22,7 +22,7 @@ public class backgroundApp {
         long monthsBeforeDeletingHistory = 3; //Månader innan historik raderas
 
 
-/*
+
         //TEST SKAPA KUNDER v
         Customer c1 = null;
         Customer c2 = null;
@@ -44,7 +44,7 @@ public class backgroundApp {
 
         System.out.println("Alex: " + a1.getAccountNumber());
         System.out.println("Abdi: " + a2.getAccountNumber());
-*/
+
 
         Transfer t1 = new Transfer("5579 3237 7830", "5505 5023 3139", 100, LocalDate.parse("2020-10-28"));
         Transfer t2 = new Transfer("5579 3237 7830", "5505 5023 3139", 100, LocalDate.parse("2020-07-28"));
@@ -61,7 +61,7 @@ public class backgroundApp {
         //TEST SKAPA KUNDER ^
 
 
-
+/*
         tempSortAndPrint("Lista från början:"); //TEST SKRIVA UT
 
         //Sortera lista på transferDate, tidigast datum först
@@ -86,7 +86,9 @@ public class backgroundApp {
                         if (transfer.getAmount() <= allAccounts.get(transfer.getFromAccountNumber()).getBalance()) {
                             //todo bugtesta att kontroll av belopp fungerar
 
-                            allAccounts.get(transfer.getFromAccountNumber()).directTransfer();
+                            if(allAccounts.get(transfer.getFromAccountNumber()).directTransfer()) {
+
+                            }
                             //transfer.setStatus(Transfer.TransferStatus.COMPLETED);
                             //todo se över när directTransfer() är färdig.
                             // Ta bort eventuella kontroller som redan sker i directTransfer.
@@ -103,12 +105,16 @@ public class backgroundApp {
                 break;
             }
         }
-
+ */
         //Sparar listorna igen
         FileService.INSTANCE.saveAccounts(allAccounts);
         FileService.INSTANCE.saveTransfers(allTransfers);
 
+        FileService.INSTANCE.saveCustomers(allCustomers); //todo ta bort (temporärt)
+
         tempSortAndPrint("Alla borde vara markerade som FAILED pga felaktigt kontonr"); //todo ta bort alla tempSortAndPrint()
+
+
     }
 
     /**
