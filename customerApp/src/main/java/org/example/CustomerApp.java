@@ -7,14 +7,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 
 
 public class CustomerApp extends Application {
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
         Parent root = loader.load();
+        LoginController loginController = loader.getController();
 
         primaryStage.setTitle("Logga in");
         primaryStage.setScene(new Scene(root, 400.0, 200.0));

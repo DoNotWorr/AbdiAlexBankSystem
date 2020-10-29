@@ -1,1 +1,1 @@
-{"5536 6790 0831":{"accountName":"Lönekonto","accountNumber":"5536 6790 0831","ownerID":"19900811-4614"},"5590 5430 0646":{"accountName":"Sparkonto","accountNumber":"5590 5430 0646","ownerID":"19920305-2973"},"5541 5050 0529":{"accountName":"Lönekonto","accountNumber":"5541 5050 0529","ownerID":"19920305-2973"}}
+{"5505 5023 3139":{"accountName":"Abdis konto","accountNumber":"5505 5023 3139","ownerID":"20000723-2382"},"5579 3237 7830":{"accountName":"Alex konto","accountNumber":"5579 3237 7830","ownerID":"19920317-0577"}}

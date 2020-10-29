@@ -7,6 +7,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
+/**
+ * @author Alex
+ */
 public class backgroundApp {
 
     //todo allCustomers behövs inte?
@@ -19,12 +22,13 @@ public class backgroundApp {
         long monthsBeforeDeletingHistory = 3; //Månader innan historik raderas
 
 
+/*
         //TEST SKAPA KUNDER v
         Customer c1 = null;
         Customer c2 = null;
         try {
             c1 = new Customer("Alex", "Wiklund", "19920317-0577");
-            c2 = new Customer("Abdi", "Hussein", "19920317-0577");
+            c2 = new Customer("Abdi", "Hussein", "20000723-2382");
             allCustomers.put(c1.getOwnerID(), c1);
             allCustomers.put(c2.getOwnerID(), c2);
         } catch (InvalidNameException e) {
@@ -33,18 +37,21 @@ public class backgroundApp {
             e.printStackTrace();
         }
 
-        Account a1 = new Account("Alex konto", c1); //kontonummer "5593 1426 6562"
-        Account a2 = new Account("Abdis konto", c2); //kontonummer "5518 0751 1257"
+        Account a1 = new Account("Alex konto", c1); //kontonummer "5579 3237 7830"
+        Account a2 = new Account("Abdis konto", c2); //kontonummer "5505 5023 3139"
         allAccounts.put(a1.getAccountNumber(), a1);
         allAccounts.put(a2.getAccountNumber(), a2);
 
+        System.out.println("Alex: " + a1.getAccountNumber());
+        System.out.println("Abdi: " + a2.getAccountNumber());
+*/
 
-        Transfer t1 = new Transfer("5593 1426 6562", "5518 0751 1257", 100, LocalDate.parse("2020-10-28"));
-        Transfer t2 = new Transfer("5593 1426 6562", "5518 0751 1257", 100, LocalDate.parse("2020-07-28"));
-        Transfer t3 = new Transfer("5593 1426 6562", "5518 0751 1257", 100, LocalDate.parse("2020-07-27"));
-        Transfer t4 = new Transfer("5593 1426 6562", "5518 0751 1257", 100, LocalDate.parse("2020-10-29"));
-        Transfer t5 = new Transfer("5593 1426 6562", "5518 0751 1257", 100, LocalDate.parse("2020-10-30"));
-        Transfer t6 = new Transfer("5593 1426 6562", "5518 0751 1257", 100, LocalDate.parse("2020-10-27"));
+        Transfer t1 = new Transfer("5579 3237 7830", "5505 5023 3139", 100, LocalDate.parse("2020-10-28"));
+        Transfer t2 = new Transfer("5579 3237 7830", "5505 5023 3139", 100, LocalDate.parse("2020-07-28"));
+        Transfer t3 = new Transfer("5579 3237 7830", "5505 5023 3139", 100, LocalDate.parse("2020-07-27"));
+        Transfer t4 = new Transfer("5579 3237 7830", "5505 5023 3139", 100, LocalDate.parse("2020-10-29"));
+        Transfer t5 = new Transfer("5579 3237 7830", "5505 5023 3139", 100, LocalDate.parse("2020-10-30"));
+        Transfer t6 = new Transfer("5579 3237 7830", "5505 5023 3139", 100, LocalDate.parse("2020-10-27"));
         allTransfers.add(t1);
         allTransfers.add(t2);
         allTransfers.add(t3);
@@ -53,14 +60,16 @@ public class backgroundApp {
         allTransfers.add(t6);
         //TEST SKAPA KUNDER ^
 
-        tempSortAndPrint("Har skapat kunder"); //TEST SKRIVA UT
+
+
+        tempSortAndPrint("Lista från början:"); //TEST SKRIVA UT
 
         //Sortera lista på transferDate, tidigast datum först
         Collections.sort(allTransfers, (a, b) -> a.getTransferDate().compareTo(b.getTransferDate()));
 
         deleteHistory(monthsBeforeDeletingHistory);
 
-        tempSortAndPrint("Har tagit bort alla som är äldre än 3 månader"); //TEST SKRIVA UT
+        tempSortAndPrint("Har tagit bort alla som är äldre än 3 månader:"); //TEST SKRIVA UT
 
         for (Transfer transfer : allTransfers) {
 
@@ -75,6 +84,7 @@ public class backgroundApp {
 
                         //Kontrollera att det finns pengar att betala med
                         if (transfer.getAmount() <= allAccounts.get(transfer.getFromAccountNumber()).getBalance()) {
+                            //todo bugtesta att kontroll av belopp fungerar
 
                             allAccounts.get(transfer.getFromAccountNumber()).directTransfer();
                             //transfer.setStatus(Transfer.TransferStatus.COMPLETED);
@@ -94,7 +104,11 @@ public class backgroundApp {
             }
         }
 
+        //Sparar listorna igen
+        FileService.INSTANCE.saveAccounts(allAccounts);
+        FileService.INSTANCE.saveTransfers(allTransfers);
 
+        tempSortAndPrint("Alla borde vara markerade som FAILED pga felaktigt kontonr"); //todo ta bort alla tempSortAndPrint()
     }
 
     /**
@@ -103,11 +117,14 @@ public class backgroundApp {
      */
     private static void deleteHistory(long monthsBeforeDeletingHistory) {
         boolean keepDeleting = true;
-        while (keepDeleting) {
-            if (allTransfers.get(0).getTransferDate().plusMonths(monthsBeforeDeletingHistory).isBefore(LocalDate.now())) {
-                allTransfers.remove(0);
-            } else {
-                keepDeleting = false;
+        //
+        if (allTransfers.size() > 0) {
+            while (keepDeleting) {
+                if (allTransfers.get(0).getTransferDate().plusMonths(monthsBeforeDeletingHistory).isBefore(LocalDate.now())) {
+                    allTransfers.remove(0);
+                } else {
+                    keepDeleting = false;
+                }
             }
         }
     }
@@ -116,7 +133,7 @@ public class backgroundApp {
      * Temporär metod för att skriva ut allTransfers. Används bara för att kolla steg för steg att backgroundApp fungerar som den ska
      * @param message meddelande före utskrift av allTransfers (till exempel "tog nyss bort alla transfers med belopp större än 500").
      */
-    public static void tempSortAndPrint(String message) {
+    private static void tempSortAndPrint(String message) {
         System.out.println(message);
         Collections.sort(allTransfers, (a, b) -> a.getTransferDate().compareTo(b.getTransferDate()));
         allTransfers.forEach(transfer -> {

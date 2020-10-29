@@ -59,6 +59,6 @@ public class Transfer {
      */
 
     public void setStatus(TransferStatus newStatus) {
-
+        this.status = newStatus;
     }
 }

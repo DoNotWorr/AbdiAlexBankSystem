@@ -24,7 +24,8 @@ public static Scanner scanner = new Scanner(System.in);
     private String accountNumber;
     private String ownerID;
     private int balance;
-    private int previousTansaction;
+    private int previousTransaction;
+
 
     /**
      * @param accountName Kontonamn
@@ -105,7 +106,7 @@ public static Scanner scanner = new Scanner(System.in);
             int amount = Integer.parseInt(scanner.nextLine());
             if (amount != 0) {
                 balance = balance + amount;
-                previousTansaction = amount;
+                previousTransaction = amount;
             }
         }
         else if (sign == 2)
@@ -115,7 +116,7 @@ public static Scanner scanner = new Scanner(System.in);
             if ( balance >= amount)
             {
                 balance = balance - amount;
-                previousTansaction = -amount;
+                previousTransaction = -amount;
             } else
                 {
                 System.out.println("För lite saldo...Transaktionen mysslyckades");
@@ -129,7 +130,7 @@ public static Scanner scanner = new Scanner(System.in);
      * @author Abdi
      * Metod för att ta fram just det konto som jag ska ändra balance på
      */
-    public static void withdraMoney(HashMap<String, Account> allAccounts)
+    public static void withdrawMoney(HashMap<String, Account> allAccounts)
     {
 
         System.out.println("Ange kontonummret som du vill ta ut pengar från: ");
@@ -158,10 +159,10 @@ public static Scanner scanner = new Scanner(System.in);
      * Den här metoden visar historiken i alla insättningar och kontantuttag.
      */
     public void previousTansaction(){
-        if (previousTansaction > 0){
-            System.out.println("Insätningar: " + previousTansaction);
-        } else if (previousTansaction < 0){
-            System.out.println("Kontantuttag: "  + Math.abs(previousTansaction)); // Använder metoden Math för att kunna se uttraget som positivt istället för minus 1000kr
+        if (previousTransaction > 0){
+            System.out.println("Insätningar: " + previousTransaction);
+        } else if (previousTransaction < 0){
+            System.out.println("Kontantuttag: "  + Math.abs(previousTransaction)); // Använder metoden Math för att kunna se uttraget som positivt istället för minus 1000kr
         } else {
             System.out.println("inget transaktionen har hänt än ");
         }

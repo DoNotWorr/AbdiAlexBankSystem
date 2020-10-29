@@ -143,7 +143,7 @@ public class App {
             }
         }
 
-        Account.withdraMoney(allAccounts);
+        Account.withdrawMoney(allAccounts);
     }
     private static void depositeMoney() {
         System.out.println("Antal kunder i systemet: " + allCustomers.size() + "\n");
