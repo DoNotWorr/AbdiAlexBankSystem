@@ -9,17 +9,16 @@ import java.util.Scanner;
 
 /**
  * @author Abdi
- *
  */
 
 // Metod addTransfer (från konto: till konto, belopp, överföringsdatum)
-    // metod removeTransfer
-    // metod insertMoney
-    // metod withrawMoney
+// metod removeTransfer
+// metod insertMoney
+// metod withrawMoney
 
 
 public class Account {
-public static Scanner scanner = new Scanner(System.in);
+    public static Scanner scanner = new Scanner(System.in);
     public String accountName;
     private String accountNumber;
     private String ownerID;
@@ -46,9 +45,10 @@ public static Scanner scanner = new Scanner(System.in);
 
     /**
      * Den här metoden ska generera kontonummer som blir nyckeln i Hashmapen
+     *
      * @return ska retunera kontonummmret.
      */
-    public static String generateAccountNumber(){
+    public static String generateAccountNumber() {
 
         return generateAccountNumber("55");
     }
@@ -61,41 +61,21 @@ public static Scanner scanner = new Scanner(System.in);
     }
 
     /**
-     *@return saldo på konto i ören.
+     * @return saldo på konto i ören.
      */
     public int getBalance() {
         return balance;
     }
 
-    //todo gör färdigt metoder
-    public double getBalanceInSEK() {
-        //2020 ören -> 20 kr + 0,20 kr
-        return (this.getBalance() / 100) + ((double)(this.getBalance() % 100) / 100.0); //balance i kronor och ören
-    }
-
-    public static double getBalanceInSEK(int amount) {
-        //2020 ören -> 20 kr + 0,20 kr
-        return (amount / 100) + ((double)(amount % 100) / 100.0); //balance i kronor och ören
-    }
-/*
-    public static int convertBalanceFromSEK(double amountInSEK) {
-
-    }
-
- */
-
     /**
      * @author Abdi
      * Metod för att ta fram just det konto som jag ska ändra balance på
      */
-    public static void depositMoney(HashMap<String, Account> allAccounts)
-    {
+    public static void depositMoney(HashMap<String, Account> allAccounts) {
         System.out.println("Ange kontonummret som du vill sätta in pengarna på: ");
         String accountNUmber = scanner.nextLine();
-        for (Map.Entry<String, Account> account: allAccounts.entrySet())
-        {
-            if (account.getValue().getAccountNumber().equals(accountNUmber))
-            {
+        for (Map.Entry<String, Account> account : allAccounts.entrySet()) {
+            if (account.getValue().getAccountNumber().equals(accountNUmber)) {
                 /*
                 steg 1 vi tar fram just det konto som vi söker efter och tar fram balance.
                 steg 2 vi vill ändra värdet i balance i kontot som vi har tagit fram förut.
@@ -110,15 +90,13 @@ public static Scanner scanner = new Scanner(System.in);
     }
 
     /**
-     * @param account   Kundens konto
-     * @param sign      int variabeln som skiljer dom olika villkoren
-     * @return          retunerar det nya värdet i balance
+     * @param account Kundens konto
+     * @param sign    int variabeln som skiljer dom olika villkoren
+     * @return retunerar det nya värdet i balance
      */
-    public int setBalance (Account account, int sign)
-    {
+    public int setBalance(Account account, int sign) {
         int balance = account.getBalance();
-        if (sign == 1)
-        {
+        if (sign == 1) {
             System.out.println("Hur mycket vill du sätta in: ");
             /*
             double amountInSek = blablabla
@@ -129,17 +107,13 @@ public static Scanner scanner = new Scanner(System.in);
                 balance = balance + amount;
                 previousTransaction = amount;
             }
-        }
-        else if (sign == 2)
-        {
+        } else if (sign == 2) {
             System.out.println("Hur mycket vill du ta ut: ");
             int amount = scanner.nextInt();
-            if ( balance >= amount)
-            {
+            if (balance >= amount) {
                 balance = balance - amount;
                 previousTransaction = -amount;
-            } else
-                {
+            } else {
                 System.out.println("För lite saldo...Transaktionen mysslyckades");
             }
         }
@@ -151,15 +125,12 @@ public static Scanner scanner = new Scanner(System.in);
      * @author Abdi
      * Metod för att ta fram just det konto som jag ska ändra balance på
      */
-    public static void withdrawMoney(HashMap<String, Account> allAccounts)
-    {
+    public static void withdrawMoney(HashMap<String, Account> allAccounts) {
 
         System.out.println("Ange kontonummret som du vill ta ut pengar från: ");
         String accountNUmber = scanner.nextLine();
-        for (Map.Entry<String, Account> account: allAccounts.entrySet())
-        {
-            if (account.getValue().getAccountNumber().equals(accountNUmber))
-            {
+        for (Map.Entry<String, Account> account : allAccounts.entrySet()) {
+            if (account.getValue().getAccountNumber().equals(accountNUmber)) {
                 /*
                 steg 1 vi tar fram just det konto som vi söker efter och tar fram balance.
                 steg 2 vi vill ändra värdet i balance i kontot som vi har tagit fram förut.
@@ -179,11 +150,11 @@ public static Scanner scanner = new Scanner(System.in);
      * @author Abdi
      * Den här metoden visar historiken i alla insättningar och kontantuttag.
      */
-    public void previousTransaction(){
-        if (previousTransaction > 0){
+    public void previousTransaction() {
+        if (previousTransaction > 0) {
             System.out.println("Insätningar: " + previousTransaction);
-        } else if (previousTransaction < 0){
-            System.out.println("Kontantuttag: "  + Math.abs(previousTransaction)); // Använder metoden Math för att kunna se uttraget som positivt istället för minus 1000kr
+        } else if (previousTransaction < 0) {
+            System.out.println("Kontantuttag: " + Math.abs(previousTransaction)); // Använder metoden Math för att kunna se uttraget som positivt istället för minus 1000kr
         } else {
             System.out.println("inget transaktionen har hänt än ");
         }
@@ -202,20 +173,21 @@ public static Scanner scanner = new Scanner(System.in);
 
     /**
      * Metod för att skapa bankuppdrag.
-     * @author Alex
-     * @param toAccount kontonummer betalning ska ske till
-     * @param amount antal ören (inte SEK)
+     *
+     * @param toAccount    kontonummer betalning ska ske till
+     * @param amount       antal ören (inte SEK)
      * @param transferDate datum i format YYYY-MM-DD för överföringen
+     * @author Alex
      */
     public void addTransfer(String toAccount, int amount, LocalDate transferDate) {
         Transfer transfer = new Transfer(this.accountNumber, toAccount, amount, transferDate);
     }
 
     /**
+     * @param allAccounts  Alla konton som finns Accountklassen
+     * @param allCustomers Alla kunder som finns i Customerklassen
+     *                     Metoden är till för att kunna printa kundens konto efter man har valt för kund.
      * @author Abdi
-     * @param allAccounts   Alla konton som finns Accountklassen
-     * @param allCustomers  Alla kunder som finns i Customerklassen
-     * Metoden är till för att kunna printa kundens konto efter man har valt för kund.
      */
     public static void printAccount(HashMap<String, Account> allAccounts, HashMap<String, Customer> allCustomers) {
         System.out.println("Antal kunder i systemet: " + allCustomers.size() + "\n");
@@ -255,10 +227,8 @@ public static Scanner scanner = new Scanner(System.in);
     }
 
     /**
-     *
-     * @author Abdi
      * @param accountNumber ska generera kontonummer som börjar med 55
-     *
+     * @author Abdi
      */
     public static String generateAccountNumber(String accountNumber) {
         //accountNumber = "55";

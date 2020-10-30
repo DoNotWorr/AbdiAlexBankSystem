@@ -288,6 +288,6 @@ public class App {
         for(Account account : allAccounts.values()) {
             totalBalance += account.getBalance();
         }
-        System.out.println("Det finns " + Account.getBalanceInSEK(totalBalance) + " kronor i kassavalvet.\n");
+        System.out.println("Det finns " + UnitConversion.convertToSek(totalBalance) + " kronor i kassavalvet.\n");
     }
 }

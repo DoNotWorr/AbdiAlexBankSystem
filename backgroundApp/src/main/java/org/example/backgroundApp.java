@@ -4,7 +4,6 @@ package org.example;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -13,7 +12,7 @@ import java.util.HashMap;
 public class backgroundApp {
 
     //todo allCustomers behövs inte?
-    private static HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers();
+    //private static HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers();
 
     private static HashMap<String, Account> allAccounts = FileService.INSTANCE.loadAccounts();
     private static ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
@@ -22,7 +21,7 @@ public class backgroundApp {
         long monthsBeforeDeletingHistory = 3; //Månader innan historik raderas
 
 
-
+/*
         //TEST SKAPA KUNDER v
         Customer c1 = null;
         Customer c2 = null;
@@ -59,9 +58,9 @@ public class backgroundApp {
         allTransfers.add(t5);
         allTransfers.add(t6);
         //TEST SKAPA KUNDER ^
+*/
 
 
-/*
         tempSortAndPrint("Lista från början:"); //TEST SKRIVA UT
 
         //Sortera lista på transferDate, tidigast datum först
@@ -86,9 +85,7 @@ public class backgroundApp {
                         if (transfer.getAmount() <= allAccounts.get(transfer.getFromAccountNumber()).getBalance()) {
                             //todo bugtesta att kontroll av belopp fungerar
 
-                            if(allAccounts.get(transfer.getFromAccountNumber()).directTransfer()) {
-
-                            }
+                            //if(allAccounts.get(transfer.getFromAccountNumber()).directTransfer()) {}
                             //transfer.setStatus(Transfer.TransferStatus.COMPLETED);
                             //todo se över när directTransfer() är färdig.
                             // Ta bort eventuella kontroller som redan sker i directTransfer.
@@ -105,12 +102,12 @@ public class backgroundApp {
                 break;
             }
         }
- */
+
         //Sparar listorna igen
         FileService.INSTANCE.saveAccounts(allAccounts);
         FileService.INSTANCE.saveTransfers(allTransfers);
 
-        FileService.INSTANCE.saveCustomers(allCustomers); //todo ta bort (temporärt)
+        //FileService.INSTANCE.saveCustomers(allCustomers); //todo ta bort (temporärt)
 
         tempSortAndPrint("Alla borde vara markerade som FAILED pga felaktigt kontonr"); //todo ta bort alla tempSortAndPrint()
 
