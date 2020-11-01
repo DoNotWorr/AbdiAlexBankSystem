@@ -1,5 +1,8 @@
 package org.example;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 public class UnitConversion {
 
     /**
@@ -8,40 +11,29 @@ public class UnitConversion {
      * @author Alex
      * Konverterar ett belopp från ören (1234 öre) till kronor (12,34 kr)
      */
-    public static double convertToSek(int amount) {
-        //2020 ören -> 20 kr + 0,20 kr
-        return (amount / 100) + ((double) (amount % 100) / 100.0); //balance i kronor och ören
+    public static BigDecimal convertToSek(BigInteger amount) {
+        //2020 öre
+        return new BigDecimal(amount.divide(BigInteger.valueOf(100)) + "." +  amount.mod(BigInteger.valueOf(100)));         //+ ((double) (amount % 100) / 100.0); //balance i kronor och ören
     }
 
     /**
+     * En metod som konverterar ett belopp i ören (int) till motsvarande belopp i kronor (double).
+     * Använd ValidationService.INSTANCE.isValidArgumentConvertFromSek(amountInSek) används för att kontrollera att argument är giltigt.
+     *
      * @param amountInSek ett belopp i kronor med max två decimaler (exempelvis 123 eller 123.45)
      * @return beloppet konverterat till ören (exempelvis 12300 eller 12345)
      * @throws TooManyDecimalsException om amountInSek innehåller mer än två decimaler (exempelvis 123.456), för att undvika avrundningsfel
      * @author Alex
      */
-    public static int convertFromSek(double amountInSek) throws TooManyDecimalsException, TooBigNumberException {
-        //Konverterar till String för att räkna ut hur många decimaler efter punkten
 
-        if (amountInSek > 21474836.47) {
-            throw new TooBigNumberException("Kan inte hantera värden större än 21474836.47 kr");
-        } else {
-            String amountAsText = Double.toString(amountInSek);
-            //Jämför längden på strängen och vilket index i strängen som decimaltecknet har. Om skillnaden är 3 så har talet 2 decimaler.
-            //"10.01"     .length = 5; .indexOf('.') = 2
-            //"10.001"    .length = 6; .indexOf('.') = 2
-            if (amountAsText.length() - amountAsText.indexOf('.') <= 3) {
-                return (int) (amountInSek * 100.0);
-            } else if (amountAsText.contains("E")) {
-                String[] amountAsScientificNotation = amountAsText.split("E");
-                if(amountAsScientificNotation[0].length() - 2 - Integer.parseInt(amountAsScientificNotation[1]) <= 2) {
-                    return (int) (amountInSek * 100.0);
-                } else {
-                    throw new TooManyDecimalsException("Max 2 decimaler");
-                }
-            } else {
-                throw new TooManyDecimalsException("Max 2 decimaler");
-            }
+    public static BigInteger convertFromSek(double amountInSek) throws TooManyDecimalsException, TooBigNumberException {
+        //All kontroll sker i ValidationService.INSTANCE.isValidArgumentConvertFromSek()
+        if (ValidationService.INSTANCE.isValidArgumentConvertFromSek(amountInSek)) {
+            return BigDecimal.valueOf(amountInSek * 100.0).toBigIntegerExact();
+            //return (BigInteger) (amountInSek * 100.0); //gamla
         }
+        return null;
     }
+
 
 }
