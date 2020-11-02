@@ -100,10 +100,14 @@ public class Account {
         this.balance = balance;
 
     }
-    public void withdraw(int amount) {
-
+    public boolean withdraw(int amount) {
+        if (amount > 0) {
+            setBalance(balance - amount);
+            return true;
+        } else {
+            return false;
+        }
     }
-
     /**
      *
      * Den här metoden visar historiken i alla insättningar och kontantuttag.
