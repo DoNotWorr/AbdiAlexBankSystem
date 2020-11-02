@@ -18,7 +18,7 @@ public enum ValidationService {
                 //Om första tecknet är en stor bokstav (A-Ö) kontrollerar for-satsen ifall varje nästkommande tecken är en liten bokstav (a-ö).
                 if (isUpperCaseLetter(name.charAt(0))) {
                     for (int i = 1; i < name.length(); i++) {
-                        if (isLowerCaseLetter(name.charAt(i)) == false) {
+                        if (!isLowerCaseLetter(name.charAt(i))) {
                             return false;       //Om ett nästkommande tecken inte är en liten bokstav (a-ö) returnerar metoden false.
                         }
                     }
