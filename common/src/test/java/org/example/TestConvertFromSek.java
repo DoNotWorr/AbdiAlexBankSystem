@@ -11,14 +11,14 @@ import java.util.Scanner;
 /**
  * Unit test for simple App.
  */
-public class CommonTest {
+public class TestConvertFromSek {
     /**
      * Test inmatning utan decimal
      */
     @Test
     public void testNoDecimal() {
         try {
-            assertTrue(UnitConversion.convertFromSek(100) == 10000);
+            assertEquals(10000, UnitConversion.convertFromSek(100));
         } catch (TooManyDecimalsException e) {
             System.out.println("Oväntat fel testNoDecimal()");
         } catch (TooBigNumberException e) {
@@ -32,7 +32,7 @@ public class CommonTest {
     @Test
     public void testOneDecimal() {
         try {
-            assertTrue(UnitConversion.convertFromSek(100.9) == 10090);
+            assertEquals(10090, UnitConversion.convertFromSek(100.9));
         } catch (TooManyDecimalsException e) {
             System.out.println("Oväntat fel testOneDecimal()");
         } catch (TooBigNumberException e) {
@@ -46,7 +46,7 @@ public class CommonTest {
     @Test
     public void testTwoDecimal() {
         try {
-            assertTrue(UnitConversion.convertFromSek(100.99) == 10099);
+            assertEquals(10099, UnitConversion.convertFromSek(100.99));
         } catch (TooManyDecimalsException e) {
             System.out.println("Oväntat fel testTwoDecimal()");
         } catch (TooBigNumberException e) {
@@ -67,7 +67,7 @@ public class CommonTest {
         } catch (TooBigNumberException e) {
             System.out.println("Oväntat fel testThreeDecimal()");
         }
-        assertTrue(message.equals("Input får ha max 2 decimalers precision"));
+        assertEquals("Input får ha max 2 decimalers precision", message);
     }
 
     /**
@@ -170,7 +170,7 @@ public class CommonTest {
     @Test
     public void testNegativeNoDecimal() {
         try {
-            assertTrue(UnitConversion.convertFromSek(-100) == -10000);
+            assertEquals(UnitConversion.convertFromSek(-100), -10000);
         } catch (TooManyDecimalsException e) {
             System.out.println("Oväntat fel testNoDecimal()");
         } catch (TooBigNumberException e) {
@@ -184,7 +184,7 @@ public class CommonTest {
     @Test
     public void testNegativeOneDecimal() {
         try {
-            assertTrue(UnitConversion.convertFromSek(-100.9) == -10090);
+            assertEquals(UnitConversion.convertFromSek(-100.9), -10090);
         } catch (TooManyDecimalsException e) {
             System.out.println("Oväntat fel testOneDecimal()");
         } catch (TooBigNumberException e) {
@@ -198,7 +198,7 @@ public class CommonTest {
     @Test
     public void testNegativeTwoDecimal() {
         try {
-            assertTrue(UnitConversion.convertFromSek(-100.99) == -10099);
+            assertEquals(UnitConversion.convertFromSek(-100.99), -10099);
         } catch (TooManyDecimalsException e) {
             System.out.println("Oväntat fel testTwoDecimal()");
         } catch (TooBigNumberException e) {
@@ -219,7 +219,7 @@ public class CommonTest {
         } catch (TooBigNumberException e) {
             System.out.println("Oväntat fel testThreeDecimal()");
         }
-        assertTrue(message.equals("Input får ha max 2 decimalers precision"));
+        assertEquals("Input får ha max 2 decimalers precision", message);
     }
 
     /**

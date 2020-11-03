@@ -1,9 +1,10 @@
 Git:
-git branch //visar alla brancher
-git status //visar min commit (mina ändringar)
-git checkout -b <namn> //skapar en ny branch som heter <namn>
-git checkout <name> //ändrar vilken branch man ställer sig på
+1. git branch //visar alla brancher
+2. git checkout -b <namn> //skapar en ny branch som heter <namn>
+3. git checkout <name> //ändrar vilken branch man ställer sig på
+
 git commit
+git status //visar min commit (mina ändringar)
 
 
 

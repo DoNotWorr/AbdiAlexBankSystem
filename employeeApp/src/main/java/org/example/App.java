@@ -412,7 +412,8 @@ public class App {
         for (Account account : allAccounts.values()) {
             totalBalance = totalBalance.add(BigInteger.valueOf(account.getBalance()));
         }
-        System.out.println("Det finns " + UnitConversion.convertToSek(totalBalance) + " kronor i kassavalvet.\n");
+        //todo fixa med nya konverteringsmetoden
+        //System.out.println("Det finns " + UnitConversion.convertToSek(totalBalance) + " kronor i kassavalvet.\n");
     }
 }
 //While loop och sen viktigt att ha bolean för att kunna lista ut om inmatning är true eller false
