@@ -1,3 +1,6 @@
 /.idea
-project/target
+common/target/
+customerApp/target/
+employeeApp/target/
+backgroundApp/target/
 /out
