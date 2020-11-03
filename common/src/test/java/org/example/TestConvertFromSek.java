@@ -136,7 +136,7 @@ public class TestConvertFromSek {
     @Test
     public void testOverflowMaxWithThreeDecimals() {
         String message = "Oväntat fel i testOverflowMaxWithThreeDecimals()";
-                //"Input får ha max 2 decimalers precision"
+        //"Input får ha max 2 decimalers precision"
         try {
             UnitConversion.convertFromSek(70368744177663.981);
         } catch (TooManyDecimalsException e) {
@@ -164,6 +164,7 @@ public class TestConvertFromSek {
     }
 
     //negativa
+
     /**
      * Test inmatning utan decimal
      */

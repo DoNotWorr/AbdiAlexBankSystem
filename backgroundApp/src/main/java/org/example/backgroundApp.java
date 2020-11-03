@@ -116,6 +116,7 @@ public class backgroundApp {
 
     /**
      * Raderar gamla transaktioner ifrån historiken
+     *
      * @param monthsBeforeDeletingHistory antal månader som ska passera efter transaktionsdatum innan transaktionen tas bort ifrån historiken.
      */
     private static void deleteHistory(long monthsBeforeDeletingHistory) {
@@ -134,6 +135,7 @@ public class backgroundApp {
 
     /**
      * Temporär metod för att skriva ut allTransfers. Används bara för att kolla steg för steg att backgroundApp fungerar som den ska
+     *
      * @param message meddelande före utskrift av allTransfers (till exempel "tog nyss bort alla transfers med belopp större än 500").
      */
     private static void tempSortAndPrint(String message) {
