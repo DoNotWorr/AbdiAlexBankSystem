@@ -1,0 +1,14 @@
+Git:
+git branch //visar alla brancher
+git status //visar min commit (mina ändringar)
+git checkout -b <namn> //skapar en ny branch som heter <namn>
+git checkout <name> //ändrar vilken branch man ställer sig på
+git commit
+
+
+
+När man är klar med pull request och merge:
+git checkout master
+git pull
+//gör ett test att allt funkar
+Skapa en ny branch (se ovan)
