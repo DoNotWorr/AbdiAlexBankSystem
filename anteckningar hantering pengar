@@ -1,0 +1,21 @@
+Account:
+balance (2050 öre): long
+
+inmatning (20,50 kr): double
+
+public static String convertToSek (long amount) {
+    //räkna om från 2050 öre till "20,50"
+    return "20,50"
+}
+
+public static long convertFromSek (double amount) {
+
+}
+
+Konto1.balance = 9223372036854775807
+
+Konto2.balance = 9223372036854775807
+
+Konto1.balance + Konto2.balance
+
+

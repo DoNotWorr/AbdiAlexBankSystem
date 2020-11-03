@@ -1,47 +1,48 @@
 package org.example;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 public class UnitConversion {
+    //Belopp i sek som ska konverteras till cent (ören) måste vara mindre än absoluteBoundSek och större än -absoluteBoundSek
+    private static final double absoluteBoundSekToCent = 70368744177663.99;
 
     /**
-     * @param amount belopp i hela ören, exempelvis: 1234
+     * @param amountCent belopp i hela ören, exempelvis: 1234
      * @return belopp i kronor som decimaltal, exempelvis 12,34
      * @author Alex
      * Konverterar ett belopp från ören (1234 öre) till kronor (12,34 kr)
      */
-    public static double convertToSek(int amount) {
-        //2020 ören -> 20 kr + 0,20 kr
-        return (amount / 100) + ((double) (amount % 100) / 100.0); //balance i kronor och ören
+    public static String convertToSek(long amountCent) {
+        StringBuilder amountSek = new StringBuilder();
+        amountSek.append(amountCent);
+        //2020 öre
+        amountSek.insert(amountSek.length() - 2, '.');
+        return amountSek.toString();
     }
 
     /**
-     * @param amountInSek ett belopp i kronor med max två decimaler (exempelvis 123 eller 123.45)
+     * Räknar om ett belopp i kronor till motsvarande belopp i ören.
+     * @param amountSek ett belopp i kronor med max två decimaler (exempelvis 123 eller 123.45)
      * @return beloppet konverterat till ören (exempelvis 12300 eller 12345)
      * @throws TooManyDecimalsException om amountInSek innehåller mer än två decimaler (exempelvis 123.456), för att undvika avrundningsfel
      * @author Alex
      */
-    public static int convertFromSek(double amountInSek) throws TooManyDecimalsException, TooBigNumberException {
-        //Konverterar till String för att räkna ut hur många decimaler efter punkten
 
-        if (amountInSek > 21474836.47) {
-            throw new TooBigNumberException("Kan inte hantera värden större än 21474836.47 kr");
-        } else {
-            String amountAsText = Double.toString(amountInSek);
-            //Jämför längden på strängen och vilket index i strängen som decimaltecknet har. Om skillnaden är 3 så har talet 2 decimaler.
-            //"10.01"     .length = 5; .indexOf('.') = 2
-            //"10.001"    .length = 6; .indexOf('.') = 2
-            if (amountAsText.length() - amountAsText.indexOf('.') <= 3) {
-                return (int) (amountInSek * 100.0);
-            } else if (amountAsText.contains("E")) {
-                String[] amountAsScientificNotation = amountAsText.split("E");
-                if(amountAsScientificNotation[0].length() - 2 - Integer.parseInt(amountAsScientificNotation[1]) <= 2) {
-                    return (int) (amountInSek * 100.0);
-                } else {
-                    throw new TooManyDecimalsException("Max 2 decimaler");
-                }
-            } else {
-                throw new TooManyDecimalsException("Max 2 decimaler");
+    public static long convertFromSek(double amountSek) throws TooManyDecimalsException, TooBigNumberException {
+        //All kontroll sker i ValidationService.INSTANCE.isValidArgumentConvertFromSek()
+        if (amountSek < absoluteBoundSekToCent && amountSek > -absoluteBoundSekToCent) {
+            try {
+                //Om amountSek innehöll mer än 2 decimalers precision så blir det ArithmeticException.
+                return BigDecimal.valueOf(amountSek).movePointRight(2).setScale(0).longValueExact();
+            } catch (ArithmeticException e) {
+                //Skapar eget exception för att påtvinga hantering av fel där metoden används
+                throw new TooManyDecimalsException("Input får ha max 2 decimalers precision");
             }
+        } else {
+            throw new TooBigNumberException("Argument måste vara mindre än 70368744177663.99");
         }
     }
+
 
 }

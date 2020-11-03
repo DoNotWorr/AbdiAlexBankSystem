@@ -1,5 +1,6 @@
 package org.example;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.*;
 
@@ -13,7 +14,7 @@ public class App {
     public static ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
     public static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         menuNavigation();
     }
 
@@ -88,9 +89,9 @@ public class App {
                                 + "\nVänligen välj det som finns i menyn!");
                         break;
                 }
-            }catch (Exception e){
-                System.out.println("Felaktig inmatning! "
-                        + "\nVänligen försök igen");
+            } catch (Exception e) {
+                System.out.println("Felaktig inmatning! " +
+                        "\nVänligen försök igen ");
             }
         }
     }
@@ -348,6 +349,7 @@ public class App {
                 break;
         }
     }
+
     private static void addNewCutomer() {
         boolean keepgoing = true;
         while (keepgoing) {
@@ -405,11 +407,13 @@ public class App {
      * Metod som visar innehållet i kassavalvet.
      */
     private static void inspectSafe() {
-        int totalBalance = 0;
-        for(Account account : allAccounts.values()) {
-            totalBalance += account.getBalance();
+        BigInteger totalBalance = new BigInteger("0");
+        //int totalBalance = 0;
+        for (Account account : allAccounts.values()) {
+            totalBalance = totalBalance.add(BigInteger.valueOf(account.getBalance()));
         }
-        System.out.println("Det finns " + UnitConversion.convertToSek(totalBalance) + " kronor i kassavalvet.\n");
+        //todo fixa med nya konverteringsmetoden
+        //System.out.println("Det finns " + UnitConversion.convertToSek(totalBalance) + " kronor i kassavalvet.\n");
     }
 }
 //While loop och sen viktigt att ha bolean för att kunna lista ut om inmatning är true eller false

@@ -16,4 +16,12 @@
       <module name="customerAppInJFX" target="11" />
     </bytecodeTargetLevel>
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="backgroundApp" options="" />
+      <module name="common" options="" />
+      <module name="customerApp" options="" />
+      <module name="employeeApp" options="" />
+    </option>
+  </component>
 </project>

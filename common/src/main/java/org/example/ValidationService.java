@@ -5,8 +5,32 @@ import java.time.LocalDate;
 public enum ValidationService {
     INSTANCE;
 
+    //Gör numera kontrollen direkt i UnitConversion.convertFromSek
+    /*
+    public boolean isValidArgumentConvertFromSek(double amountInSek) throws TooManyDecimalsException, TooBigNumberException {
+        //Konverterar till String för att räkna ut hur många decimaler efter punkten
+        String amountAsText = Double.toString(amountInSek);
+        //Jämför längden på strängen och vilket index i strängen som decimaltecknet har. Om skillnaden är 3 så har talet 2 decimaler.
+        //"10.01"     .length = 5; .indexOf('.') = 2
+        //"10.001"    .length = 6; .indexOf('.') = 2
+        if (amountAsText.length() - amountAsText.indexOf('.') <= 3) {
+            return true;
+        } else if (amountAsText.contains("E")) {
+            String[] amountAsScientificNotation = amountAsText.split("E");
+            if (amountAsScientificNotation[0].length() - 2 - Integer.parseInt(amountAsScientificNotation[1]) <= 2) {
+                return true;
+            } else {
+                throw new TooManyDecimalsException("Max 2 decimaler");
+            }
+        } else {
+            throw new TooManyDecimalsException("Max 2 decimaler");
+        }
+    }
+    */
+
     /**
      * Kontrollerar godtyckligt om ett namn matas in.
+     *
      * @param name för- eller efternamn som ska valideras
      * @return true om namnet är minst ett tecken långt och börjar med en stor bokstav som (eventuellt) följs av små bokstäver. Vissa korrekta namn returnerar false (till exempel "Therése", eftersom 'é' inte ingår i det vanliga alfabetet).
      * @author Alex
@@ -32,6 +56,7 @@ public enum ValidationService {
     /**
      * Kontrollerar om en ownerID är ett giltigt personnummer. Den enda ålderskontrollen som görs är att personen måste vara född.
      * Till exempel är "00000101-0008" ett giltigt personnummer (1: januari år 0). Mest relevant är att personen kan vara under 18 eller till och med nyfödd, så länge personnumret i sig är giltigt.
+     *
      * @param ownerID ett personnummer i formatet "yyyyMMdd-xxxx"
      * @return true om ownerID är ett giltigt personnummer
      * @author Alex
@@ -41,30 +66,30 @@ public enum ValidationService {
         //0. För att programmet inte ska krasha ifall ownerID inte har något värde.
         if (ownerID != null) {
             //1. Kontrollerar att ownerID är 13 tecken lång
-            if(ownerID.length() == 13) {
+            if (ownerID.length() == 13) {
                 //2. Kontrollerar att tecken på index 8 är '-'
-                if(ownerID.charAt(8) == '-') {
+                if (ownerID.charAt(8) == '-') {
                     //3a. Konverterar till standard datumformat "yyyy-MM-dd" för nästa kontroll (3b)
                     StringBuilder stringBuilderOwnerID = new StringBuilder();
                     stringBuilderOwnerID.append(ownerID, 0, 4);
                     stringBuilderOwnerID.append('-');
-                    stringBuilderOwnerID.append(ownerID, 4,6);
+                    stringBuilderOwnerID.append(ownerID, 4, 6);
                     stringBuilderOwnerID.append('-');
-                    stringBuilderOwnerID.append(ownerID,6,8);
+                    stringBuilderOwnerID.append(ownerID, 6, 8);
                     try {
                         //3b. Kontrollerar att "yyyy-MM-dd" är ett giltigt datum genom att försöka parsa till LocalDate
                         //3c. Kontrollerar samtidigt att datumet har inträffat
                         //3d. Kontrollerar samtidigt att "yyyy", "MM" och "dd" enbart består av siffror
-                        if(LocalDate.parse(stringBuilderOwnerID.toString()).isAfter(LocalDate.now())) {
+                        if (LocalDate.parse(stringBuilderOwnerID.toString()).isAfter(LocalDate.now())) {
                             return false;
                         }
                     } catch (Exception e) {
                         return false;
                     }
                     //4a. Förbereder stringbuilder för Luhns algoritm. Ändrar StringBuilder från "yyyy-MM-dd" till "yyMMdd"
-                    stringBuilderOwnerID.delete(0,2); //från "yyyy-MM-dd" till "yy-MM-dd"
-                    stringBuilderOwnerID.delete(2,3); //från yy-MM-DD" till "yyMM-DD"
-                    stringBuilderOwnerID.delete(4,5); //från "yyMM-DD" till "yyMMdd"
+                    stringBuilderOwnerID.delete(0, 2); //från "yyyy-MM-dd" till "yy-MM-dd"
+                    stringBuilderOwnerID.delete(2, 3); //från yy-MM-DD" till "yyMM-DD"
+                    stringBuilderOwnerID.delete(4, 5); //från "yyMM-DD" till "yyMMdd"
 
                     //4b. Förbereder stringbuilder för Luhns algoritm. Kontrollerar att "XXXX" är ett heltal
                     try {
@@ -99,6 +124,7 @@ public enum ValidationService {
 
     /**
      * Kontrollerar om ett tecken är en stor bokstav
+     *
      * @param ch tecknet som kontrolleras
      * @return true om tecknet är en stor bokstav (A-Ö). Variationer av bokstäver (till exempel È) returnerar false.
      */
@@ -116,6 +142,7 @@ public enum ValidationService {
 
     /**
      * Kontrollerar om ett tecken är en liten bokstav (a-ö).
+     *
      * @param ch tecknet som kontrolleras
      * @return true om tecknet är en stor bokstav (A-Ö). Variationer av bokstäver (till exempel é) returnerar false.
      */
