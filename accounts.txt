@@ -1,1 +1,1 @@
-{"5565 3892 2406":{"accountName":"Alex konto","accountNumber":"5565 3892 2406","ownerID":"19920317-0577","balance":0,"previousTransaction":0},"5521 1306 6173":{"accountName":"Abdis konto","accountNumber":"5521 1306 6173","ownerID":"20000723-2382","balance":0,"previousTransaction":0}}
+{"5576-8529-9067":{"accountName":"Sparkonto","accountNumber":"5576-8529-9067","ownerID":"19920317-0577","balance":0,"previousTransaction":0},"5569-7130-0846":{"accountName":"Lönekonto","accountNumber":"5569-7130-0846","ownerID":"19920317-0577","balance":500,"previousTransaction":0}}

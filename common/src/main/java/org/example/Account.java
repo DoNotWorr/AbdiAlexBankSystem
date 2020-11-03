@@ -1,34 +1,23 @@
 package org.example;
 
-
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * @author Abdi
  */
 
-// Metod addTransfer (från konto: till konto, belopp, överföringsdatum)
-// metod removeTransfer
-// metod insertMoney
-// metod withrawMoney
-
-
 public class Account {
-    public static Scanner scanner = new Scanner(System.in);
-    public String accountName;
+
+    private String accountName;
     private String accountNumber;
     private String ownerID;
     private int balance;
     private int previousTransaction;
 
-
     /**
-     * @param accountName Kontonamn
-     * @param customer    kundens ownerID/personnummer
+     * @param accountName Kontonamn.
+     * @param customer    kundens ownerID/personnummer.
      */
     public Account(String accountName, Customer customer) {
         this.accountName = accountName;
@@ -37,6 +26,15 @@ public class Account {
     }
 
     /**
+     * Metod för att få fram namnet på kontot.
+     * @return retunerar kontots namn.
+     */
+    public String getAccountName(){
+        return accountName;
+    }
+
+    /**
+     * Metod som får fram kundens kontonummer.
      * @return AccountNumber/Kontonummer (String)
      */
     public String getAccountNumber() {
@@ -44,16 +42,15 @@ public class Account {
     }
 
     /**
-     * Den här metoden ska generera kontonummer som blir nyckeln i Hashmapen
-     *
+     * Den här metoden ska generera kontonummer som blir nyckeln i Hashmapen.
      * @return ska retunera kontonummmret.
      */
     public static String generateAccountNumber() {
-
         return generateAccountNumber("55");
     }
 
     /**
+     * Metod fär att få fram kundens personnummer.
      * @return OwnerID/personnummer (String)
      */
     public String getOwnerID() {
@@ -61,6 +58,7 @@ public class Account {
     }
 
     /**
+     * Metod som får fram kundens saldo i kontot.
      * @return saldo på konto i ören.
      */
     public int getBalance() {
@@ -68,112 +66,71 @@ public class Account {
     }
 
     /**
-     * @author Abdi
-     * Metod för att ta fram just det konto som jag ska ändra balance på
+     * @param amount beloppet som personen ska sätta in i kontot.
+     * @return den retunerar true om det gick att sätta in pengar i kontot eller false om det inte gick.
      */
-    public static void depositMoney(HashMap<String, Account> allAccounts) {
-        System.out.println("Ange kontonummret som du vill sätta in pengarna på: ");
-        String accountNUmber = scanner.nextLine();
-        for (Map.Entry<String, Account> account : allAccounts.entrySet()) {
-            if (account.getValue().getAccountNumber().equals(accountNUmber)) {
-                /*
-                steg 1 vi tar fram just det konto som vi söker efter och tar fram balance.
-                steg 2 vi vill ändra värdet i balance i kontot som vi har tagit fram förut.
-                steg 3 sen anropar vi setbalance och skickar med kontot som vi har tagit fram
-                steg 4 I setbalance så gör vi själva insättningen och retunerar det nya balance.
-                 */
-                Account thisAccount = account.getValue();
-                account.getValue().balance = thisAccount.setBalance(thisAccount, 1); //account.setValue(account.getValue()).setBalance(account.getValue());
 
-            }
+    public boolean depositMoney(int amount) {
+        if (amount > 0) {
+            setBalance(balance + amount);
+            return true;
+        } else {
+            return false;
         }
     }
 
     /**
-     * @param account Kundens konto
-     * @param sign    int variabeln som skiljer dom olika villkoren
-     * @return retunerar det nya värdet i balance
+     * Metod för att få fram rätt balance för att kunna ändra saldot i kontot.
      */
-    public int setBalance(Account account, int sign) {
-        int balance = account.getBalance();
-        if (sign == 1) {
-            System.out.println("Hur mycket vill du sätta in: ");
-            /*
-            double amountInSek = blablabla
-            int amount = Account.getAmountFromSek(amountInSek)
-             */
-            int amount = Integer.parseInt(scanner.nextLine());
-            if (amount != 0) {
-                balance = balance + amount;
-                previousTransaction = amount;
-            }
-        } else if (sign == 2) {
-            System.out.println("Hur mycket vill du ta ut: ");
-            int amount = scanner.nextInt();
-            if (balance >= amount) {
-                balance = balance - amount;
-                previousTransaction = -amount;
-            } else {
-                System.out.println("För lite saldo...Transaktionen mysslyckades");
-            }
-        }
-
-        return balance;
+    private void setBalance(int balance){
+        this.balance = balance;
     }
 
     /**
-     * @author Abdi
-     * Metod för att ta fram just det konto som jag ska ändra balance på
+     * @param amount beloppet som personen ska ta ut från kontot.
+     * @return den retunerar true om det gick att göra ett uttag från kontot eller false om det inte gick.
      */
-    public static void withdrawMoney(HashMap<String, Account> allAccounts) {
-
-        System.out.println("Ange kontonummret som du vill ta ut pengar från: ");
-        String accountNUmber = scanner.nextLine();
-        for (Map.Entry<String, Account> account : allAccounts.entrySet()) {
-            if (account.getValue().getAccountNumber().equals(accountNUmber)) {
-                /*
-                steg 1 vi tar fram just det konto som vi söker efter och tar fram balance.
-                steg 2 vi vill ändra värdet i balance i kontot som vi har tagit fram förut.
-                steg 3 sen anropar vi setbalance och skickar med kontot som vi har tagit fram
-                steg 4 I setbalance så gör vi själva insättningen och retunerar det nya balance.
-                 */
-                Account thisAccount = account.getValue();
-                account.getValue().balance = thisAccount.setBalance(thisAccount, 2); //account.setValue(account.getValue()).setBalance(account.getValue());
-
+    public boolean withdrawMoney(int amount) {
+        if (amount > 0) {
+            if (balance >= amount){
+            setBalance(balance - amount);
+            return true;
             }
-
         }
-
+        return false;
     }
 
     /**
-     * @author Abdi
+     *
      * Den här metoden visar historiken i alla insättningar och kontantuttag.
      */
     public void previousTransaction() {
-        if (previousTransaction > 0) {
-            System.out.println("Insätningar: " + previousTransaction);
-        } else if (previousTransaction < 0) {
-            System.out.println("Kontantuttag: " + Math.abs(previousTransaction)); // Använder metoden Math för att kunna se uttraget som positivt istället för minus 1000kr
-        } else {
-            System.out.println("inget transaktionen har hänt än ");
-        }
+            if (previousTransaction > 0) {
+                System.out.println("Insättningar: " + previousTransaction);
+            } else if (previousTransaction < 0) {
+                System.out.println("Kontantuttag: " + Math.abs(previousTransaction));// Använder metoden Math för att kunna se uttraget som positivt istället för minus 1000kr
+            } else {
+                System.out.println("inget transaktionen har hänt än ");
+            }
     }
 
     /**
      * Metod för direktövering.
+     * @return Den retunerar true om det gick att skicka över pengar eller false om det inte gick genom.
      */
-    /*
-    public boolean directTransfer(){
 
-
+    public boolean directTransfer(Account toAccount, int amount){
+        if(amount > 0 && amount <= this.getBalance()){
+            this.withdrawMoney(amount);
+            toAccount.depositMoney(amount);
+            return true;
+        } else {
+            return false;
+        }
     }
-    */
-
 
     /**
      * Metod för att skapa bankuppdrag.
-     *
      * @param toAccount    kontonummer betalning ska ske till
      * @param amount       antal ören (inte SEK)
      * @param transferDate datum i format YYYY-MM-DD för överföringen
@@ -184,49 +141,6 @@ public class Account {
     }
 
     /**
-     * @param allAccounts  Alla konton som finns Accountklassen
-     * @param allCustomers Alla kunder som finns i Customerklassen
-     *                     Metoden är till för att kunna printa kundens konto efter man har valt för kund.
-     * @author Abdi
-     */
-    public static void printAccount(HashMap<String, Account> allAccounts, HashMap<String, Customer> allCustomers) {
-        System.out.println("Antal kunder i systemet: " + allCustomers.size() + "\n");
-        int counters = 1;
-        String formats = "%-5s %-10s %-16s %-15s  \n";
-        System.out.format(formats, "Rad", "Förnamn ", "Efternamn ", "Personnummer ");
-
-        for (Map.Entry<String, Customer> ownerId : allCustomers.entrySet()) {
-            System.out.format(formats, counters + ". ", ownerId.getValue().getFirstName() + " ",
-                    ownerId.getValue().getLastName() + " ",
-                    ownerId.getValue().getOwnerID() + " " + "\n");
-            counters++;
-        }
-        System.out.println("Välj kundens personnummer som du vill komma åt: ");
-        String ownerID = SingletonInput.getInstance().scanner.nextLine();
-
-        System.out.println("Kundens personnummer är : " + ownerID + "\n");
-
-        if (allCustomers.keySet().contains(ownerID)) {
-
-            int counter = 1;
-            String format = "%-5s %-10s %-16s %-15s %-19s \n";
-            System.out.format(format, "Rad ", "Kontonamn ", "Kontonummer ", "Personnumer ", "Balance ");
-            for (Map.Entry<String, Account> accounts : allAccounts.entrySet()) {
-                if (accounts.getValue().getOwnerID().equals(ownerID))
-                    System.out.format(format, counter - 1 + ". ",
-                            accounts.getValue().accountName + " ",
-                            accounts.getValue().getAccountNumber() + " ",
-                            accounts.getValue().getOwnerID() + " ",
-                            accounts.getValue().getBalance() + " "
-                                    + "\n");
-                counter++;
-            }
-        } else {
-            System.out.println("Tyvärr så finns inte kunden: ");
-        }
-    }
-
-    /**
      * @param accountNumber ska generera kontonummer som börjar med 55
      * @author Abdi
      */
@@ -234,22 +148,24 @@ public class Account {
         //accountNumber = "55";
         Random value = new Random();
 
-        // Generera 8 tal som ska 55 i början.
+        // Generera 8 tal som ska ha 55 i början.
         int rad1 = value.nextInt(10);
         int rad2 = value.nextInt(10);
-        accountNumber += Integer.toString(rad1) + Integer.toString(rad2) + " ";
+        accountNumber += rad1 + Integer.toString(rad2) + "-";
 
         int count = 0;
         int number = 0;
+        StringBuilder accountNumberBuilder = new StringBuilder(accountNumber);
         for (int i = 0; i < 8; i++) {
             if (count == 4) {
-                accountNumber += " ";
+                accountNumberBuilder.append("-");
                 count = 0;
             } else
                 number = value.nextInt(10);
-            accountNumber += Integer.toString(number);
+            accountNumberBuilder.append(number);
             count++;
         }
+        accountNumber = accountNumberBuilder.toString();
         return accountNumber;
     }
 }
