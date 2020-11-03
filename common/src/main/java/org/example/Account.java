@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class Account {
 
-    public String accountName;
+    private String accountName;
     private String accountNumber;
     private String ownerID;
     private int balance;
@@ -23,6 +23,14 @@ public class Account {
         this.accountName = accountName;
         this.accountNumber = generateAccountNumber();
         this.ownerID = customer.getOwnerID();
+    }
+
+    /**
+     * Metod för att få fram namnet på kontot.
+     * @return retunerar kontots namn.
+     */
+    public String getAccountName(){
+        return accountName;
     }
 
     /**
@@ -83,12 +91,13 @@ public class Account {
      * @return den retunerar true om det gick att göra ett uttag från kontot eller false om det inte gick.
      */
     public boolean withdrawMoney(int amount) {
-        if (amount < 0) {
+        if (amount > 0) {
+            if (balance >= amount){
             setBalance(balance - amount);
             return true;
-        } else {
-            return false;
+            }
         }
+        return false;
     }
 
     /**
