@@ -74,7 +74,8 @@ public enum FileService {
             System.out.println("Hittade inga sparade kunder.");
             return new HashMap<>();
         }
-        Type allCustomersType = new TypeToken<HashMap<String, Customer>>() {}.getType(); //Från "3. Using TypeToken", https://www.baeldung.com/gson-json-to-map
+        Type allCustomersType = new TypeToken<HashMap<String, Customer>>() {
+        }.getType(); //Från "3. Using TypeToken", https://www.baeldung.com/gson-json-to-map
         return gson.fromJson(jsonFromFile, allCustomersType);
     }
 
@@ -89,7 +90,8 @@ public enum FileService {
             System.out.println("Hittade inga sparade konton.");
             return new HashMap<>();
         }
-        Type allAccountsType = new TypeToken<HashMap<String, Account>>() {}.getType(); //Från "3. Using TypeToken", https://www.baeldung.com/gson-json-to-map
+        Type allAccountsType = new TypeToken<HashMap<String, Account>>() {
+        }.getType(); //Från "3. Using TypeToken", https://www.baeldung.com/gson-json-to-map
         return gson.fromJson(jsonFromFile, allAccountsType);
     }
 
@@ -104,7 +106,8 @@ public enum FileService {
             System.out.println("Hittade inga sparade betalningsuppdrag.");
             return new ArrayList<>();
         }
-        Type allTransfersType = new TypeToken<ArrayList<Transfer>>() {}.getType(); //Från "3. Using TypeToken", https://www.baeldung.com/gson-json-to-map
+        Type allTransfersType = new TypeToken<ArrayList<Transfer>>() {
+        }.getType(); //Från "3. Using TypeToken", https://www.baeldung.com/gson-json-to-map
         return gson.fromJson(jsonFromFile, allTransfersType);
     }
 
@@ -142,6 +145,7 @@ public enum FileService {
 
     /**
      * Generell metod som skriver en textrad i en datafil.
+     *
      * @param filepath    sökväg till textfil
      * @param dataToWrite den textrad som skrivs till textfil
      */

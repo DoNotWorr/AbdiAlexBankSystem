@@ -154,16 +154,17 @@ public class App {
         }
         scanner.nextLine();
     }
+
     private static void withdrawMoney() {
         boolean keepgoing = true;
         boolean keepgoings = true;
 
         while (keepgoing) {
             String ownerID = getCutomer("%-5s %-10s %-10s %-10s  \n", "Den valda kundens personnumer är: ");
-            if (!allCustomers.containsKey(ownerID)){
+            if (!allCustomers.containsKey(ownerID)) {
                 System.out.println("Felaktig inmatning! ");
                 System.out.println("Vänligen skriv rätt personnummer som finns i listan. " + "\n");
-            } else{
+            } else {
                 int counters = 0;
                 String formats = "%-4s%-12s%-16s%-18s%-8s \n";
                 System.out.format(formats, "Rad", "Kontonamn ", "Kontonummer ", "Personnummer ", "Balance ");
@@ -212,6 +213,7 @@ public class App {
         }
         scanner.nextLine();
     }
+
     private static void depositeMoney() {
         boolean keepgoing = true;
         boolean keepgoings = true;
@@ -237,30 +239,30 @@ public class App {
                 }
             }
         }
-            while (keepgoings) {
-                System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill sätta in pengarna på: ");
-                String accountNumber = scanner.nextLine();
+        while (keepgoings) {
+            System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill sätta in pengarna på: ");
+            String accountNumber = scanner.nextLine();
 
-                for (Account thisAccount : allAccounts.values()) {
-                    if (thisAccount.getAccountNumber().equals(accountNumber)) {
-                        System.out.println("Hur mycket vill du sätta in: ");
-                        int amount = Integer.parseInt(scanner.nextLine());
-                        if (thisAccount.depositMoney(amount)) {
-                            System.out.println("Den valda kundens personnummer är: " + thisAccount.getOwnerID());
-                            System.out.println("Kontonamn: " + thisAccount.getAccountName() + "\n"
-                                    + "Kontonummer: "
-                                    + thisAccount.getAccountNumber() + "\n"
-                                    + "Balance: " + thisAccount.getBalance());
-                            keepgoings = false;
-                        } else {
-                            System.out.println("Insättningar måste vara positiv och inget negativa belopp. "
-                                    + "\nVänligen försök igen!");
-                        }
+            for (Account thisAccount : allAccounts.values()) {
+                if (thisAccount.getAccountNumber().equals(accountNumber)) {
+                    System.out.println("Hur mycket vill du sätta in: ");
+                    int amount = Integer.parseInt(scanner.nextLine());
+                    if (thisAccount.depositMoney(amount)) {
+                        System.out.println("Den valda kundens personnummer är: " + thisAccount.getOwnerID());
+                        System.out.println("Kontonamn: " + thisAccount.getAccountName() + "\n"
+                                + "Kontonummer: "
+                                + thisAccount.getAccountNumber() + "\n"
+                                + "Balance: " + thisAccount.getBalance());
+                        keepgoings = false;
+                    } else {
+                        System.out.println("Insättningar måste vara positiv och inget negativa belopp. "
+                                + "\nVänligen försök igen!");
                     }
                 }
             }
-            scanner.nextLine();
         }
+        scanner.nextLine();
+    }
 
     /**
      * @author Abdi
@@ -275,27 +277,27 @@ public class App {
             if (!allCustomers.containsKey(ownerID)) {
                 System.out.println("Felaktig inmatning! ");
                 System.out.println("Vänligen skriv rätt personnummer som finns i listan. " + "\n");
-            } else{
+            } else {
                 System.out.println("Den valda kundens personnummer är : " + ownerID);
 
-                    int counter = 1;
-                    String format = "%-4s %-12s%-16s%-18s%-18s\n";
-                    System.out.format(format, "Rad ", "Kontonamn ", "Kontonummer ", "Personnumer ", "Balance ");
-                    for (Account thisAccounts : allAccounts.values()) {
-                        if (thisAccounts.getOwnerID().equals(ownerID))
-                            System.out.format(format, counter + ". ",
-                                    thisAccounts.getAccountName() + " ",
-                                    thisAccounts.getAccountNumber() + " ",
-                                    thisAccounts.getOwnerID() + " ",
-                                    thisAccounts.getBalance()
-                            );
-                        counter++;
-                        keepgoing = false;
-                    }
-                    scanner.nextLine();
+                int counter = 1;
+                String format = "%-4s %-12s%-16s%-18s%-18s\n";
+                System.out.format(format, "Rad ", "Kontonamn ", "Kontonummer ", "Personnumer ", "Balance ");
+                for (Account thisAccounts : allAccounts.values()) {
+                    if (thisAccounts.getOwnerID().equals(ownerID))
+                        System.out.format(format, counter + ". ",
+                                thisAccounts.getAccountName() + " ",
+                                thisAccounts.getAccountNumber() + " ",
+                                thisAccounts.getOwnerID() + " ",
+                                thisAccounts.getBalance()
+                        );
+                    counter++;
+                    keepgoing = false;
                 }
+                scanner.nextLine();
             }
         }
+    }
 
     private static void addCustomerToNewAccount() {
         System.out.println("Vill du skapa ett nytt konto? " + "\n[1] Ja \n[2] Nej. Tillbaka till menyn. ");
@@ -385,6 +387,7 @@ public class App {
             }
         }
     }
+
     private static String getCutomer(String s, String s2) {
         System.out.println("Antal kunder i systemet: " + allCustomers.size() + "\n");
         int counters = 1;
@@ -402,6 +405,7 @@ public class App {
         System.out.println(s2 + ownerID + "\n");
         return ownerID;
     }
+
     /**
      * @author Alex
      * Metod som visar innehållet i kassavalvet.

@@ -27,14 +27,16 @@ public class Account {
 
     /**
      * Metod för att få fram namnet på kontot.
+     *
      * @return retunerar kontots namn.
      */
-    public String getAccountName(){
+    public String getAccountName() {
         return accountName;
     }
 
     /**
      * Metod som får fram kundens kontonummer.
+     *
      * @return AccountNumber/Kontonummer (String)
      */
     public String getAccountNumber() {
@@ -43,6 +45,7 @@ public class Account {
 
     /**
      * Den här metoden ska generera kontonummer som blir nyckeln i Hashmapen.
+     *
      * @return ska retunera kontonummmret.
      */
     public static String generateAccountNumber() {
@@ -51,6 +54,7 @@ public class Account {
 
     /**
      * Metod fär att få fram kundens personnummer.
+     *
      * @return OwnerID/personnummer (String)
      */
     public String getOwnerID() {
@@ -59,6 +63,7 @@ public class Account {
 
     /**
      * Metod som får fram kundens saldo i kontot.
+     *
      * @return saldo på konto i ören.
      */
     public int getBalance() {
@@ -82,7 +87,7 @@ public class Account {
     /**
      * Metod för att få fram rätt balance för att kunna ändra saldot i kontot.
      */
-    private void setBalance(int balance){
+    private void setBalance(int balance) {
         this.balance = balance;
     }
 
@@ -92,35 +97,35 @@ public class Account {
      */
     public boolean withdrawMoney(int amount) {
         if (amount > 0) {
-            if (balance >= amount){
-            setBalance(balance - amount);
-            return true;
+            if (balance >= amount) {
+                setBalance(balance - amount);
+                return true;
             }
         }
         return false;
     }
 
     /**
-     *
      * Den här metoden visar historiken i alla insättningar och kontantuttag.
      */
     public void previousTransaction() {
-            if (previousTransaction > 0) {
-                System.out.println("Insättningar: " + previousTransaction);
-            } else if (previousTransaction < 0) {
-                System.out.println("Kontantuttag: " + Math.abs(previousTransaction));// Använder metoden Math för att kunna se uttraget som positivt istället för minus 1000kr
-            } else {
-                System.out.println("inget transaktionen har hänt än ");
-            }
+        if (previousTransaction > 0) {
+            System.out.println("Insättningar: " + previousTransaction);
+        } else if (previousTransaction < 0) {
+            System.out.println("Kontantuttag: " + Math.abs(previousTransaction));// Använder metoden Math för att kunna se uttraget som positivt istället för minus 1000kr
+        } else {
+            System.out.println("inget transaktionen har hänt än ");
+        }
     }
 
     /**
      * Metod för direktövering.
+     *
      * @return Den retunerar true om det gick att skicka över pengar eller false om det inte gick genom.
      */
 
-    public boolean directTransfer(Account toAccount, int amount){
-        if(amount > 0 && amount <= this.getBalance()){
+    public boolean directTransfer(Account toAccount, int amount) {
+        if (amount > 0 && amount <= this.getBalance()) {
             this.withdrawMoney(amount);
             toAccount.depositMoney(amount);
             return true;
@@ -131,6 +136,7 @@ public class Account {
 
     /**
      * Metod för att skapa bankuppdrag.
+     *
      * @param toAccount    kontonummer betalning ska ske till
      * @param amount       antal ören (inte SEK)
      * @param transferDate datum i format YYYY-MM-DD för överföringen

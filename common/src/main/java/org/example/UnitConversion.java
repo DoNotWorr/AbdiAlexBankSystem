@@ -23,6 +23,7 @@ public class UnitConversion {
 
     /**
      * Räknar om ett belopp i kronor till motsvarande belopp i ören.
+     *
      * @param amountSek ett belopp i kronor med max två decimaler (exempelvis 123 eller 123.45)
      * @return beloppet konverterat till ören (exempelvis 12300 eller 12345)
      * @throws TooManyDecimalsException om amountInSek innehåller mer än två decimaler (exempelvis 123.456), för att undvika avrundningsfel

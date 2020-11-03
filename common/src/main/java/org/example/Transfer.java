@@ -20,10 +20,11 @@ public class Transfer {
     /**
      * //todo kolla med Jon om användning av accessmodifier
      * Transfer är tänkt att användas i Account när överföring skapas.
+     *
      * @param fromAccountNumber kontot som pengar ska dras ifrån
-     * @param toAccountNumber kontot som pengar ska föras över till
-     * @param amount ören som ska föras över
-     * @param transferDate vilket datum överföringen ska göras
+     * @param toAccountNumber   kontot som pengar ska föras över till
+     * @param amount            ören som ska föras över
+     * @param transferDate      vilket datum överföringen ska göras
      */
     public Transfer(String fromAccountNumber, String toAccountNumber, int amount, LocalDate transferDate) {
         this.fromAccountNumber = fromAccountNumber;
@@ -55,6 +56,7 @@ public class Transfer {
 
     /**
      * //todo kom på bra sätt att kontrollera så man inte ändrar status felaktigt, kanske return boolean som visar om det gick eller inte?
+     *
      * @param newStatus
      */
 
@@ -63,11 +65,10 @@ public class Transfer {
     }
 
     /**
-     *
      * @return
      */
     public boolean setCompleted() {
-        if(this.status == TransferStatus.PENDING) {
+        if (this.status == TransferStatus.PENDING) {
             this.status = TransferStatus.COMPLETED;
             return true;
         } else {
