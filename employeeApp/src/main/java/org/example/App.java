@@ -20,7 +20,6 @@ public class App {
 
     private static void menuNavigation() {
 
-
         System.out.println("--------Välkommen till Newton bank--------");
         boolean keepRunning = true;
         while (keepRunning) {
@@ -39,58 +38,29 @@ public class App {
                 );
 
                 int menuChoice = Integer.parseInt(scanner.nextLine());
-                //Skapade ett Singleton klass för att försöka fatta mig på hur det funkar och jag lyckades. Plon Jon har kollat genom koden och det är rätt.
 
                 switch (menuChoice) {
                     case 1:
-                        addNewCutomer(allCustomers);
+                        addNewCutomer();
                         break;
                     case 2:
-                        //skapa konto
                         addCustomerToNewAccount();
                         break;
 
                     case 3:
-                        //lista vald användars konto
-                        printAccounts();
+                        printAccount();
                         break;
 
                     case 4:
-                        // välj kund
-                        // sätta in pengar med hjälp av metoden som finns i Account
-                        // kunna se dom andra insättningar
                         depositeMoney();
                         break;
 
                     case 5:
-                        //Välj kund
-                        //Ta ut pengar från konto
-                        // kunna se dom andra insättningar
                         withdrawMoney();
                         break;
 
                     case 6:
                         //Spara betalningsuppdrag för framtida betalning
-                        String ownerID = getCutomer("%-4s%-8s%-10s%-10s\n", "Den valda kundens personnummer är: ");
-                        if (allCustomers.containsKey(ownerID)){
-
-                            int counter = 0;
-                            String format = "%-4s %-12s %-16s %-18s %-18s\n";
-                            System.out.format(format, "Rad", "Kontonamn ", "Kontonummer ", "Personnummer ", "Balance ");
-                            for (Map.Entry<String, Account> accounts : allAccounts.entrySet()) {
-                                if (accounts.getValue().getOwnerID().equals(ownerID)) {
-                                    System.out.format(format, counter + 1 + ". ",
-                                            accounts.getValue().accountName + " ",
-                                            accounts.getValue().getAccountNumber() + " ",
-                                            accounts.getValue().getOwnerID() + " ",
-                                            accounts.getValue().getBalance() + " ");
-
-                                    counter++;
-                                }
-                            }
-                            findCustomer(allAccounts);
-
-                        }
                         break;
 
                     case 7:
@@ -103,16 +73,10 @@ public class App {
                         break;
 
                     case 9:
-                        //Överföring mellan två konton
-                        // Välj kund
-                        // välj konto
-
                         createNewTransfer();
-
                         break;
 
                     case 0:
-                        //Avsluta program
                         FileService.INSTANCE.saveCustomers(allCustomers);
                         FileService.INSTANCE.saveAccounts(allAccounts);
                         FileService.INSTANCE.saveTransfers(allTransfers);
@@ -120,20 +84,20 @@ public class App {
                         break;
 
                     default:
-                        System.out.println("Felaktig inmatning. " + "\nVänligen välj det som finns i menyn!");
+                        System.out.println("Felaktig inmatning. "
+                                + "\nVänligen välj det som finns i menyn!");
                         break;
                 }
             }catch (Exception e){
-                System.out.println("Felaktig inmatning! " + "\nVänligen försök igen ");
+                System.out.println("Felaktig inmatning! "
+                        + "\nVänligen försök igen");
             }
         }
     }
-
     private static void createNewTransfer() {
         String ownerID = getCutomer("%-4s%-8s%-10s%-10s\n", "Den valda kundens personnummer är: ");
 
         if (allCustomers.containsKey(ownerID)){
-
             int counter = 0;
             String format = "%-4s %-12s %-16s %-18s %-18s\n";
             System.out.format(format, "Rad", "Kontonamn ", "Kontonummer ", "Personnummer ", "Balance ");
@@ -144,127 +108,46 @@ public class App {
                             thisAccount.getAccountNumber() + " ",
                             thisAccount.getOwnerID() + " ",
                             thisAccount.getBalance() + " ");
-
                     counter++;
                 }
             }
         }
-        System.out.println("Ange kontonummret xxxx xxxx xxxx som du vill skicka ifrån: ");
+        System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka ifrån: ");
         String fromAccountNumber = scanner.nextLine();
 
         if (allAccounts.containsKey(fromAccountNumber)) {
             Account fromAccount = allAccounts.get(fromAccountNumber);
-            System.out.println("Ange kontonummret xxxx xxxx xxxx som du vill skicka till: ");
+            System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka till: ");
             String toAccountNumber = scanner.nextLine();
             if (allAccounts.containsKey(toAccountNumber)) {
                 Account toAccount = allAccounts.get(toAccountNumber);
-                System.out.println("Hur mycket vill du skicka: ");
+                System.out.println("Hur mycket pengar vill du skicka över: ");
                 int amount = Integer.parseInt(scanner.nextLine());
                 if (fromAccount.directTransfer(toAccount, amount)) {
-                    System.out.println("skickad");
+                    System.out.println("Pengarnade överförades till: "
+                            + toAccount.getAccountNumber());
                 } else {
-                    System.out.println("kunde inte skickad.....");
+                    System.out.println("Pengarna kunde inte skickas till kontot: "
+                            + toAccount.getAccountNumber());
                 }
             } else {
-                System.out.println("hittade inte konto");
+                System.out.println("Kunde inte hitta den valda konotot..."
+                        + "\nVänligen försök igen! ");
             }
-        } else{
-            System.out.println("fanns inget konto");
+        } else {
+            System.out.println("Fanns inget konto som matchade det du skrev in: " + fromAccountNumber
+                    + "\nVänligen försök igen! ");
         }
     }
-/*
-    public int setBalance(Account account, int sign) {
-        int balance = account.getBalance();
-        if (sign == 1) {
-            System.out.println("Hur mycket vill du sätta in: ");
-            int amount = Integer.parseInt(scanner.nextLine());
-            if (amount != 0) {
-                balance = balance + amount;
-                previousTransaction = amount;
-                System.out.println("Kundens personnummer är: " + account.getOwnerID() );
-                System.out.println("Kontonamn: " + account.accountName + "\n"
-                        + "Kontonummer: "
-                        + accountNumber + "\n"
-                        + "Balance: " + balance + "\n"
-                );
-                previousTransaction(); //TODO så att man kan se historiken av flera insättnigar eller uttag.
-                scanner.nextLine();
-            }
-        } else if (sign == 2) {
-            System.out.println("Hur mycket vill du ta ut: ");
-            int amount = Integer.parseInt(scanner.nextLine());
-            if (balance >= amount) {
-                balance = balance - amount;
-                previousTransaction = -amount;
-                System.out.println("Kundens personnummer är: " + account.ownerID );
-                System.out.println("Kontonamn: " + accountName + "\n"
-                        + "Kontonummer: "
-                        + accountNumber + "\n"
-                        + "Balance: " + balance + "\n"
-                        + "Historik: " + previousTransaction);
-                //previousTransaction();
-                scanner.nextLine();
-            } else {
-                System.out.println("Transaktionen mysslyckades! ");
-                System.out.println("För lite saldo i kontot... " + "\n"
-                        +"Kontonamn: "
-                        + accountName + "\n"
-                        + "Kontonummer: "
-                        + accountNumber + "\n"
-                        + "Balance: "
-                        + account.getBalance()
-                );
-                scanner.nextLine();
-            }
-        }
-
-        return balance;
-    }*/
-    /*
-    public static void findCustomersAccountToDepositeMoney(HashMap<String, Account> allAccounts) {
-        System.out.println("Ange kontonummret xxxx xxxx xxxx som du vill sätta in pengarna på: ");
-        String accountNUmber = scanner.nextLine();
-        for (Map.Entry<String, Account> account : allAccounts.entrySet()) {
-            if (account.getValue().getAccountNumber().equals(accountNUmber)) {
-                *//*
-                steg 1 vi tar fram just det konto som vi söker efter och tar fram balance.
-                steg 2 vi vill ändra värdet i balance i kontot som vi har tagit fram förut.
-                steg 3 sen anropar vi setbalance och skickar med kontot som vi har tagit fram
-                steg 4 I setbalance så gör vi själva insättningen och retunerar det nya balance.
-                 *//*
-                // Abdis konton
-                Account thisAccount = account.getValue();
-                account.getValue().getBalance(); //thisAccount.setBalance(thisAccount, 1); //account.setValue(account.getValue()).setBalance(account.getValue());
-            }
-        }
-    }*/
-
-
-
-    public static void findCustomer(HashMap<String, Account> allAccounts) {
-        System.out.println("Ange kontonummret xxxx xxxx xxxx som du vill betala ifrån: ");
-        String accountNUmber = scanner.nextLine();
-        for (Map.Entry<String, Account> account : allAccounts.entrySet()) {
-            if (account.getValue().getAccountNumber().equals(accountNUmber)) {
-
-                Account thisAccount = account.getValue();
-
-            }
-        }
-    }
-
     private static void withdrawMoney() {
         String ownerID = getCutomer("%-5s %-10s %-10s %-10s  \n", "Den valda kundens personnumer är: ");
 
-        if (allCustomers.containsKey(ownerID))
-        {
+        if (allCustomers.containsKey(ownerID)) {
             int counters = 0;
             String formats = "%-4s%-12s%-16s%-18s%-8s \n";
             System.out.format(formats, "Rad", "Kontonamn ", "Kontonummer ", "Personnummer ", "Balance ");
-            for (Map.Entry<String, Account> accounts : allAccounts.entrySet())
-            {
-                if (accounts.getValue().getOwnerID().equals(ownerID))
-                {
+            for (Map.Entry<String, Account> accounts : allAccounts.entrySet()) {
+                if (accounts.getValue().getOwnerID().equals(ownerID)) {
                     System.out.format(formats, counters + 1 + ". ",
                             accounts.getValue().accountName + " ",
                             accounts.getValue().getAccountNumber() + " ",
@@ -275,13 +158,37 @@ public class App {
                 }
             }
         }
+        System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill ta ut pengarna ifrån: ");
+        String accountNumber = scanner.nextLine();
 
-        //Account.findCustomersAccountToWithdrawMoney(allAccounts);
+        for (Map.Entry<String, Account> account : allAccounts.entrySet()) {
+            if (account.getValue().getAccountNumber().equals(accountNumber)) {
+                System.out.println("Hur mycket vill du ta ut från kontot: ");
+                int amount = Integer.parseInt(scanner.nextLine());
+                if (account.setValue(account.getValue()).withdrawMoney(amount)) {
+                    System.out.println("Kundens personnummer är: " + account.getValue().getOwnerID());
+                    System.out.println("Kontonamn: " + account.getValue().accountName + "\n"
+                            + "Kontonummer: "
+                            + account.getValue().getAccountNumber() + "\n"
+                            + "Balance: " + account.getValue().getBalance()
+                    );
+                } else {
+                    System.out.println("För lite saldo i kontot! " + "\n"
+                            + "Kontonamn: "
+                            + account.getValue().accountName + "\n"
+                            + "Kontonummer:"
+                            + accountNumber + "\n"
+                            + "Balance: "
+                            + account.getValue().getBalance());
+                }
+            }
+        }
+        scanner.nextLine();
     }
     private static void depositeMoney() {
         String ownerID = getCutomer("%-4s%-8s%-10s%-10s\n", "Den valda kundens personnummer är: ");
 
-        if (allCustomers.containsKey(ownerID)){
+        if (allCustomers.containsKey(ownerID)) {
 
             int counter = 0;
             String format = "%-4s %-12s %-16s %-18s %-18s\n";
@@ -298,36 +205,68 @@ public class App {
                 }
             }
         }
-        System.out.println("Ange kontonummret xxxx xxxx xxxx som du vill sätta in pengarna på: ");
-        String accountNumber = scanner.nextLine();
+            System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill sätta in pengarna på: ");
+            String accountNumber = scanner.nextLine();
 
-        for (Map.Entry<String, Account> account : allAccounts.entrySet()) {
-            if (account.getValue().getAccountNumber().equals(accountNumber)) {
-                /*
-                steg 1 vi tar fram just det konto som vi söker efter och tar fram balance.
-                steg 2 vi vill ändra värdet i balance i kontot som vi har tagit fram förut.
-                steg 3 sen anropar vi setbalance och skickar med kontot som vi har tagit fram
-                steg 4 I setbalance så gör vi själva insättningen och retunerar det nya balance.
-                 */
-                // Abdis konton
-                System.out.println("Hur mycket vill du sätta in: ");
-                int amount = Integer.parseInt(scanner.nextLine());
-                if(account.setValue(account.getValue()).deposit(amount)){
-                    System.out.println("Kundens personnummer är: " + account.getValue().getOwnerID() );
-                    System.out.println("Kontonamn: " + account.getValue().accountName + "\n"
+            for (Map.Entry<String, Account> account : allAccounts.entrySet()) {
+                if (account.getValue().getAccountNumber().equals(accountNumber)) {
+                    System.out.println("Hur mycket vill du sätta in: ");
+                    int amount = Integer.parseInt(scanner.nextLine());
+                    if (account.setValue(account.getValue()).depositMoney(amount)) {
+                        System.out.println("Kundens personnummer är: " + account.getValue().getOwnerID());
+                        System.out.println("Kontonamn: " + account.getValue().accountName + "\n"
                             + "Kontonummer: "
                             + account.getValue().getAccountNumber() + "\n"
-                            + "Balance: " + account.getValue().getBalance() + "\n"
+                            + "Balance: " + account.getValue().getBalance()
                     );
                 }
-
             }
         }
-
-        //Account.findCustomersAccountToDepositeMoney(allAccounts);
+            scanner.nextLine();
     }
-    private static void printAccounts() {
-        Account.printAccount(allAccounts, allCustomers);
+    /**
+     * @author Abdi
+     * Alla konton som finns Accountklassen
+     * Alla kunder som finns i Customerklassen
+     * Metoden är till för att kunna printa kundens konto efter man har valt specifik kund.
+     */
+    public static void printAccount() {
+        System.out.println("Antal kunder i systemet: " + allCustomers.size() + "\n");
+        int counters = 1;
+        String formats = "%-4s %-8s %-10s %-10s \n";
+        System.out.format(formats, "Rad", "Förnamn ", "Efternamn ", "Personnummer ");
+
+        for (Map.Entry<String, Customer> ownerId : allCustomers.entrySet()) {
+            System.out.format(formats, counters + ". ", ownerId.getValue().getFirstName() + " ",
+                    ownerId.getValue().getLastName() + " ",
+                    ownerId.getValue().getOwnerID()
+            );
+            counters++;
+        }
+        System.out.println("Skriv kundens personnummer yymmdd-XXXX som du vill komma åt: ");
+        String ownerID = scanner.nextLine();
+
+        System.out.println("Den valda kundens personnummer är : " + ownerID);
+
+        if (allCustomers.containsKey(ownerID)) {
+
+            int counter = 1;
+            String format = "%-4s %-12s%-16s%-18s%-18s\n";
+            System.out.format(format,"Rad ","Kontonamn ", "Kontonummer ","Personnumer ","Balance ");
+            for (Map.Entry<String, Account> accounts : allAccounts.entrySet()) {
+                if (accounts.getValue().getOwnerID().equals(ownerID))
+                    System.out.format(format, counter + ". ",
+                            accounts.getValue().accountName + " ",
+                            accounts.getValue().getAccountNumber() + " ",
+                            accounts.getValue().getOwnerID() + " ",
+                            accounts.getValue().getBalance()
+                    );
+                counter++;
+            }
+            scanner.nextLine();
+        } else {
+            System.out.println("Tyvärr så finns inte kunden: ");
+        }
     }
     private static void addCustomerToNewAccount() {
         System.out.println("Vill du skapa ett nytt konto? " + "\n[1] Ja \n[2] Nej. Tillbaka till menyn. ");
@@ -389,7 +328,7 @@ public class App {
                 break;
         }
     }
-    private static void addNewCutomer(HashMap<String, Customer> allCustomers) {
+    private static void addNewCutomer() {
         try {
             System.out.println("Förnamn: ");
             String firstname = scanner.nextLine();
@@ -443,7 +382,6 @@ public class App {
      * @author Alex
      * Metod som visar innehållet i kassavalvet.
      */
-
     private static void inspectSafe() {
         int totalBalance = 0;
         for(Account account : allAccounts.values()) {

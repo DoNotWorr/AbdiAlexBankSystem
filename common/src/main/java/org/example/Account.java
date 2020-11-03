@@ -1,24 +1,14 @@
 package org.example;
 
-
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * @author Abdi
  */
 
-// Metod addTransfer (från konto: till konto, belopp, överföringsdatum)
-// metod removeTransfer
-// metod insertMoney
-// metod withrawMoney
-
-
 public class Account {
-    public static Scanner scanner = new Scanner(System.in);
+
     public String accountName;
     private String accountNumber;
     private String ownerID;
@@ -26,8 +16,8 @@ public class Account {
     private int previousTransaction;
 
     /**
-     * @param accountName Kontonamn
-     * @param customer    kundens ownerID/personnummer
+     * @param accountName Kontonamn.
+     * @param customer    kundens ownerID/personnummer.
      */
     public Account(String accountName, Customer customer) {
         this.accountName = accountName;
@@ -36,6 +26,7 @@ public class Account {
     }
 
     /**
+     * Metod som får fram kundens kontonummer.
      * @return AccountNumber/Kontonummer (String)
      */
     public String getAccountNumber() {
@@ -43,16 +34,15 @@ public class Account {
     }
 
     /**
-     * Den här metoden ska generera kontonummer som blir nyckeln i Hashmapen
-     *
+     * Den här metoden ska generera kontonummer som blir nyckeln i Hashmapen.
      * @return ska retunera kontonummmret.
      */
     public static String generateAccountNumber() {
-
         return generateAccountNumber("55");
     }
 
     /**
+     * Metod fär att få fram kundens personnummer.
      * @return OwnerID/personnummer (String)
      */
     public String getOwnerID() {
@@ -60,6 +50,7 @@ public class Account {
     }
 
     /**
+     * Metod som får fram kundens saldo i kontot.
      * @return saldo på konto i ören.
      */
     public int getBalance() {
@@ -67,28 +58,11 @@ public class Account {
     }
 
     /**
-     * @author Abdi
-     * Metod för att ta fram just det konto som jag ska ändra balance på
+     * @param amount beloppet som personen ska sätta in i kontot.
+     * @return den retunerar true om det gick att sätta in pengar i kontot eller false om det inte gick.
      */
-    /*public static void findCustomersAccountToDepositeMoney(HashMap<String, Account> allAccounts) {
-        System.out.println("Ange kontonummret xxxx xxxx xxxx som du vill sätta in pengarna på: ");
-        String accountNUmber = scanner.nextLine();
-        for (Map.Entry<String, Account> account : allAccounts.entrySet()) {
-            if (account.getValue().getAccountNumber().equals(accountNUmber)) {
-                *//*
-                steg 1 vi tar fram just det konto som vi söker efter och tar fram balance.
-                steg 2 vi vill ändra värdet i balance i kontot som vi har tagit fram förut.
-                steg 3 sen anropar vi setbalance och skickar med kontot som vi har tagit fram
-                steg 4 I setbalance så gör vi själva insättningen och retunerar det nya balance.
-                 *//*
 
-                Account thisAccount = account.getValue();
-                account.getValue().balance = thisAccount.setBalance(thisAccount, 1); //account.setValue(account.getValue()).setBalance(account.getValue());
-            }
-        }
-    }*/
-
-    public boolean deposit(int amount) {
+    public boolean depositMoney(int amount) {
         if (amount > 0) {
             setBalance(balance + amount);
             return true;
@@ -96,18 +70,27 @@ public class Account {
             return false;
         }
     }
+
+    /**
+     * Metod för att få fram rätt balance för att kunna ändra saldot i kontot.
+     */
     private void setBalance(int balance){
         this.balance = balance;
-
     }
-    public boolean withdraw(int amount) {
-        if (amount > 0) {
+
+    /**
+     * @param amount beloppet som personen ska ta ut från kontot.
+     * @return den retunerar true om det gick att göra ett uttag från kontot eller false om det inte gick.
+     */
+    public boolean withdrawMoney(int amount) {
+        if (amount < 0) {
             setBalance(balance - amount);
             return true;
         } else {
             return false;
         }
     }
+
     /**
      *
      * Den här metoden visar historiken i alla insättningar och kontantuttag.
@@ -124,19 +107,17 @@ public class Account {
 
     /**
      * Metod för direktövering.
-     *
+     * @return Den retunerar true om det gick att skicka över pengar eller false om det inte gick genom.
      */
 
     public boolean directTransfer(Account toAccount, int amount){
-        // Överföring konto till konto
-        // Amount
-        // retunera true / false
         if(amount > 0 && amount <= this.getBalance()){
-            this.withdraw(amount);
-            toAccount.deposit(amount);
+            this.withdrawMoney(amount);
+            toAccount.depositMoney(amount);
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -151,51 +132,6 @@ public class Account {
     }
 
     /**
-     * @param allAccounts  Alla konton som finns Accountklassen
-     * @param allCustomers Alla kunder som finns i Customerklassen
-     * Metoden är till för att kunna printa kundens konto efter man har valt specifik kund.
-     * @author Abdi
-     */
-    public static void printAccount(HashMap<String, Account> allAccounts, HashMap<String, Customer> allCustomers) {
-        System.out.println("Antal kunder i systemet: " + allCustomers.size() + "\n");
-        int counters = 1;
-        String formats = "%-4s %-8s %-10s %-10s \n";
-        System.out.format(formats, "Rad", "Förnamn ", "Efternamn ", "Personnummer ");
-
-        for (Map.Entry<String, Customer> ownerId : allCustomers.entrySet()) {
-            System.out.format(formats, counters + ". ", ownerId.getValue().getFirstName() + " ",
-                    ownerId.getValue().getLastName() + " ",
-                    ownerId.getValue().getOwnerID()
-            );
-            counters++;
-        }
-        System.out.println("Skriv kundens personnummer yymmdd-XXXX som du vill komma åt: ");
-        String ownerID = scanner.nextLine();
-
-        System.out.println("Den valda kundens personnummer är : " + ownerID);
-
-        if (allCustomers.containsKey(ownerID)) {
-
-            int counter = 1;
-            String format = "%-4s %-12s%-16s%-18s%-18s\n";
-            System.out.format(format,"Rad ","Kontonamn ", "Kontonummer ","Personnumer ","Balance ");
-            for (Map.Entry<String, Account> accounts : allAccounts.entrySet()) {
-                if (accounts.getValue().getOwnerID().equals(ownerID))
-                    System.out.format(format, counter + ". ",
-                            accounts.getValue().accountName + " ",
-                            accounts.getValue().getAccountNumber() + " ",
-                            accounts.getValue().getOwnerID() + " ",
-                            accounts.getValue().getBalance()
-                    );
-                counter++;
-            }
-            scanner.nextLine();
-        } else {
-            System.out.println("Tyvärr så finns inte kunden: ");
-        }
-    }
-
-    /**
      * @param accountNumber ska generera kontonummer som börjar med 55
      * @author Abdi
      */
@@ -203,22 +139,24 @@ public class Account {
         //accountNumber = "55";
         Random value = new Random();
 
-        // Generera 8 tal som ska 55 i början.
+        // Generera 8 tal som ska ha 55 i början.
         int rad1 = value.nextInt(10);
         int rad2 = value.nextInt(10);
-        accountNumber += Integer.toString(rad1) + Integer.toString(rad2) + " ";
+        accountNumber += rad1 + Integer.toString(rad2) + "-";
 
         int count = 0;
         int number = 0;
+        StringBuilder accountNumberBuilder = new StringBuilder(accountNumber);
         for (int i = 0; i < 8; i++) {
             if (count == 4) {
-                accountNumber += " ";
+                accountNumberBuilder.append("-");
                 count = 0;
             } else
                 number = value.nextInt(10);
-            accountNumber += Integer.toString(number);
+            accountNumberBuilder.append(number);
             count++;
         }
+        accountNumber = accountNumberBuilder.toString();
         return accountNumber;
     }
 }
