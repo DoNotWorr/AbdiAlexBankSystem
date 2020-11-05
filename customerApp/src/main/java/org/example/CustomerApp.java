@@ -10,6 +10,9 @@ import java.io.File;
 
 
 public class CustomerApp extends Application {
+    private static Scene scene;
+
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
