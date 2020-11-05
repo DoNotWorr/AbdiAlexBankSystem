@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane prefHeight="200.0" prefWidth="400.0" maxWidth="200.0" maxHeight="400.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.MainController">
+    <Button id="logoutButton" onAction="#logout" mnemonicParsing="false" text="Logga ut"/>
+</Pane>
