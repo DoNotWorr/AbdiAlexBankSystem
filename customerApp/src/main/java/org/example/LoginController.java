@@ -23,16 +23,16 @@ public class LoginController {
 
     @FXML
     Button loginButton = null;
+
     @FXML
     public void login(Event e) {
-        if(customerApp.allCustomers.containsKey(textField.getText())) {
+        if (customerApp.allCustomers.containsKey(textField.getText())) {
             System.out.println(customerApp.allCustomers.get(textField.getText()).getFirstName());
             customerApp.primaryStage.setScene(customerApp.myScenes.get("mainScene"));
             customerApp.primaryStage.show();
         }
 
     }
-
 
 
 }

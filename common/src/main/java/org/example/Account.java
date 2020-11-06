@@ -140,10 +140,11 @@ public class Account {
      * @param toAccount    kontonummer betalning ska ske till
      * @param amount       antal ören (inte SEK)
      * @param transferDate datum i format YYYY-MM-DD för överföringen
+     * @return retunerar den nya Transfer objektet.
      * @author Alex
      */
-    public void addTransfer(String toAccount, int amount, LocalDate transferDate) {
-        Transfer transfer = new Transfer(this.accountNumber, toAccount, amount, transferDate);
+    public Transfer addTransfer(Account toAccount, int amount, LocalDate transferDate) {
+        return new Transfer(this.accountNumber, toAccount.accountNumber, amount, transferDate);
     }
 
     /**
