@@ -108,86 +108,86 @@ public class App {
         boolean keepgoing = true;
         boolean keepgoings = true;
 
-            while (keepgoing) {
-                switch (choice1) {
+        while (keepgoing) {
+            switch (choice1) {
 
-                    case 1:
-                        String ownerID = findCutomer("%-5s %-10s %-10s %-10s  \n", "Den valda kundens personnumer är: ");
-                        if (!allCustomers.containsKey(ownerID)) {
-                            System.out.println("Felaktig inmatning! ");
-                            System.out.println("Vänligen skriv rätt personnummer som finns i listan. " + "\n");
-                        } else {
-                            ArrayList<Transfer> yourTransfers = new ArrayList<>();
-                            allTransfers.sort(((o1, o2) -> o1.getTransferDate().compareTo(o2.getTransferDate())));
-                            int counters = 0;
-                            String formats = "%-4s%-18s%-18s%-8s%-11s%-10s\n";
-                            System.out.format(formats, "Rad", "Från kontonummer ", "Till kontonummer ", "Belopp ", "Datum", "Status ");
-                            for (Account accounts : allAccounts.values()) {
-                                if (accounts.getOwnerID().equals(ownerID)) {
-                                    for (Transfer transfer : allTransfers) {
-                                        if (transfer.getFromAccountNumber().equals(accounts.getAccountNumber()) && transfer.getStatus() == Transfer.TransferStatus.PENDING) {
-                                            System.out.format(formats, counters + 1 + ". ",
-                                                    transfer.getFromAccountNumber(),
-                                                    transfer.getToAccountNumber(),
-                                                    transfer.getAmount(),
-                                                    transfer.getTransferDate(),
-                                                    transfer.getStatus()
-                                            );
-                                            counters++;
-                                            keepgoing = false;
-                                            yourTransfers.add(transfer);
+                case 1:
+                    String ownerID = findCutomer("%-5s %-10s %-10s %-10s  \n", "Den valda kundens personnumer är: ");
+                    if (!allCustomers.containsKey(ownerID)) {
+                        System.out.println("Felaktig inmatning! ");
+                        System.out.println("Vänligen skriv rätt personnummer som finns i listan. " + "\n");
+                    } else {
+                        ArrayList<Transfer> yourTransfers = new ArrayList<>();
+                        allTransfers.sort(((o1, o2) -> o1.getTransferDate().compareTo(o2.getTransferDate())));
+                        int counters = 0;
+                        String formats = "%-4s%-18s%-18s%-8s%-11s%-10s\n";
+                        System.out.format(formats, "Rad", "Från kontonummer ", "Till kontonummer ", "Belopp ", "Datum", "Status ");
+                        for (Account accounts : allAccounts.values()) {
+                            if (accounts.getOwnerID().equals(ownerID)) {
+                                for (Transfer transfer : allTransfers) {
+                                    if (transfer.getFromAccountNumber().equals(accounts.getAccountNumber()) && transfer.getStatus() == Transfer.TransferStatus.PENDING) {
+                                        System.out.format(formats, counters + 1 + ". ",
+                                                transfer.getFromAccountNumber(),
+                                                transfer.getToAccountNumber(),
+                                                transfer.getAmount(),
+                                                transfer.getTransferDate(),
+                                                transfer.getStatus()
+                                        );
+                                        counters++;
+                                        keepgoing = false;
+                                        yourTransfers.add(transfer);
 
-                                        }
                                     }
-                                }
-                            }
-                            while (keepgoings) {
-                                try {
-                                    System.out.println("Välj siffran som du vill avbryta betalningen på från listan: ");
-                                    int listNumber = Integer.parseInt(scanner.nextLine());
-
-                                    Transfer thisTransfer = yourTransfers.get(listNumber - 1);
-                                    System.out.println("Status på betalningen är :" + thisTransfer.getStatus());
-
-                                    System.out.println("Vill du verkligen avbryta?" + "[1] Ja [2] Nej");
-                                    int choice = Integer.parseInt(scanner.nextLine());
-
-                                    switch (choice) {
-                                        case 1:
-                                            thisTransfer.setStatus(Transfer.TransferStatus.CANCELLED);
-                                            System.out.println("Statusen på betalningen nu är: " + thisTransfer.getStatus());
-                                            keepgoings = false;
-                                            break;
-
-                                        case 2:
-                                            System.out.println("Återgår till menyn.");
-                                            keepgoings = false;
-                                            break;
-
-                                        default:
-                                            System.out.println("Felaktig inmatning! "
-                                                    + "\nVänligen försök igen!");
-                                            break;
-                                    }
-                                } catch (Exception e){
-                                    System.out.println("Felaktig inmatning! "
-                                            + "\nVänligen försök igen!");
                                 }
                             }
                         }
-                        scanner.nextLine();
+                        while (keepgoings) {
+                            try {
+                                System.out.println("Välj siffran som du vill avbryta betalningen på från listan: ");
+                                int listNumber = Integer.parseInt(scanner.nextLine());
 
-                        break;
+                                Transfer thisTransfer = yourTransfers.get(listNumber - 1);
+                                System.out.println("Status på betalningen är :" + thisTransfer.getStatus());
 
-                    case 2:
-                        System.out.println("Återgår till menyn.");
-                        break;
+                                System.out.println("Vill du verkligen avbryta?" + "[1] Ja [2] Nej");
+                                int choice = Integer.parseInt(scanner.nextLine());
 
-                    default:
-                        System.out.println("Felaktig inmatning! ");
-                        break;
-                }
+                                switch (choice) {
+                                    case 1:
+                                        thisTransfer.setStatus(Transfer.TransferStatus.CANCELLED);
+                                        System.out.println("Statusen på betalningen nu är: " + thisTransfer.getStatus());
+                                        keepgoings = false;
+                                        break;
+
+                                    case 2:
+                                        System.out.println("Återgår till menyn.");
+                                        keepgoings = false;
+                                        break;
+
+                                    default:
+                                        System.out.println("Felaktig inmatning! "
+                                                + "\nVänligen försök igen!");
+                                        break;
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Felaktig inmatning! "
+                                        + "\nVänligen försök igen!");
+                            }
+                        }
+                    }
+                    scanner.nextLine();
+
+                    break;
+
+                case 2:
+                    System.out.println("Återgår till menyn.");
+                    break;
+
+                default:
+                    System.out.println("Felaktig inmatning! ");
+                    break;
             }
+        }
     }
 
     /**
@@ -200,7 +200,7 @@ public class App {
         boolean keepgoing = true;
         boolean keepgoings = true;
 
-        switch (choice){
+        switch (choice) {
 
             case 1:
                 while (keepgoing) {
@@ -238,25 +238,25 @@ public class App {
                         Account toAccount = allAccounts.get(toAccountNumber);
                         if (allAccounts.containsKey(toAccountNumber)) {
                             System.out.println("Hur mycket pengar vill du skicka över: ");
-                             amount = Integer.parseInt(scanner.nextLine());
+                            amount = Integer.parseInt(scanner.nextLine());
                             System.out.println("Ange datumet yy-mm-dd när du vill betalningsuppdraget ska skickas: ");
                             String transferDate = scanner.nextLine();
 
                             allTransfers.add(fromAccount.addTransfer(toAccount, amount, LocalDate.parse(transferDate)));
 
-                                System.out.println("Pengarna kommer att skickas till det här kontonummret: "
-                                        + toAccountNumber + "\n"
-                                        + "Belopp är: "
-                                        + amount + "\n"
-                                        + "Datum som betalningen kommer skickas är: "
-                                        + transferDate + "\n"
-                                        + "Status på betalningen: "
-                                        + Transfer.TransferStatus.PENDING
-                                );
-                                keepgoings = false;
-                            }
+                            System.out.println("Pengarna kommer att skickas till det här kontonummret: "
+                                    + toAccountNumber + "\n"
+                                    + "Belopp är: "
+                                    + amount + "\n"
+                                    + "Datum som betalningen kommer skickas är: "
+                                    + transferDate + "\n"
+                                    + "Status på betalningen: "
+                                    + Transfer.TransferStatus.PENDING
+                            );
+                            keepgoings = false;
                         }
                     }
+                }
                 scanner.nextLine();
                 break;
 
@@ -578,7 +578,8 @@ public class App {
 
     /**
      * Den här metoden loopar genom alla kunder och för att hitta kunden som vi söker efter.
-     * @return  Den retunerar kunden som vi hittade.
+     *
+     * @return Den retunerar kunden som vi hittade.
      */
     private static String findCutomer(String s, String s2) {
         System.out.println("Antal kunder i systemet: " + allCustomers.size() + "\n");

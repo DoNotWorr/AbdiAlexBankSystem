@@ -164,6 +164,7 @@ public enum FileService {
 
     /**
      * Kontrollerar om en fil existerar i filsökvägen som skapas av getDirectory() och försöker skapa filen om den inte existerar.
+     *
      * @param fileName namnet på filen
      * @return Returnerar File-instans som pekar på filen om den existerar. Returnerar null om filen inte existerar och inte heller gick att skapa.
      */
@@ -173,7 +174,7 @@ public enum FileService {
         StringBuilder filePathBuilder = getDirectory();
 
         //Kontrollerar det gick att skapa mapp
-        if(Objects.isNull(filePathBuilder)) { //todo ändra till eget exeception?
+        if (Objects.isNull(filePathBuilder)) { //todo ändra till eget exeception?
             return null;
         }
 
@@ -199,6 +200,7 @@ public enum FileService {
 
     /**
      * Försöker skapa en mapp i "C:\\users\\%username%\\AppData\\Local\\" om mappen inte redan existerar. Mappens namn bestäms i global-variabel folderName.
+     *
      * @return StringBuilder-instans med sökväg till mappen. Returnerar null om mapp inte existerade och inte gick att skapa.
      */
     //todo eget exception?
@@ -214,8 +216,8 @@ public enum FileService {
         File folder = new File(filePathBuilder.toString());
 
         //Kontrollerar om sökväg till mapp existerar, skapar annars
-        if(!folder.exists()) {
-            if(folder.mkdir()) {
+        if (!folder.exists()) {
+            if (folder.mkdir()) {
                 System.out.println("Skapade mapp " + folder.getAbsolutePath());
 
             } else {

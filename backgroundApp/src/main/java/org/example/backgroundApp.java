@@ -8,7 +8,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 /**
- *
  * @author Alex
  */
 public class backgroundApp {
