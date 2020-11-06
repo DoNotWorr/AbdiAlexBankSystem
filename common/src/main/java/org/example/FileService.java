@@ -8,10 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * @author Alex
@@ -19,9 +16,10 @@ import java.util.Scanner;
 public enum FileService {
     INSTANCE;
 
-    private final String filepathCustomers = "customers.txt";
-    private final String filepathAccounts = "accounts.txt";
-    private final String filepathTransfers = "transfers.txt";
+    private final String filenameCustomers = "customers.txt";
+    private final String filenameAccounts = "accounts.txt";
+    private final String filenameTransfers = "transfers.txt";
+    private final String folderName = "Banksystem";
     private final Gson gson = new Gson();
 
     /**
@@ -33,7 +31,7 @@ public enum FileService {
         if (allCustomers.size() == 0) {
             System.out.println("Det finns inga kunder att spara.");
         } else {
-            save(filepathCustomers, gson.toJson(allCustomers));
+            save(filenameCustomers, gson.toJson(allCustomers));
         }
     }
 
@@ -46,7 +44,7 @@ public enum FileService {
         if (allAccounts.size() == 0) {
             System.out.println("Det finns inga konton att spara.");
         } else {
-            save(filepathAccounts, gson.toJson(allAccounts));
+            save(filenameAccounts, gson.toJson(allAccounts));
         }
     }
 
@@ -59,7 +57,7 @@ public enum FileService {
         if (allTransfers.size() == 0) {
             System.out.println("Det finns inga betalningsuppdrag att spara.");
         } else {
-            save(filepathTransfers, gson.toJson(allTransfers));
+            save(filenameTransfers, gson.toJson(allTransfers));
         }
     }
 
@@ -69,7 +67,7 @@ public enum FileService {
      * @return HashMap med customers, inlästa från datafil
      */
     public HashMap<String, Customer> loadCustomers() {
-        String jsonFromFile = load(filepathCustomers);
+        String jsonFromFile = load(filenameCustomers);
         if (jsonFromFile == null) {
             System.out.println("Hittade inga sparade kunder.");
             return new HashMap<>();
@@ -85,7 +83,7 @@ public enum FileService {
      * @return HashMap med accounts, inlästa från datafil
      */
     public HashMap<String, Account> loadAccounts() {
-        String jsonFromFile = load(filepathAccounts);
+        String jsonFromFile = load(filenameAccounts);
         if (jsonFromFile == null) {
             System.out.println("Hittade inga sparade konton.");
             return new HashMap<>();
@@ -101,7 +99,7 @@ public enum FileService {
      * @return ArrayList med transfers, inlästa från datafil
      */
     public ArrayList<Transfer> loadTransfers() {
-        String jsonFromFile = load(filepathTransfers);
+        String jsonFromFile = load(filenameTransfers);
         if (jsonFromFile == null) {
             System.out.println("Hittade inga sparade betalningsuppdrag.");
             return new ArrayList<>();
@@ -114,24 +112,18 @@ public enum FileService {
     /**
      * Generell metod som returnerar den första raden i en textfil.
      *
-     * @param filepath sökväg till textfil
+     * @param fileName sökväg till textfil
      * @return String med första raden från textfilen
      */
-    private String load(String filepath) {
-        File file = new File(filepath);
+    private String load(String fileName) {
         String StringToReturn = null;
-        if (!file.exists()) {                                                            //Om datafil inte existerar skapas ny fil
-            System.out.println("Försöker skapa datafil " + filepath + ".");
+
+        File dataFile = getFile(fileName);
+
+        if (Objects.nonNull(dataFile)) {
+            //Om datafil existerar så läses filen in
             try {
-                file.createNewFile();
-                System.out.println("Skapade datafil " + filepath + ".");
-            } catch (IOException error) {
-                System.out.println("Kunde inte skapa datafil " + filepath + ".");
-                error.printStackTrace();
-            }
-        } else {                                                                        //Om datafil existerar så läses filen in
-            try {
-                Scanner reader = new Scanner(file);
+                Scanner reader = new Scanner(dataFile);
                 StringToReturn = reader.nextLine();
                 reader.close();
             } catch (FileNotFoundException e) {
@@ -144,33 +136,94 @@ public enum FileService {
     }
 
     /**
-     * Generell metod som skriver en textrad i en datafil.
+     * Skriver en textrad i en datafil.
      *
-     * @param filepath    sökväg till textfil
+     * @param fileName    namnet på filen som ska skrivas till (till exempel "accounts.txt");
      * @param dataToWrite den textrad som skrivs till textfil
      */
-    private void save(String filepath, String dataToWrite) {
-        File file = new File(filepath);
-        if (!file.exists()) {                                                            //Om datafil inte existerar skapas ny fil
-            System.out.println("Försöker skapa datafil " + filepath + ".");
-            try {
-                file.createNewFile();
-                System.out.println("Skapade datafil " + filepath + ".");
-            } catch (IOException error) {
-                System.out.println("Kunde inte skapa datafil " + filepath + ".");
-                error.printStackTrace();
-                System.out.println("Det går inte att spara utan datafil.");
-                return;
-            }
-        }                                                                        //Om datafil existerar så läses filen in
+    private void save(String fileName, String dataToWrite) {
+        //todo implementera save() som använder en absolut filsökväg
+
+        //getFile skapar File-objekt som pekar på filen som
+        File dataFile = getFile(fileName);
+        if (dataFile == null) return; //todo ändra till eget exception??
+
+        //todo implementera exakt samma i load()
+
+        //Om datafil existerar så läses filen in
         try {
-            FileWriter fileWriter = new FileWriter(file);
+            FileWriter fileWriter = new FileWriter(dataFile);
             fileWriter.write(dataToWrite);
             fileWriter.close();
         } catch (IOException e) {
-            System.out.println("Kunde inte spara data i " + filepath);
+            System.out.println("Kunde inte spara data i " + dataFile.getAbsolutePath());
             System.out.println("Datan har inte sparats.");
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Kontrollerar om en fil existerar i filsökvägen som skapas av getDirectory() och försöker skapa filen om den inte existerar.
+     * @param fileName namnet på filen
+     * @return Returnerar File-instans som pekar på filen om den existerar. Returnerar null om filen inte existerar och inte heller gick att skapa.
+     */
+    private File getFile(String fileName) {
+        //todo tänk på att om filen redan existerar så ska programmet ändå fortsätta
+        //Kontrollerar om mapp existerar, skapar annars
+        StringBuilder filePathBuilder = getDirectory();
+
+        //Kontrollerar det gick att skapa mapp
+        if(Objects.isNull(filePathBuilder)) { //todo ändra till eget exeception?
+            return null;
+        }
+
+        //filePathBuilder är nu absolut sökväg till namnet där
+        filePathBuilder.append("\\").append(fileName);
+
+        File dataFile = new File(filePathBuilder.toString());
+        if (!dataFile.exists()) {                                                            //Om datafil inte existerar skapas ny fil
+            System.out.println("Försöker skapa datafil " + filePathBuilder.toString());
+            try {
+                dataFile.createNewFile();
+                System.out.println("Skapade datafil " + filePathBuilder.toString());
+            } catch (IOException error) {
+                System.out.println("Kunde inte skapa datafil " + filePathBuilder.toString());
+                error.printStackTrace();
+                System.out.println("Det går inte att spara utan datafil.");
+                return null;
+            }
+        }
+        //Om datafil inte gick att spara, fortsätt inte
+        return dataFile;
+    }
+
+    /**
+     * Försöker skapa en mapp i "C:\\users\\%username%\\AppData\\Local\\" om mappen inte redan existerar. Mappens namn bestäms i global-variabel folderName.
+     * @return StringBuilder-instans med sökväg till mappen. Returnerar null om mapp inte existerade och inte gick att skapa.
+     */
+    //todo eget exception?
+    private StringBuilder getDirectory() {
+        StringBuilder filePathBuilder = new StringBuilder();
+
+        //Skapar sökväg till mapp
+        filePathBuilder.append(System.getProperty("user.home"))
+                .append("\\AppData\\Local\\")
+                .append(folderName);
+
+        //Skapar File-objekt med sökväg till mapp
+        File folder = new File(filePathBuilder.toString());
+
+        //Kontrollerar om sökväg till mapp existerar, skapar annars
+        if(!folder.exists()) {
+            if(folder.mkdir()) {
+                System.out.println("Skapade mapp " + folder.getAbsolutePath());
+
+            } else {
+                //Om sökväg inte går att skapa
+                System.out.println("Kunde inte skapa " + folder.getAbsolutePath());
+                return null;
+            }
+        }
+        return filePathBuilder;
     }
 }

@@ -2,14 +2,11 @@ package org.example;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 
-import java.io.IOException;
 
 public class LoginController {
     CustomerApp customerApp = null;
@@ -19,7 +16,7 @@ public class LoginController {
     @FXML
     Label labelPassword = null;
     @FXML
-    TextField textFieldOwnerID = null;
+    TextField textField = null;
     @FXML
     PasswordField passwordFieldPassword = null;
 
@@ -28,8 +25,12 @@ public class LoginController {
     Button loginButton = null;
     @FXML
     public void login(Event e) {
-        customerApp.primaryStage.setScene(customerApp.myScenes.get("mainScene"));
-        customerApp.primaryStage.show();
+        if(customerApp.allCustomers.containsKey(textField.getText())) {
+            System.out.println(customerApp.allCustomers.get(textField.getText()).getFirstName());
+            customerApp.primaryStage.setScene(customerApp.myScenes.get("mainScene"));
+            customerApp.primaryStage.show();
+        }
+
     }
 
 

@@ -1,1 +1,0 @@
-{"5536-5044-4718":{"accountName":"Abdis konto","accountNumber":"5536-5044-4718","ownerID":"20000723-2382","balance":10000,"previousTransaction":0},"5521-1299-9573":{"accountName":"Alex konto","accountNumber":"5521-1299-9573","ownerID":"19920317-0577","balance":10000,"previousTransaction":0}}
