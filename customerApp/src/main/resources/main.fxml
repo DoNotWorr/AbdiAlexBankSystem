@@ -4,7 +4,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane prefHeight="200.0" prefWidth="400.0" maxWidth="200.0" maxHeight="400.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.MainController">
-    <Button id="logoutButton" onAction="#logout" mnemonicParsing="false" text="Logga ut"/>
+<Pane prefHeight="200.0" prefWidth="400.0" maxWidth="200.0" maxHeight="400.0" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.MainController"
+      fx:id="Pane">
+    <VBox>
+        <Button id="logoutButton" onAction="#logout" mnemonicParsing="false" text="Logga ut"/>
+        <Label text="Mina konton"/>
+        <ListView/>
+
+
+        <Label text="Kommande transaktioner"/>
+        <ListView/>
+        <Button onAction="#createTransfer" text="Skapa ny transaktion"/>
+    </VBox>
 </Pane>

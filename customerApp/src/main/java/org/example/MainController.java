@@ -2,6 +2,7 @@ package org.example;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.PopupControl;
 
 
 import java.io.IOException;
@@ -17,4 +18,9 @@ public class MainController {
         customerApp.primaryStage.show();
     }
 
+    @FXML
+    public void createTransfer() {
+        customerApp.primaryStage.setScene(customerApp.myScenes.get("transferScene"));
+        customerApp.primaryStage.show();
+    }
 }

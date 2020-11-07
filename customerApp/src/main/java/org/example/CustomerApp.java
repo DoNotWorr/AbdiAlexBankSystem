@@ -26,17 +26,23 @@ public class CustomerApp extends Application {
         // Vi laddar in vår fxml-fil med exempelvis layouts och knappar
         FXMLLoader loaderLogin = new FXMLLoader(getClass().getResource("/login.fxml"));
         FXMLLoader loaderMain = new FXMLLoader(getClass().getResource("/main.fxml"));
+        FXMLLoader loaderTransfer = new FXMLLoader(getClass().getResource("/transfer.fxml"));
 
 
         // Ladda vår fxml-fil som Parent till vår Scene
         Parent rootLogin = loaderLogin.load();
         Parent rootMain = loaderMain.load();
+        Parent rootTransfer = loaderTransfer.load();
 
         // Vi hämtar en referens till vår Controller-klass
         LoginController loginController = loaderLogin.getController();
         MainController mainController = loaderMain.getController();
+        TransferController transferController = loaderTransfer.getController();
+
+
         loginController.customerApp = this;
         mainController.customerApp = this;
+        transferController.customerApp = this;
 
         /*
         controller.button1.setText("Knapp");
@@ -48,9 +54,11 @@ public class CustomerApp extends Application {
         // Skapar en scene och ställer in dess storlek
         // Skickar även med  en referens till den Stage/ram som
         Scene loginScene = new Scene(rootLogin, 300, 300);
-        Scene mainScene = new Scene(rootMain, 600, 600);
+        Scene mainScene = new Scene(rootMain, 300, 900);
+        Scene transferScene = new Scene(rootTransfer, 300, 300);
         myScenes.put("loginScene", loginScene);
         myScenes.put("mainScene", mainScene);
+        myScenes.put("transferScene", transferScene);
         // Lägger vår Scene i fönstret.
         primaryStage.setScene(loginScene);
 

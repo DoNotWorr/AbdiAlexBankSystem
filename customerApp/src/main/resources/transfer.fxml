@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.TransferController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <VBox>
+
+        <HBox>
+            <Label text="Till kontonummer"/>
+            <TextField/>
+        </HBox>
+
+        <HBox>
+            <fx:define>
+                <ToggleGroup fx:id="group"/>
+            </fx:define>
+            <RadioButton fx:id="onCurrentDate" text="Omgående">
+                <!--design utseende-->
+            </RadioButton>
+            <RadioButton fx:id="onLaterDate" text="På datum">
+                <!--design utseende-->
+            </RadioButton>
+
+        </HBox>
+    </VBox>
+
+</AnchorPane>
