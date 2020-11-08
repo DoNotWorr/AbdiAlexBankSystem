@@ -9,6 +9,10 @@
             prefHeight="400.0" prefWidth="600.0">
 
     <VBox>
+        <HBox>
+            <Label text="Från kontonummer"/>
+            <ListView fx:id="minaKonton"/>
+        </HBox>
 
         <HBox>
             <Label text="Till kontonummer"/>
@@ -16,16 +20,21 @@
         </HBox>
 
         <HBox>
-            <fx:define>
-                <ToggleGroup fx:id="group"/>
-            </fx:define>
             <RadioButton fx:id="onCurrentDate" text="Omgående">
-                <!--design utseende-->
+                <toggleGroup>
+                    <ToggleGroup fx:id="whenTransaction"/>
+                </toggleGroup>
             </RadioButton>
             <RadioButton fx:id="onLaterDate" text="På datum">
-                <!--design utseende-->
+                <toggleGroup>
+                    <fx:reference source="whenTransaction"/>
+                </toggleGroup>
             </RadioButton>
 
+        </HBox>
+        <HBox>
+            <Button fx:id="createTransaction" onAction="#createTransaction" text="Skapa transaktion"/>
+            <Button fx:id="cancelTransaction" onAction="#cancelTransaction" text="Avbryt"/>
         </HBox>
     </VBox>
 

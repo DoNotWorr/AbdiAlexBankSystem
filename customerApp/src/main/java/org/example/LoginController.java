@@ -27,7 +27,10 @@ public class LoginController {
     @FXML
     public void login(Event e) {
         if (customerApp.allCustomers.containsKey(textField.getText())) {
-            System.out.println(customerApp.allCustomers.get(textField.getText()).getFirstName());
+            //customerApp.currentCustomer = customerApp.allCustomers.get(textField.getText());
+
+            //customerApp.yourAccounts
+
             customerApp.primaryStage.setScene(customerApp.myScenes.get("mainScene"));
             customerApp.primaryStage.show();
         }

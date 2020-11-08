@@ -12,6 +12,8 @@ public class MainController {
 
     Button logout = null;
 
+
+
     @FXML
     public void logout() {
         customerApp.primaryStage.setScene(customerApp.myScenes.get("loginScene"));
