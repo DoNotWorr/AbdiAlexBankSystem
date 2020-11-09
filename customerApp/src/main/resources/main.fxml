@@ -14,7 +14,7 @@
         <ListView fx:id="currentAccountsListView"/>
 
         <Label text="Kommande transaktioner"/>
-        <ListView/>
+        <ListView fx:id="currentTransfersListView"/>
         <Button onAction="#createTransfer" text="Skapa ny transaktion"/>
     </VBox>
 </Pane>

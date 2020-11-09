@@ -27,14 +27,17 @@ public class LoginController {
     public void login(Event e) {
         if (customerApp.allCustomers.containsKey(textField.getText())) {
             //Skapar användarsession
-            customerApp.currentCustomer = customerApp.allCustomers.get(textField.getText());
-            //
-            customerApp.mainController.createListView(customerApp.currentCustomer);
+            UserSession.setInstance(customerApp.allCustomers.get(textField.getText()));
+
+            //Hämtar
+            customerApp.mainController.fillListViewAccounts(UserSession.getInstance().getAccounts());
+            customerApp.mainController.fillListViewTransfers(UserSession.getInstance().getTransfers());
+
+            customerApp.transferController.fillListViewAccounts(UserSession.getInstance().getAccounts());
 
             customerApp.primaryStage.setScene(customerApp.myScenes.get("mainScene"));
             customerApp.primaryStage.show();
         }
-
     }
 
     /*

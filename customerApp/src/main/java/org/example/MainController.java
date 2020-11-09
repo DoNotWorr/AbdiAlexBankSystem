@@ -19,8 +19,11 @@ public class MainController {
     ListView<Account> currentAccountsListView;
 
     @FXML
+    ListView<Transfer> currentTransfersListView;
+
+    @FXML
     public void logout() {
-        //System.out.println(currentAccounts.getItems().get(0).getOwnerID()); //test för att se om currentAccounts visas todo fixa så currentAccounts visas när man loggar in
+        UserSession.getInstance().clearInstance();
         customerApp.primaryStage.setScene(customerApp.myScenes.get("loginScene"));
         customerApp.primaryStage.show();
     }
@@ -31,13 +34,13 @@ public class MainController {
         customerApp.primaryStage.show();
     }
 
-    public void createListView(Customer customer) {
-        ObservableList<Account> accountsInCustomer = customerApp.getAccountsInCustomer(customerApp.currentCustomer);
-        if(Objects.isNull(currentAccountsListView)) {
-            System.out.println("currentAccountsListView är null");
-        } else {
-            currentAccountsListView.setItems(accountsInCustomer);
-        }
+    public void fillListViewAccounts(ObservableList<Account> accounts) {
+        currentAccountsListView.setItems(accounts);
+        //currentAccountsList.getItems().addAll(CustomerApp.getAccountsInCustomer(customer));
+    }
+
+    public void fillListViewTransfers(ObservableList<Transfer> transfers) {
+        currentTransfersListView.setItems(transfers);
         //currentAccountsList.getItems().addAll(CustomerApp.getAccountsInCustomer(customer));
     }
 }

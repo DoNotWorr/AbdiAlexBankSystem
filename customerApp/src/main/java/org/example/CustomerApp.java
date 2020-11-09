@@ -19,6 +19,7 @@ public class CustomerApp extends Application {
 
     public LoginController loginController = null;
     public MainController mainController = null;
+    public TransferController transferController = null;
 
     public Customer currentCustomer = null;
     //public static ListView<Account> currentAccounts = new ListView<>(); //todo nuvarande försök
@@ -26,7 +27,7 @@ public class CustomerApp extends Application {
 
     public HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers();
     public static HashMap<String, Account> allAccounts = FileService.INSTANCE.loadAccounts();
-    public ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
+    public static ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
 
     public static void main(String[] args) {
         launch();
@@ -66,7 +67,7 @@ public class CustomerApp extends Application {
         //Transfer window
         FXMLLoader loaderTransfer = new FXMLLoader(getClass().getResource("/transfer.fxml"));
         Parent rootTransfer = loaderTransfer.load();
-        TransferController transferController = loaderTransfer.getController();
+        transferController = loaderTransfer.getController();
         transferController.customerApp = this;
         Scene transferScene = new Scene(rootTransfer, 900, 900);
         myScenes.put("transferScene", transferScene);
@@ -90,10 +91,24 @@ public class CustomerApp extends Application {
         for (Account account : allAccounts.values()) {
             if (account.getOwnerID().equals(customer.getOwnerID())) {
                 currentAccounts.add(account);
-                System.out.println(account.getOwnerID()); //todo testprint
             }
         }
         return currentAccounts;
+    }
+
+    public static ObservableList<Transfer> getTransfersInCustomer(Customer customer) {
+        ObservableList<Transfer> currentTransfers = FXCollections.observableArrayList();
+
+        for (Account account : allAccounts.values()) {
+            if (account.getOwnerID().equals(customer.getOwnerID())) {
+                for (Transfer transfer : allTransfers) {
+                    if (transfer.getFromAccountNumber().equals(account.getAccountNumber())) {
+                        currentTransfers.add(transfer);
+                    }
+                }
+            }
+        }
+        return currentTransfers;
     }
 
 
