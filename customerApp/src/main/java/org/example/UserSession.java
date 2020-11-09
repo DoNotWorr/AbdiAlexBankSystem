@@ -13,12 +13,11 @@ public class UserSession {
     private ObservableList<Transfer> transfers;
 
 
-/**
- * https://stackoverflow.com/questions/46508098/how-to-keep-user-information-after-login-in-javafx-desktop-application
- *
- * @param customer the customer in this usersession
- *
- */
+    /**
+     * https://stackoverflow.com/questions/46508098/how-to-keep-user-information-after-login-in-javafx-desktop-application
+     *
+     * @param customer the customer in this usersession
+     */
 
 
     private UserSession(Customer customer, ObservableList<Account> accounts, ObservableList<Transfer> transfers) {

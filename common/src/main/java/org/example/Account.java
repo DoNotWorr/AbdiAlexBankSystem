@@ -177,6 +177,7 @@ public class Account {
 
     /**
      * Metod för att skriva ut konton. Används i CustomerApp.
+     *
      * @return formatet på utskriften
      */
     public String toString() {
