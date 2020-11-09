@@ -1,9 +1,12 @@
 package org.example;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
@@ -14,18 +17,27 @@ public class CustomerApp extends Application {
     HashMap<String, Scene> myScenes = new HashMap<>();
     Stage primaryStage = null;
 
-    Customer currentCustomer = null;
-    ListView<Account> currentAccounts = null;
+    public LoginController loginController = null;
+    public MainController mainController = null;
+
+    public Customer currentCustomer = null;
+    //public static ListView<Account> currentAccounts = new ListView<>(); //todo nuvarande försök
+
 
     public HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers();
-    public HashMap<String, Account> allAccounts = FileService.INSTANCE.loadAccounts();
+    public static HashMap<String, Account> allAccounts = FileService.INSTANCE.loadAccounts();
     public ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
+
+    public static void main(String[] args) {
+        launch();
+    }
 
     /**
      * Använder struktur från Jons exempel för att skapa flera fönster
-     * @author Alex
+     *
      * @param primaryStage
      * @throws Exception
+     * @author Alex
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -36,15 +48,17 @@ public class CustomerApp extends Application {
         //Login window
         FXMLLoader loaderLogin = new FXMLLoader(getClass().getResource("/login.fxml"));
         Parent rootLogin = loaderLogin.load();
-        LoginController loginController = loaderLogin.getController();
+        loginController = loaderLogin.getController();
         loginController.customerApp = this;
-        Scene loginScene = new Scene(rootLogin, 300, 300);
+        Scene loginScene = new Scene(rootLogin, 600, 300);
         myScenes.put("loginScene", loginScene);
+
 
         //Main window
         FXMLLoader loaderMain = new FXMLLoader(getClass().getResource("/main.fxml"));
         Parent rootMain = loaderMain.load();
-        MainController mainController = loaderMain.getController();
+        mainController = loaderMain.getController();
+        //mainController.createListView(currentCustomer); //todo annat test
         mainController.customerApp = this;
         Scene mainScene = new Scene(rootMain, 300, 900);
         myScenes.put("mainScene", mainScene);
@@ -54,7 +68,7 @@ public class CustomerApp extends Application {
         Parent rootTransfer = loaderTransfer.load();
         TransferController transferController = loaderTransfer.getController();
         transferController.customerApp = this;
-        Scene transferScene = new Scene(rootTransfer, 300, 300);
+        Scene transferScene = new Scene(rootTransfer, 900, 900);
         myScenes.put("transferScene", transferScene);
 
 
@@ -70,7 +84,18 @@ public class CustomerApp extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
-        launch();
+    //Kommenterat ut flera olika lösningar medan jag söker lösning
+    public static ObservableList<Account> getAccountsInCustomer(Customer customer) {
+        ObservableList<Account> currentAccounts = FXCollections.observableArrayList();
+        for (Account account : allAccounts.values()) {
+            if (account.getOwnerID().equals(customer.getOwnerID())) {
+                currentAccounts.add(account);
+                System.out.println(account.getOwnerID()); //todo testprint
+            }
+        }
+        return currentAccounts;
     }
+
+
 }
+

@@ -1,0 +1,14 @@
+1. Global Listview
+2. I login skapas en ObservableList och visas i ListView
+
+
+1. UserSession med ObservableList av användarens konton
+2. I login visas ObservableList i Listview (main)
+
+
+1. Gör MainController till en Singleton?
+
+
+---
+Gör MainController mainController till global
+I start() så initieras mainController

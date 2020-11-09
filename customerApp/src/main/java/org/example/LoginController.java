@@ -2,10 +2,10 @@ package org.example;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import sun.rmi.rmic.Main;
+
+import java.io.IOException;
 
 
 public class LoginController {
@@ -20,16 +20,16 @@ public class LoginController {
     @FXML
     PasswordField passwordFieldPassword = null;
 
-
     @FXML
     Button loginButton = null;
 
     @FXML
     public void login(Event e) {
         if (customerApp.allCustomers.containsKey(textField.getText())) {
-            //customerApp.currentCustomer = customerApp.allCustomers.get(textField.getText());
-
-            //customerApp.yourAccounts
+            //Skapar användarsession
+            customerApp.currentCustomer = customerApp.allCustomers.get(textField.getText());
+            //
+            customerApp.mainController.createListView(customerApp.currentCustomer);
 
             customerApp.primaryStage.setScene(customerApp.myScenes.get("mainScene"));
             customerApp.primaryStage.show();
@@ -37,5 +37,16 @@ public class LoginController {
 
     }
 
-
+    /*
+    //Kommenterat ut flera olika lösningar medan jag söker lösning
+    public ListView<Account> getCurrentAccounts(Customer customer) {
+        ListView<Account> currentAccounts = new ListView<>();
+        for (Account account : customerApp.allAccounts.values()) {
+            if (account.getOwnerID().equals(customer.getOwnerID())) {
+                currentAccounts.getItems().add(account);
+            }
+        }
+        return currentAccounts;
+    }
+     */
 }

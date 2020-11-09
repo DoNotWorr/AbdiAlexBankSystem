@@ -11,8 +11,7 @@
     <VBox>
         <Button id="logoutButton" onAction="#logout" mnemonicParsing="false" text="Logga ut"/>
         <Label text="Mina konton"/>
-        <ListView/>
-
+        <ListView fx:id="currentAccountsListView"/>
 
         <Label text="Kommande transaktioner"/>
         <ListView/>

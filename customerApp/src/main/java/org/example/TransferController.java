@@ -16,7 +16,7 @@ public class TransferController {
     @FXML
     public void createTransaction() {
         //Om det gick att genomföra
-        if(true) {
+        if (true) {
             //Lägg upp transaktion eller genomför direktöverföring
 
             //och byt sedan tillbaka till mainScene

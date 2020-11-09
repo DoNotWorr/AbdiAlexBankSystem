@@ -174,6 +174,14 @@ public class Account {
         accountNumber = accountNumberBuilder.toString();
         return accountNumber;
     }
+
+    /**
+     * Metod för att skriva ut konton. Används i CustomerApp.
+     * @return formatet på utskriften
+     */
+    public String toString() {
+        return this.accountName + "(" + this.getAccountNumber() + ")";
+    }
 }
 
 
