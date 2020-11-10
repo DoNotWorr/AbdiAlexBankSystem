@@ -30,10 +30,10 @@ public class Transfer {
      * @param amount            ören som ska föras över
      * @param transferDate      vilket datum överföringen ska görasgi
      */
-    public Transfer(String fromAccountNumber, String toAccountNumber, double amount, LocalDate transferDate) {
+    public Transfer(String fromAccountNumber, String toAccountNumber, long amount, LocalDate transferDate) {
         this.fromAccountNumber = fromAccountNumber;
         this.toAccountNumber = toAccountNumber;
-        this.amount = (long) amount;
+        this.amount = amount;
         this.transferDate = transferDate;
         this.status = TransferStatus.PENDING;
     }
