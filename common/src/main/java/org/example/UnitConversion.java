@@ -5,18 +5,38 @@ import java.math.BigInteger;
 
 public class UnitConversion {
     //Belopp i sek som ska konverteras till cent (ören) måste vara mindre än absoluteBoundSek och större än -absoluteBoundSek
-    private static final double absoluteBoundSekToCent = 70368744177663.99;
+    public static final double absoluteBoundSekToCent = 70368744177663.99;
 
     /**
      * @param amountCent belopp i hela ören, exempelvis: 1234
      * @return belopp i kronor som decimaltal, exempelvis 12,34
-     * @author Alex
+     * @author Alex, Abdi
      * Konverterar ett belopp från ören (1234 öre) till kronor (12,34 kr)
      */
     public static String convertToSek(long amountCent) {
         StringBuilder amountSek = new StringBuilder();
         amountSek.append(amountCent);
         //2020 öre
+        while (amountSek.toString().length() < 3) {  // Fixade bugg när amountSek var mindre än 3 siffror //Abdi
+            amountSek.insert(0, '0');
+        }
+        amountSek.insert(amountSek.length() - 2, '.');
+        return amountSek.toString();
+    }
+
+    /**
+     * @param amountCent belopp i hela ören, exempelvis: 1234
+     * @return belopp i kronor som decimaltal, exempelvis 12,34
+     * @author Alex, Abdi
+     * Konverterar ett belopp från ören (1234 öre) till kronor (12,34 kr)
+     */
+    public static String convertToSek(String amountCent) {
+        StringBuilder amountSek = new StringBuilder();
+        amountSek.append(amountCent);
+        //2020 öre
+        while (amountSek.toString().length() < 3) {  // Fixade bugg när amountSek var mindre än 3 siffror //Abdi
+            amountSek.insert(0, '0');
+        }
         amountSek.insert(amountSek.length() - 2, '.');
         return amountSek.toString();
     }

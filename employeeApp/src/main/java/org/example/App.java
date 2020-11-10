@@ -42,9 +42,11 @@ public class App {
                 int menuChoice = Integer.parseInt(scanner.nextLine());
 
                 switch (menuChoice) {
+
                     case 1:
                         addNewCutomer();
                         break;
+
                     case 2:
                         addCustomerToNewAccount();
                         break;
@@ -66,7 +68,6 @@ public class App {
                         break;
 
                     case 7:
-
                         deletePayment();
                         break;
 
@@ -86,13 +87,12 @@ public class App {
                         break;
 
                     default:
-                        System.out.println("Felaktig inmatning. "
-                                + "\nVänligen välj det som finns i menyn!");
+                        System.out.println("Felaktig inmatning.\nVänligen välj det som finns i menyn!");
                         break;
                 }
             } catch (Exception e) {
-                System.out.println("Felaktig inmatning! " +
-                        "\nVänligen försök igen ");
+                System.out.println("Felaktig inmatning!\nVänligen försök igen ");
+
             }
         }
     }
@@ -102,7 +102,7 @@ public class App {
      * Den här metoden tar fram kunden först och sen den personens konto och deras betalningsuppdrag som finns. Därefter kan man välja från listan vilken av dom som man vill avbryta.
      */
     private static void deletePayment() {
-        System.out.println("Vill du ta bort ett betalningsuppdrag? " + "\n[1] Ja \n[2] Nej ");
+        System.out.println("Vill du ta bort ett betalningsuppdrag?\n[1] Ja\n[2] Nej ");
         int choice1 = Integer.parseInt(scanner.nextLine());
 
         boolean keepgoing = true;
@@ -112,13 +112,13 @@ public class App {
             switch (choice1) {
 
                 case 1:
-                    String ownerID = findCutomer("%-5s %-10s %-10s %-10s  \n", "Den valda kundens personnumer är: ");
+                    String ownerID = findCutomer("%-5s %-10s %-10s %-10s\n", "Den valda kundens personnumer är: ");
                     if (!allCustomers.containsKey(ownerID)) {
                         System.out.println("Felaktig inmatning! ");
-                        System.out.println("Vänligen skriv rätt personnummer som finns i listan. " + "\n");
+                        System.out.println("Vänligen skriv rätt personnummer som finns i listan.\n");
                     } else {
                         ArrayList<Transfer> yourTransfers = new ArrayList<>();
-                        allTransfers.sort(((o1, o2) -> o1.getTransferDate().compareTo(o2.getTransferDate())));
+                        allTransfers.sort((Comparator.comparing(Transfer::getTransferDate)));
                         int counters = 0;
                         String formats = "%-4s%-18s%-18s%-8s%-11s%-10s\n";
                         System.out.format(formats, "Rad", "Från kontonummer ", "Till kontonummer ", "Belopp ", "Datum", "Status ");
@@ -129,7 +129,7 @@ public class App {
                                         System.out.format(formats, counters + 1 + ". ",
                                                 transfer.getFromAccountNumber(),
                                                 transfer.getToAccountNumber(),
-                                                transfer.getAmount(),
+                                                UnitConversion.convertToSek(transfer.getAmount()) + " kr",
                                                 transfer.getTransferDate(),
                                                 transfer.getStatus()
                                         );
@@ -165,13 +165,11 @@ public class App {
                                         break;
 
                                     default:
-                                        System.out.println("Felaktig inmatning! "
-                                                + "\nVänligen försök igen!");
+                                        System.out.println("Felaktig inmatning!\nVänligen försök igen!");
                                         break;
                                 }
                             } catch (Exception e) {
-                                System.out.println("Felaktig inmatning! "
-                                        + "\nVänligen försök igen!");
+                                System.out.println("Felaktig inmatning!\nVänligen försök igen!");
                             }
                         }
                     }
@@ -194,7 +192,8 @@ public class App {
      * Den här metoden tar fram kunden först och den personens konton. Därefter väljer man vilken av dom konton som man vill göra betalningen ifrån.
      */
     private static void makePayment() {
-        System.out.println("Vill du ska ett nytt betalningsuppdrag? " + "\n[1] Ja \n[2] Nej ");
+
+        System.out.println("Vill du ska ett nytt betalningsuppdrag?\n[1] Ja\n[2] Nej ");
         int choice = Integer.parseInt(scanner.nextLine());
 
         boolean keepgoing = true;
@@ -204,21 +203,21 @@ public class App {
 
             case 1:
                 while (keepgoing) {
-                    String ownerID = findCutomer("%-5s %-10s %-10s %-10s  \n", "Den valda kundens personner är: ");
+                    String ownerID = findCutomer("%-5s %-10s %-10s %-10s\n", "Den valda kundens personner är: ");
                     if (!allCustomers.containsKey(ownerID)) {
                         System.out.println("Felaktig inmatning! ");
-                        System.out.println("Vänligen skriv rätt personnummer som finns i listan. " + "\n");
+                        System.out.println("Vänligen skriv rätt personnummer som finns i listan.\n");
                     } else {
                         int counters = 0;
-                        String formats = "%-4s%-12s%-16s%-18s%-8s \n";
-                        System.out.format(formats, "Rad", "Kontonamn ", "Kontonummer ", "Personnummer ", "Balance ");
+                        String formats = "%-4s%-12s%-16s%-18s%-8s\n";
+                        System.out.format(formats, "Rad", "Kontonamn ", "Kontonummer ", "Personnummer ", "Saldo ");
                         for (Account accounts : allAccounts.values()) {
                             if (accounts.getOwnerID().equals(ownerID)) {
                                 System.out.format(formats, counters + 1 + ". ",
                                         accounts.getAccountName() + " ",
                                         accounts.getAccountNumber() + " ",
                                         accounts.getOwnerID() + " ",
-                                        accounts.getBalance() + " "
+                                        UnitConversion.convertToSek(accounts.getBalance()) + " kr"
                                 );
                                 counters++;
                                 keepgoing = false;
@@ -227,34 +226,42 @@ public class App {
                     }
                 }
                 while (keepgoings) {
-                    int amount = 0;
-                    System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka betalningsuppdraget ifrån: ");
-                    String fromAccountNumber = scanner.nextLine();
-                    Account fromAccount = allAccounts.get(fromAccountNumber);
+                    try {
+                        double amount = 0;
+                        System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka betalningsuppdraget ifrån: ");
+                        String fromAccountNumber = scanner.nextLine();
+                        Account fromAccount = allAccounts.get(fromAccountNumber);
 
-                    if (allAccounts.containsKey(fromAccountNumber)) {
-                        System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka till: ");
-                        String toAccountNumber = scanner.nextLine();
-                        Account toAccount = allAccounts.get(toAccountNumber);
-                        if (allAccounts.containsKey(toAccountNumber)) {
-                            System.out.println("Hur mycket pengar vill du skicka över: ");
-                            amount = Integer.parseInt(scanner.nextLine());
-                            System.out.println("Ange datumet yy-mm-dd när du vill betalningsuppdraget ska skickas: ");
-                            String transferDate = scanner.nextLine();
+                        if (allAccounts.containsKey(fromAccountNumber)) {
+                            System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka till: ");
+                            String toAccountNumber = scanner.nextLine();
+                            Account toAccount = allAccounts.get(toAccountNumber);
+                            if (allAccounts.containsKey(toAccountNumber)) {
+                                System.out.println("Hur mycket pengar vill du skicka över: ");
+                                amount = Double.parseDouble(scanner.nextLine());
+                                System.out.println("Ange datumet yy-mm-dd när du vill betalningsuppdraget ska skickas: ");
+                                String transferDate = scanner.nextLine();
 
-                            allTransfers.add(fromAccount.addTransfer(toAccount, amount, LocalDate.parse(transferDate)));
+                                allTransfers.add(fromAccount.addTransfer(toAccount, UnitConversion.convertFromSek(amount), LocalDate.parse(transferDate)));
 
-                            System.out.println("Pengarna kommer att skickas till det här kontonummret: "
-                                    + toAccountNumber + "\n"
-                                    + "Belopp är: "
-                                    + amount + "\n"
-                                    + "Datum som betalningen kommer skickas är: "
-                                    + transferDate + "\n"
-                                    + "Status på betalningen: "
-                                    + Transfer.TransferStatus.PENDING
-                            );
-                            keepgoings = false;
+                                System.out.println("Pengarna kommer att skickas till det här kontonummret: "
+                                        + toAccountNumber + "\n"
+                                        + "Belopp är: "
+                                        + amount + " kr\n"
+                                        + "Datum som betalningen kommer skickas är: "
+                                        + transferDate + "\n"
+                                        + "Status på betalningen: "
+                                        + Transfer.TransferStatus.PENDING
+                                );
+                                keepgoings = false;
+                            }
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Felaktig inmatning. Ange ett sifferbelopp i kronor som tex. \"100\" eller \"10.00\"");
+                    } catch (TooManyDecimalsException e) {
+                        System.out.println("Felaktig inmatning. Ange sifferbelopp med max två decimaler.");
+                    } catch (TooBigNumberException e) {
+                        System.out.println("Felaktig inmatning. Ange sifferbelopp som är mindre än " + UnitConversion.absoluteBoundSekToCent + " kronor");
                     }
                 }
                 scanner.nextLine();
@@ -279,21 +286,21 @@ public class App {
         boolean keepgoings = true;
 
         while (keepgoing) {
-            String ownerID = findCutomer("%-5s %-10s %-10s %-10s  \n", "Den valda kundens personnumer är: ");
+            String ownerID = findCutomer("%-5s %-10s %-10s %-10s\n", "Den valda kundens personnumer är: ");
             if (!allCustomers.containsKey(ownerID)) {
                 System.out.println("Felaktig inmatning! ");
-                System.out.println("Vänligen skriv rätt personnummer som finns i listan. " + "\n");
+                System.out.println("Vänligen skriv rätt personnummer som finns i listan.\n");
             } else {
                 int counters = 0;
-                String formats = "%-4s%-12s%-16s%-18s%-8s \n";
-                System.out.format(formats, "Rad", "Kontonamn ", "Kontonummer ", "Personnummer ", "Balance ");
+                String formats = "%-4s%-12s%-16s%-18s%-8s\n";
+                System.out.format(formats, "Rad", "Kontonamn ", "Kontonummer ", "Personnummer ", "Saldo ");
                 for (Account accounts : allAccounts.values()) {
                     if (accounts.getOwnerID().equals(ownerID)) {
                         System.out.format(formats, counters + 1 + ". ",
                                 accounts.getAccountName() + " ",
                                 accounts.getAccountNumber() + " ",
                                 accounts.getOwnerID() + " ",
-                                accounts.getBalance() + " "
+                                UnitConversion.convertToSek(accounts.getBalance()) + " kr"
                         );
                         counters++;
                         keepgoing = false;
@@ -302,32 +309,39 @@ public class App {
             }
         }
         while (keepgoings) {
-            System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka ifrån: ");
-            String fromAccountNumber = scanner.nextLine();
+            try {
+                System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka ifrån: ");
+                String fromAccountNumber = scanner.nextLine();
 
-            if (allAccounts.containsKey(fromAccountNumber)) {
-                Account fromAccount = allAccounts.get(fromAccountNumber);
-                System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka till: ");
-                String toAccountNumber = scanner.nextLine();
-                if (allAccounts.containsKey(toAccountNumber)) {
-                    Account toAccount = allAccounts.get(toAccountNumber);
-                    System.out.println("Hur mycket pengar vill du skicka över: ");
-                    int amount = Integer.parseInt(scanner.nextLine());
-                    if (fromAccount.directTransfer(toAccount, amount)) {
-                        System.out.println("Pengarnade överförades till: "
-                                + toAccount.getAccountNumber());
-                        keepgoings = false;
+                if (allAccounts.containsKey(fromAccountNumber)) {
+                    Account fromAccount = allAccounts.get(fromAccountNumber);
+                    System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka till: ");
+                    String toAccountNumber = scanner.nextLine();
+                    if (allAccounts.containsKey(toAccountNumber)) {
+                        Account toAccount = allAccounts.get(toAccountNumber);
+                        System.out.println("Hur mycket pengar vill du skicka över: ");
+                        double amount = Double.parseDouble(scanner.nextLine());
+                        if (fromAccount.directTransfer(toAccount, UnitConversion.convertFromSek(amount))) {
+                            System.out.println("Pengarnade överförades till: "
+                                    + toAccount.getAccountNumber());
+                            keepgoings = false;
+                        } else {
+                            System.out.println("Pengarna kunde inte skickas till kontot: "
+                                    + toAccount.getAccountNumber());
+                        }
                     } else {
-                        System.out.println("Pengarna kunde inte skickas till kontot: "
-                                + toAccount.getAccountNumber());
+                        System.out.println("Kunde inte hitta den valda kontot som du ville skicka penagr till...\nVänligen försök igen! ");
                     }
                 } else {
-                    System.out.println("Kunde inte hitta den valda kontot som du ville skicka penagr till..."
+                    System.out.println("Fanns inget konto som matchade det du skrev in: " + fromAccountNumber
                             + "\nVänligen försök igen! ");
                 }
-            } else {
-                System.out.println("Fanns inget konto som matchade det du skrev in: " + fromAccountNumber
-                        + "\nVänligen försök igen! ");
+            } catch (NumberFormatException e) {
+                System.out.println("Felaktig inmatning. Ange ett sifferbelopp i kronor som tex. \"100\" eller \"10.00\"");
+            } catch (TooManyDecimalsException e) {
+                System.out.println("Felaktig inmatning. Ange sifferbelopp med max två decimaler.");
+            } catch (TooBigNumberException e) {
+                System.out.println("Felaktig inmatning. Ange sifferbelopp som är mindre än " + UnitConversion.absoluteBoundSekToCent + " kronor");
             }
         }
         scanner.nextLine();
@@ -342,21 +356,21 @@ public class App {
         boolean keepgoings = true;
 
         while (keepgoing) {
-            String ownerID = findCutomer("%-5s %-10s %-10s %-10s  \n", "Den valda kundens personnumer är: ");
+            String ownerID = findCutomer("%-5s %-10s %-10s %-10s\n", "Den valda kundens personnumer är: ");
             if (!allCustomers.containsKey(ownerID)) {
                 System.out.println("Felaktig inmatning! ");
-                System.out.println("Vänligen skriv rätt personnummer som finns i listan. " + "\n");
+                System.out.println("Vänligen skriv rätt personnummer som finns i listan.\n");
             } else {
                 int counters = 0;
                 String formats = "%-4s%-12s%-16s%-18s%-8s \n";
-                System.out.format(formats, "Rad", "Kontonamn ", "Kontonummer ", "Personnummer ", "Balance ");
+                System.out.format(formats, "Rad", "Kontonamn ", "Kontonummer ", "Personnummer ", "Saldo ");
                 for (Account accounts : allAccounts.values()) {
                     if (accounts.getOwnerID().equals(ownerID)) {
                         System.out.format(formats, counters + 1 + ". ",
                                 accounts.getAccountName() + " ",
                                 accounts.getAccountNumber() + " ",
                                 accounts.getOwnerID() + " ",
-                                accounts.getBalance() + " "
+                                UnitConversion.convertToSek(accounts.getBalance()) + " kr"
                         );
                         counters++;
                         keepgoing = false;
@@ -365,32 +379,40 @@ public class App {
             }
         }
         while (keepgoings) {
-            System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill ta ut pengarna ifrån: ");
-            String accountNumber = scanner.nextLine();
+            try {
+                System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill ta ut pengarna ifrån: ");
+                String accountNumber = scanner.nextLine();
 
-            for (Account thisAccount : allAccounts.values()) {
-                if (thisAccount.getAccountNumber().equals(accountNumber)) {
-                    System.out.println("Hur mycket vill du ta ut från kontot: ");
-                    int amount = Integer.parseInt(scanner.nextLine());
-                    if (thisAccount.withdrawMoney(amount)) {
-                        System.out.println("Den valda kundens personnummer är: " + thisAccount.getOwnerID());
-                        System.out.println("Kontonamn: "
-                                + thisAccount.getAccountName() + "\n"
-                                + "Kontonummer: "
-                                + thisAccount.getAccountNumber() + "\n"
-                                + "Balance: "
-                                + thisAccount.getBalance());
-                        keepgoings = false;
-                    } else {
-                        System.out.println("För lite saldo i kontot! " + "\n"
-                                + "Kontonamn: "
-                                + thisAccount.getAccountName() + "\n"
-                                + "Kontonummer:"
-                                + accountNumber + "\n"
-                                + "Balance: "
-                                + thisAccount.getBalance());
+                for (Account thisAccount : allAccounts.values()) {
+                    if (thisAccount.getAccountNumber().equals(accountNumber)) {
+                        System.out.println("Hur mycket vill du ta ut från kontot: ");
+                        double amount = Double.parseDouble(scanner.nextLine());
+                        if (thisAccount.withdrawMoney(UnitConversion.convertFromSek(amount))) {
+                            System.out.println("Den valda kundens personnummer är: " + thisAccount.getOwnerID());
+                            System.out.println("Kontonamn: "
+                                    + thisAccount.getAccountName() + "\n"
+                                    + "Kontonummer: "
+                                    + thisAccount.getAccountNumber() + "\n"
+                                    + "Saldo: "
+                                    + UnitConversion.convertToSek(thisAccount.getBalance()) + " kr");
+                            keepgoings = false;
+                        } else {
+                            System.out.println("För lite saldo i kontot!\n"
+                                    + "Kontonamn: "
+                                    + thisAccount.getAccountName() + "\n"
+                                    + "Kontonummer:"
+                                    + accountNumber + "\n"
+                                    + "Saldo: "
+                                    + UnitConversion.convertToSek(thisAccount.getBalance()) + " kr");
+                        }
                     }
                 }
+            } catch (NumberFormatException e) {
+                System.out.println("Felaktig inmatning. Ange ett sifferbelopp i kronor som tex. \"100\" eller \"10.00\"");
+            } catch (TooManyDecimalsException e) {
+                System.out.println("Felaktig inmatning. Ange sifferbelopp med max två decimaler.");
+            } catch (TooBigNumberException e) {
+                System.out.println("Felaktig inmatning. Ange sifferbelopp som är mindre än " + UnitConversion.absoluteBoundSekToCent + " kronor");
             }
         }
         scanner.nextLine();
@@ -407,18 +429,18 @@ public class App {
             String ownerID = findCutomer("%-4s%-8s%-10s%-10s\n", "Den valda kundens personnummer är: ");
             if (!allCustomers.containsKey(ownerID)) {
                 System.out.println("Felaktig inmatning! ");
-                System.out.println("Vänligen skriv rätt personnummer som finns i listan. " + "\n");
+                System.out.println("Vänligen skriv rätt personnummer som finns i listan.\n");
             } else {
                 int counter = 0;
                 String format = "%-4s %-12s %-16s %-18s %-18s\n";
-                System.out.format(format, "Rad", "Kontonamn ", "Kontonummer ", "Personnummer ", "Balance ");
+                System.out.format(format, "Rad", "Kontonamn ", "Kontonummer ", "Personnummer ", "Saldo ");
                 for (Account thisAccount : allAccounts.values()) {
                     if (thisAccount.getOwnerID().equals(ownerID)) {
                         System.out.format(format, counter + 1 + ". ",
                                 thisAccount.getAccountName() + " ",
                                 thisAccount.getAccountNumber() + " ",
                                 thisAccount.getOwnerID() + " ",
-                                thisAccount.getBalance() + " ");
+                                UnitConversion.convertToSek(thisAccount.getBalance()) + " kr");
                         counter++;
                         keepgoing = false;
                     }
@@ -426,25 +448,32 @@ public class App {
             }
         }
         while (keepgoings) {
-            System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill sätta in pengarna på: ");
-            String accountNumber = scanner.nextLine();
+            try {
+                System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill sätta in pengarna på: ");
+                String accountNumber = scanner.nextLine();
 
-            for (Account thisAccount : allAccounts.values()) {
-                if (thisAccount.getAccountNumber().equals(accountNumber)) {
-                    System.out.println("Hur mycket vill du sätta in: ");
-                    int amount = Integer.parseInt(scanner.nextLine());
-                    if (thisAccount.depositMoney(amount)) {
-                        System.out.println("Den valda kundens personnummer är: " + thisAccount.getOwnerID());
-                        System.out.println("Kontonamn: " + thisAccount.getAccountName() + "\n"
-                                + "Kontonummer: "
-                                + thisAccount.getAccountNumber() + "\n"
-                                + "Balance: " + thisAccount.getBalance());
-                        keepgoings = false;
-                    } else {
-                        System.out.println("Insättningar måste vara positiv och inget negativa belopp. "
-                                + "\nVänligen försök igen!");
+                for (Account thisAccount : allAccounts.values()) {
+                    if (thisAccount.getAccountNumber().equals(accountNumber)) {
+                        System.out.println("Hur mycket vill du sätta in: ");
+                        double amount = Double.parseDouble(scanner.nextLine());
+                        if (thisAccount.depositMoney(UnitConversion.convertFromSek(amount))) {
+                            System.out.println("Den valda kundens personnummer är: " + thisAccount.getOwnerID());
+                            System.out.println("Kontonamn: " + thisAccount.getAccountName() + "\n"
+                                    + "Kontonummer: "
+                                    + thisAccount.getAccountNumber() + "\n"
+                                    + "Saldo: " + UnitConversion.convertToSek(thisAccount.getBalance()) + " kr");
+                            keepgoings = false;
+                        } else {
+                            System.out.println("Insättningar måste vara positiv och inget negativa belopp.\nVänligen försök igen!");
+                        }
                     }
                 }
+            } catch (NumberFormatException e) {
+                System.out.println("Felaktig inmatning. Ange ett sifferbelopp i kronor som tex. \"100\" eller \"10.00\"");
+            } catch (TooManyDecimalsException e) {
+                System.out.println("Felaktig inmatning. Ange sifferbelopp med max två decimaler.");
+            } catch (TooBigNumberException e) {
+                System.out.println("Felaktig inmatning. Ange sifferbelopp som är mindre än " + UnitConversion.absoluteBoundSekToCent + " kronor");
             }
         }
         scanner.nextLine();
@@ -459,20 +488,20 @@ public class App {
             String ownerID = findCutomer("%-4s%-8s%-10s%-10s\n", "Den valda kundens personnummer är: ");
             if (!allCustomers.containsKey(ownerID)) {
                 System.out.println("Felaktig inmatning! ");
-                System.out.println("Vänligen skriv rätt personnummer som finns i listan. " + "\n");
+                System.out.println("Vänligen skriv rätt personnummer som finns i listan.\n");
             } else {
                 System.out.println("Den valda kundens personnummer är : " + ownerID);
 
                 int counter = 1;
                 String format = "%-4s %-12s%-16s%-18s%-18s\n";
-                System.out.format(format, "Rad ", "Kontonamn ", "Kontonummer ", "Personnumer ", "Balance ");
+                System.out.format(format, "Rad ", "Kontonamn ", "Kontonummer ", "Personnumer ", "Saldo ");
                 for (Account thisAccounts : allAccounts.values()) {
                     if (thisAccounts.getOwnerID().equals(ownerID))
                         System.out.format(format, counter + ". ",
                                 thisAccounts.getAccountName() + " ",
                                 thisAccounts.getAccountNumber() + " ",
                                 thisAccounts.getOwnerID() + " ",
-                                thisAccounts.getBalance()
+                                UnitConversion.convertToSek(thisAccounts.getBalance()) + " kr"
                         );
                     counter++;
                     keepgoing = false;
@@ -486,7 +515,7 @@ public class App {
      * Den här metoden kopplar kunden till ett nytt konto och sen lägger det i hashmapen.
      */
     private static void addCustomerToNewAccount() {
-        System.out.println("Vill du skapa ett nytt konto? " + "\n[1] Ja \n[2] Nej. Tillbaka till menyn. ");
+        System.out.println("Vill du skapa ett nytt konto?\n[1] Ja\n[2] Nej. Tillbaka till menyn. ");
         int choice = Integer.parseInt(scanner.nextLine());
 
         boolean keepgoing = true;
@@ -508,20 +537,20 @@ public class App {
                         Account newAccount = new Account(accountName, customer);
                         allAccounts.put(newAccount.getAccountNumber(), newAccount);
 
-                        System.out.println("Nu skapas ett nytt konto i systemet: " + "\n"
+                        System.out.println("Nu skapas ett nytt konto i systemet:\n"
                                 + "Kontonamn:"
                                 + newAccount.getAccountName() + "\n"
                                 + "Kontonummer:"
                                 + newAccount.getAccountNumber() + "\n"
-                                + "balance: "
-                                + newAccount.getBalance()
+                                + "Saldo: "
+                                + UnitConversion.convertToSek(newAccount.getBalance()) + " kr"
                         );
                         keepgoing = false;
 
                         scanner.nextLine();
 
                     } else {
-                        System.out.println("Felaktig personnummer eller så finns inte den personen! " + "\n");
+                        System.out.println("Felaktig personnummer eller så finns inte den personen!\n");
                     }
                 }
                 break;
@@ -531,8 +560,7 @@ public class App {
                 break;
 
             default:
-                System.out.println("Felaktg inmatning! "
-                        + "\nVänligen välj mellan dom alternativen som finns...");
+                System.out.println("Felaktg inmatning!\nVänligen välj mellan dom alternativen som finns...");
                 break;
         }
     }
@@ -557,8 +585,8 @@ public class App {
                 Customer newCustomer = new Customer(firstname, lastname, ownerID);
                 allCustomers.put(ownerID, newCustomer);
 
-                System.out.println("Nu skapas en ny kund i systemet: "
-                        + "\n" + "Förnamn: "
+                System.out.println("Nu skapas en ny kund i systemet:\n"
+                        + "Förnamn: "
                         + newCustomer.getFirstName() + "\n"
                         + "Efternamn: "
                         + newCustomer.getLastName() + "\n"
@@ -566,12 +594,10 @@ public class App {
                         + newCustomer.getOwnerID());
                 keepgoing = false;
             } catch (InvalidNameException invalidNameException) {
-                System.out.println("Namnet får inte innehålla siffor! "
-                        + "\nVänligen försök igen! " + "\n");
+                System.out.println("Namnet får inte innehålla siffor!\nVänligen försök igen!\n");
 
             } catch (InvalidOwnerIDException invalidOwnerIDException) {
-                System.out.println("Ogiltig personnummer "
-                        + "\nVänligen försök igen! ");
+                System.out.println("Ogiltig personnummer\nVänligen försök igen! ");
             }
         }
     }
@@ -605,11 +631,9 @@ public class App {
      */
     private static void inspectSafe() {
         BigInteger totalBalance = new BigInteger("0");
-        //int totalBalance = 0;
         for (Account account : allAccounts.values()) {
-            totalBalance = totalBalance.add(BigInteger.valueOf(account.getBalance()));
+            totalBalance.add(BigInteger.valueOf(account.getBalance()));
         }
-        //todo fixa med nya konverteringsmetoden
-        //System.out.println("Det finns " + UnitConversion.convertToSek(totalBalance) + " kronor i kassavalvet.\n");
+        System.out.println("Det finns " + UnitConversion.convertToSek(totalBalance.toString()) + " kr i kassavalvet.\n");
     }
 }
