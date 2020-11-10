@@ -1,7 +1,5 @@
 package org.example;
 
-import sun.tools.jconsole.Plotter;
-
 import java.time.LocalDate;
 
 /**
@@ -76,9 +74,5 @@ public class Transfer {
             }
         }
         return false;
-    }
-
-    public String toString() {
-        return UnitConversion.convertToSek(this.getAmount()) + " kr från " + this.getFromAccountNumber() + " till " + this.getToAccountNumber();
     }
 }
