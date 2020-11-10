@@ -3,9 +3,6 @@ package org.example;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import sun.rmi.rmic.Main;
-
-import java.io.IOException;
 
 
 public class LoginController {
