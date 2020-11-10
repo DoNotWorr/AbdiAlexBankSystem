@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.TransferController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <VBox>
+        <HBox>
+            <Label text="Från kontonummer"/>
+            <ListView fx:id="currentAccountsListView"/>
+        </HBox>
+
+        <HBox>
+            <Label text="Till kontonummer"/>
+            <TextField/>
+        </HBox>
+
+        <HBox>
+            <RadioButton fx:id="onCurrentDate" text="Omgående">
+                <toggleGroup>
+                    <ToggleGroup fx:id="whenTransaction"/>
+                </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="onLaterDate" text="På datum">
+                <toggleGroup>
+                    <fx:reference source="whenTransaction"/>
+                </toggleGroup>
+            </RadioButton>
+
+        </HBox>
+        <HBox>
+            <Button fx:id="createTransaction" onAction="#createTransaction" text="Skapa transaktion"/>
+            <Button fx:id="cancelTransaction" onAction="#cancelTransaction" text="Avbryt"/>
+        </HBox>
+    </VBox>
+
+</AnchorPane>

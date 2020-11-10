@@ -1,9 +1,13 @@
 package org.example;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -13,30 +17,62 @@ public class CustomerApp extends Application {
     HashMap<String, Scene> myScenes = new HashMap<>();
     Stage primaryStage = null;
 
-    public HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers();
-    public HashMap<String, Account> allAccounts = FileService.INSTANCE.loadAccounts();
-    public ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
+    public LoginController loginController = null;
+    public MainController mainController = null;
+    public TransferController transferController = null;
 
+    public Customer currentCustomer = null;
+    //public static ListView<Account> currentAccounts = new ListView<>(); //todo nuvarande försök
+
+
+    public HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers();
+    public static HashMap<String, Account> allAccounts = FileService.INSTANCE.loadAccounts();
+    public static ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
+
+    public static void main(String[] args) {
+        launch();
+    }
+
+    /**
+     * Använder struktur från Jons exempel för att skapa flera fönster
+     *
+     * @param primaryStage
+     * @throws Exception
+     * @author Alex
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-        // Sätter titeln på själva fönstret
-        primaryStage.setTitle("Logga in");
 
-        // Vi laddar in vår fxml-fil med exempelvis layouts och knappar
+        primaryStage.setTitle("Bank");
+
+        //Login window
         FXMLLoader loaderLogin = new FXMLLoader(getClass().getResource("/login.fxml"));
-        FXMLLoader loaderMain = new FXMLLoader(getClass().getResource("/main.fxml"));
-
-
-        // Ladda vår fxml-fil som Parent till vår Scene
         Parent rootLogin = loaderLogin.load();
-        Parent rootMain = loaderMain.load();
-
-        // Vi hämtar en referens till vår Controller-klass
-        LoginController loginController = loaderLogin.getController();
-        MainController mainController = loaderMain.getController();
+        loginController = loaderLogin.getController();
         loginController.customerApp = this;
+        Scene loginScene = new Scene(rootLogin, 600, 300);
+        myScenes.put("loginScene", loginScene);
+
+
+        //Main window
+        FXMLLoader loaderMain = new FXMLLoader(getClass().getResource("/main.fxml"));
+        Parent rootMain = loaderMain.load();
+        mainController = loaderMain.getController();
+        //mainController.createListView(currentCustomer); //todo annat test
         mainController.customerApp = this;
+        Scene mainScene = new Scene(rootMain, 300, 900);
+        myScenes.put("mainScene", mainScene);
+
+        //Transfer window
+        FXMLLoader loaderTransfer = new FXMLLoader(getClass().getResource("/transfer.fxml"));
+        Parent rootTransfer = loaderTransfer.load();
+        transferController = loaderTransfer.getController();
+        transferController.customerApp = this;
+        Scene transferScene = new Scene(rootTransfer, 900, 900);
+        myScenes.put("transferScene", transferScene);
+
+
 
         /*
         controller.button1.setText("Knapp");
@@ -45,41 +81,36 @@ public class CustomerApp extends Application {
         controller.button1.setStyle(cssh + cssw);
         */
 
-        // Skapar en scene och ställer in dess storlek
-        // Skickar även med  en referens till den Stage/ram som
-        Scene loginScene = new Scene(rootLogin, 300, 300);
-        Scene mainScene = new Scene(rootMain, 600, 600);
-        myScenes.put("loginScene", loginScene);
-        myScenes.put("mainScene", mainScene);
-        // Lägger vår Scene i fönstret.
         primaryStage.setScene(loginScene);
-
-        // Visar fönstret
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
-        launch();
+    //Kommenterat ut flera olika lösningar medan jag söker lösning
+    public static ObservableList<Account> getAccountsInCustomer(Customer customer) {
+        ObservableList<Account> currentAccounts = FXCollections.observableArrayList();
+        for (Account account : allAccounts.values()) {
+            if (account.getOwnerID().equals(customer.getOwnerID())) {
+                currentAccounts.add(account);
+            }
+        }
+        return currentAccounts;
+    }
+
+    public static ObservableList<Transfer> getTransfersInCustomer(Customer customer) {
+        ObservableList<Transfer> currentTransfers = FXCollections.observableArrayList();
+
+        for (Account account : allAccounts.values()) {
+            if (account.getOwnerID().equals(customer.getOwnerID())) {
+                for (Transfer transfer : allTransfers) {
+                    if (transfer.getFromAccountNumber().equals(account.getAccountNumber())) {
+                        currentTransfers.add(transfer);
+                    }
+                }
+            }
+        }
+        return currentTransfers;
     }
 
 
-   /* @Override
-    public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("login"));
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(CustomerApp.class.getResource("/" + fxml + ".fxml"));
-        return fxmlLoader.load();
-    }
-
-    public static void main(String[] args) {
-        launch();
-    }*/
 }
+
