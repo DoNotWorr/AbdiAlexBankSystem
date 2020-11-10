@@ -12,7 +12,7 @@ public class Account {
     private String accountName;
     private String accountNumber;
     private String ownerID;
-    private int balance;
+    private long balance;
     private int previousTransaction;
 
     /**
@@ -66,7 +66,7 @@ public class Account {
      *
      * @return saldo på konto i ören.
      */
-    public int getBalance() {
+    public long getBalance() {
         return balance;
     }
 
@@ -75,7 +75,7 @@ public class Account {
      * @return den retunerar true om det gick att sätta in pengar i kontot eller false om det inte gick.
      */
 
-    public boolean depositMoney(int amount) {
+    public boolean depositMoney(long amount) {
         if (amount > 0) {
             setBalance(balance + amount);
             return true;
@@ -87,7 +87,7 @@ public class Account {
     /**
      * Metod för att få fram rätt balance för att kunna ändra saldot i kontot.
      */
-    private void setBalance(int balance) {
+    private void setBalance(long balance) {
         this.balance = balance;
     }
 
@@ -95,7 +95,7 @@ public class Account {
      * @param amount beloppet som personen ska ta ut från kontot.
      * @return den retunerar true om det gick att göra ett uttag från kontot eller false om det inte gick.
      */
-    public boolean withdrawMoney(int amount) {
+    public boolean withdrawMoney(long amount) {
         if (amount > 0) {
             if (balance >= amount) {
                 setBalance(balance - amount);
@@ -123,8 +123,7 @@ public class Account {
      *
      * @return Den retunerar true om det gick att skicka över pengar eller false om det inte gick genom.
      */
-
-    public boolean directTransfer(Account toAccount, int amount) {
+    public boolean directTransfer(Account toAccount, long amount) {
         if (amount > 0 && amount <= this.getBalance()) {
             this.withdrawMoney(amount);
             toAccount.depositMoney(amount);
@@ -143,7 +142,7 @@ public class Account {
      * @return retunerar den nya Transfer objektet.
      * @author Alex
      */
-    public Transfer addTransfer(Account toAccount, int amount, LocalDate transferDate) {
+    public Transfer addTransfer(Account toAccount, long amount, LocalDate transferDate) {
         return new Transfer(this.accountNumber, toAccount.accountNumber, amount, transferDate);
     }
 

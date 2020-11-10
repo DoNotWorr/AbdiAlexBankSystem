@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class Transfer {
     private String fromAccountNumber;
     private String toAccountNumber;
-    private int amount;
+    private long amount;
     private LocalDate transferDate;
     private TransferStatus status;
 
@@ -30,10 +30,10 @@ public class Transfer {
      * @param amount            ören som ska föras över
      * @param transferDate      vilket datum överföringen ska görasgi
      */
-    public Transfer(String fromAccountNumber, String toAccountNumber, int amount, LocalDate transferDate) {
+    public Transfer(String fromAccountNumber, String toAccountNumber, double amount, LocalDate transferDate) {
         this.fromAccountNumber = fromAccountNumber;
         this.toAccountNumber = toAccountNumber;
-        this.amount = amount;
+        this.amount = (long) amount;
         this.transferDate = transferDate;
         this.status = TransferStatus.PENDING;
     }
@@ -46,7 +46,7 @@ public class Transfer {
         return toAccountNumber;
     }
 
-    public int getAmount() {
+    public long getAmount() {
         return amount;
     }
 
