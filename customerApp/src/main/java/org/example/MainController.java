@@ -23,24 +23,28 @@ public class MainController {
 
     @FXML
     public void logout() {
+        //Tömmer användarsession
         UserSession.getInstance().clearInstance();
+
+        //Byter scen och visar den scenen
         customerApp.primaryStage.setScene(customerApp.myScenes.get("loginScene"));
         customerApp.primaryStage.show();
     }
 
     @FXML
     public void createTransfer() {
+        //Byter scen och visar den scenen
         customerApp.primaryStage.setScene(customerApp.myScenes.get("transferScene"));
         customerApp.primaryStage.show();
     }
 
     public void fillListViewAccounts(ObservableList<Account> accounts) {
+        //Fyller lista med konton
         currentAccountsListView.setItems(accounts);
-        //currentAccountsList.getItems().addAll(CustomerApp.getAccountsInCustomer(customer));
     }
 
     public void fillListViewTransfers(ObservableList<Transfer> transfers) {
+        //Fyller lista med överföringar
         currentTransfersListView.setItems(transfers);
-        //currentAccountsList.getItems().addAll(CustomerApp.getAccountsInCustomer(customer));
     }
 }

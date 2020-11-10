@@ -11,7 +11,7 @@
     <VBox>
         <HBox>
             <Label text="Från kontonummer"/>
-            <ListView fx:id="currentAccountsListView"/>
+            <ChoiceBox fx:id="currentAccountsChoiceBox"/>
         </HBox>
 
         <HBox>
