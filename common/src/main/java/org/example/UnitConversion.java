@@ -5,7 +5,7 @@ import java.math.BigInteger;
 
 public class UnitConversion {
     //Belopp i sek som ska konverteras till cent (ören) måste vara mindre än absoluteBoundSek och större än -absoluteBoundSek
-    private static final double absoluteBoundSekToCent = 70368744177663.99;
+    public static final double absoluteBoundSekToCent = 70368744177663.99;
 
     /**
      * @param amountCent belopp i hela ören, exempelvis: 1234
