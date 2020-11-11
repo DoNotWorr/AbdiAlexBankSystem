@@ -86,6 +86,7 @@ public class CustomerApp extends Application {
         mainController.customerApp = this;
         Scene mainScene = new Scene(rootMain, 300, 900);
         // lägg här så man fattar bättre
+        rootMain.addEventHandler(MouseEvent.MOUSE_DRAGGED, draggedWindow);
         myScenes.put("mainScene", mainScene);
 
 
@@ -95,6 +96,7 @@ public class CustomerApp extends Application {
         transferController = loaderTransfer.getController();
         transferController.customerApp = this;
         Scene transferScene = new Scene(rootTransfer, 900, 900);
+        rootTransfer.addEventHandler(MouseEvent.MOUSE_DRAGGED, draggedWindow);
         myScenes.put("transferScene", transferScene);
 
         primaryStage.setScene(loginScene);
