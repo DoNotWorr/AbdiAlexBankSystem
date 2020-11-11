@@ -14,20 +14,22 @@ public class LoginController {
 
     @FXML
     public void login(Event e) {
+        //Om angivet personnummer stämmer överens med existerande användare
         if (customerApp.allCustomers.containsKey(textField.getText())) {
             //Skapar användarsession
             UserSession.setInstance(customerApp.allCustomers.get(textField.getText()));
 
-            //Hämtar
+            //Fyller listor i main-fönstret med innehåll från UserSession
             customerApp.mainController.fillListViewAccounts(UserSession.getInstance().getAccounts());
             customerApp.mainController.fillListViewTransfers(UserSession.getInstance().getTransfers());
 
+            //Fyller listor i transfer-fönstret med innehåll från UserSession
             customerApp.transferController.fillListViewAccounts(UserSession.getInstance().getAccounts());
 
+            //Byter scen och visar den scenen
             customerApp.primaryStage.setScene(customerApp.myScenes.get("mainScene"));
             customerApp.primaryStage.show();
         }
-
     }
 
     /**

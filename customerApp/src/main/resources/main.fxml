@@ -15,6 +15,9 @@
 
         <Label text="Kommande transaktioner"/>
         <ListView fx:id="currentTransfersListView"/>
-        <Button onAction="#createTransfer" text="Skapa ny transaktion"/>
+        <HBox>
+            <Button onAction="#createTransfer" text="Skapa ny transaktion"/>
+            <Button fx:id="removeTransfer" onAction="#removeTransfer" text="Ta bort transaktion"/>
+        </HBox>
     </VBox>
 </Pane>
