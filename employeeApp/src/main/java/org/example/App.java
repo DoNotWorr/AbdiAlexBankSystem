@@ -191,6 +191,7 @@ public class App {
 
     /**
      * Den här metoden tar fram kunden först och den personens konton. Därefter väljer man vilken av dom konton som man vill göra betalningen ifrån.
+     *
      * @author Abdi, Alex
      * Abdi skrev metoden. Alex skapade flera loopar så man slipper skriva om så mycket ifall det blir fel.
      */
@@ -258,7 +259,7 @@ public class App {
                     System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka till: ");
                     toAccountNumber = scanner.nextLine();
                     //För att komma ur loopen ifall man inte vet kontonumret eller det inte finns några konton att skicka till.
-                    if(toAccountNumber.length() == 0) {
+                    if (toAccountNumber.length() == 0) {
                         return;
                     }
                     if (allAccounts.containsKey(toAccountNumber)) {

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class UnitConversion {
-     /**
+    /**
      * @param amountCent belopp i hela ören, exempelvis: 1234
      * @return belopp i kronor som decimaltal, exempelvis 12,34
      * @author Alex, Abdi
@@ -23,6 +23,7 @@ public class UnitConversion {
 
     /**
      * Metod för att konvertera belopp väldigt stora belopp (ören) till kronor. Validerar inte inmatning
+     *
      * @param amountCent belopp i hela ören, exempelvis: 123456789123456789123456789123456789
      * @return belopp i kronor som decimaltal, exempelvis 12,34
      * @author Alex, Abdi
@@ -44,7 +45,7 @@ public class UnitConversion {
      *
      * @param amountSek String med ett belopp i kronor med max två decimaler (exempelvis "123" eller "123.45"). Max två decimaler och inom intervallet -92233720368547758.08 >= amountSek <= 92233720368547758.07
      * @return beloppet konverterat till ören (exempelvis 12300 eller 12345)
-     * @throws NonNumericalException om argument inte går att göra om till ett tal
+     * @throws NonNumericalException      om argument inte går att göra om till ett tal
      * @throws NumberNotInBoundsException om argument är ett tal som inte kan hanteras. Max två decimaler och inom intervallet -92233720368547758.08 >= amountSek <= 92233720368547758.07
      * @author Alex
      */

@@ -144,10 +144,10 @@ public class Account {
      * @author Alex
      */
     public Transfer addTransfer(Account toAccount, long amount, LocalDate transferDate) throws NullToAccountException, NotLaterDateException {
-        if(Objects.isNull(toAccount)) {
+        if (Objects.isNull(toAccount)) {
             throw new NullToAccountException("toAccount är null");
         }
-        if(transferDate.isBefore(LocalDate.now().plusDays(1))) {
+        if (transferDate.isBefore(LocalDate.now().plusDays(1))) {
             throw new NotLaterDateException("Datumet måste vara imorgon eller längre fram i tiden");
         }
         return new Transfer(this.accountNumber, toAccount.accountNumber, amount, transferDate);
