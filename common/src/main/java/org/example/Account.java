@@ -142,7 +142,7 @@ public class Account {
      * @return retunerar den nya Transfer objektet.
      * @author Alex
      */
-    public Transfer addTransfer(Account toAccount, long amount, LocalDate transferDate) {
+    public Transfer addTransfer(Account toAccount, long amount, LocalDate transferDate) throws NullToAccountException {
         return new Transfer(this.accountNumber, toAccount.accountNumber, amount, transferDate);
     }
 
