@@ -1,6 +1,7 @@
 package org.example;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -143,6 +144,9 @@ public class Account {
      * @author Alex
      */
     public Transfer addTransfer(Account toAccount, long amount, LocalDate transferDate) throws NullToAccountException {
+        if(Objects.isNull(toAccount)) {
+            throw new NullToAccountException("toAccount är null");
+        }
         return new Transfer(this.accountNumber, toAccount.accountNumber, amount, transferDate);
     }
 
