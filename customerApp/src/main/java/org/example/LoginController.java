@@ -3,22 +3,14 @@ package org.example;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 
 public class LoginController {
     CustomerApp customerApp = null;
 
     @FXML
-    Label labelOwnerID = null;
-    @FXML
-    Label labelPassword = null;
-    @FXML
     TextField textField = null;
-    @FXML
-    PasswordField passwordFieldPassword = null;
-
-    @FXML
-    Button loginButton = null;
 
     @FXML
     public void login(Event e) {
@@ -35,7 +27,17 @@ public class LoginController {
             customerApp.primaryStage.setScene(customerApp.myScenes.get("mainScene"));
             customerApp.primaryStage.show();
         }
+
     }
+
+    /**
+     * @param mouseEvent Eftersom jag gjorde bakgrunden transparent så behöver jag skapa mustryckning för att kunna avsluta fönstret.
+     * @author Abdi
+     */
+    public void btn_exit(MouseEvent mouseEvent) {
+        System.exit(0);
+    }
+
 
     /*
     //Kommenterat ut flera olika lösningar medan jag söker lösning
