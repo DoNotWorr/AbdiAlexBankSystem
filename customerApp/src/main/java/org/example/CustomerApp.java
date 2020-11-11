@@ -3,13 +3,18 @@ package org.example;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Alert;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -44,14 +49,33 @@ public class CustomerApp extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
 
-        primaryStage.setTitle("Bank");
+        //Abdi
+        //Här använder jag mig av ett EventHandler för att kunna dra fönstret runt och det är för att jag gjorde fönstret transparent.
+        double xOffset = 0, yOffset = 0;
+        EventHandler<MouseEvent> draggedWindow = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                primaryStage.setX(event.getScreenX() - xOffset);
+                primaryStage.setY(event.getScreenY() - yOffset);
+            }
+        };
+
+        primaryStage.setTitle("Newton First Bank");
 
         //Login window
         FXMLLoader loaderLogin = new FXMLLoader(getClass().getResource("/login.fxml"));
         Parent rootLogin = loaderLogin.load();
         loginController = loaderLogin.getController();
         loginController.customerApp = this;
-        Scene loginScene = new Scene(rootLogin, 600, 300);
+        Scene loginScene = new Scene(rootLogin, 330, 330);
+
+        //Abdi
+        //Här använder jag mig av metoden initStylke för att kunna ge bakgrunden ett transparent utseende
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.setScene(loginScene);
+        loginScene.setFill(Color.TRANSPARENT);
+        rootLogin.addEventHandler(MouseEvent.MOUSE_DRAGGED, draggedWindow);
+
         myScenes.put("loginScene", loginScene);
 
 
@@ -59,10 +83,11 @@ public class CustomerApp extends Application {
         FXMLLoader loaderMain = new FXMLLoader(getClass().getResource("/main.fxml"));
         Parent rootMain = loaderMain.load();
         mainController = loaderMain.getController();
-        //mainController.createListView(currentCustomer); //todo annat test
         mainController.customerApp = this;
         Scene mainScene = new Scene(rootMain, 300, 900);
+        // lägg här så man fattar bättre
         myScenes.put("mainScene", mainScene);
+
 
         //Transfer window
         FXMLLoader loaderTransfer = new FXMLLoader(getClass().getResource("/transfer.fxml"));
@@ -71,15 +96,6 @@ public class CustomerApp extends Application {
         transferController.customerApp = this;
         Scene transferScene = new Scene(rootTransfer, 900, 900);
         myScenes.put("transferScene", transferScene);
-
-
-
-        /*
-        controller.button1.setText("Knapp");
-        String cssh = "-fx-min-height: 50; -fx-pref-height: 50%; -fx-max-height: 350;";
-        String cssw = "-fx-min-width: 50; -fx-pref-width: 50%; -fx-max-width: 350;";
-        controller.button1.setStyle(cssh + cssw);
-        */
 
         primaryStage.setScene(loginScene);
         primaryStage.show();
