@@ -38,6 +38,12 @@ public class MainController {
         customerApp.primaryStage.show();
     }
 
+    @FXML
+    public void removeTransfer() {
+        //todo Avbryt transaktion som är markerad i listan med transaktioner
+        currentTransfersListView.getSelectionModel().getSelectedItem().setStatus(Transfer.TransferStatus.CANCELLED);
+    }
+
     public void fillListViewAccounts(ObservableList<Account> accounts) {
         //Fyller lista med konton
         currentAccountsListView.setItems(accounts);

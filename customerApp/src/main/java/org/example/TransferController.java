@@ -3,6 +3,7 @@ package org.example;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 
 public class TransferController {
@@ -18,6 +19,9 @@ public class TransferController {
     RadioButton onCurrentDate = null;
 
     @FXML
+    DatePicker datePicker = null;
+
+    @FXML
     public void createTransaction() {
         //Om det gick att genomföra
         if (true) {
@@ -31,6 +35,9 @@ public class TransferController {
 
     @FXML
     public void cancelTransaction() {
+        //todo Töm fält i Transaktion
+        //todo Lägg in nya transaktioner i employeeApp för att testa med
+
         //Byter scen och visar den scenen
         customerApp.primaryStage.setScene(customerApp.myScenes.get("mainScene"));
         customerApp.primaryStage.show();

@@ -30,11 +30,11 @@
                     <fx:reference source="whenTransaction"/>
                 </toggleGroup>
             </RadioButton>
-
         </HBox>
+        <DatePicker fx:id="datePicker" editable="false"/> <!-- editable="false" för att undvika felaktig inmatning. Kan ändras till true om inmatning valideras -->
         <HBox>
-            <Button fx:id="createTransaction" onAction="#createTransaction" text="Skapa transaktion"/>
-            <Button fx:id="cancelTransaction" onAction="#cancelTransaction" text="Avbryt"/>
+            <Button onAction="#createTransaction" text="Skapa transaktion"/>
+            <Button onAction="#cancelTransaction" text="Avbryt"/>
         </HBox>
     </VBox>
 
