@@ -5,29 +5,6 @@ import java.time.LocalDate;
 public enum ValidationService {
     INSTANCE;
 
-    //Gör numera kontrollen direkt i UnitConversion.convertFromSek
-    /*
-    public boolean isValidArgumentConvertFromSek(double amountInSek) throws TooManyDecimalsException, TooBigNumberException {
-        //Konverterar till String för att räkna ut hur många decimaler efter punkten
-        String amountAsText = Double.toString(amountInSek);
-        //Jämför längden på strängen och vilket index i strängen som decimaltecknet har. Om skillnaden är 3 så har talet 2 decimaler.
-        //"10.01"     .length = 5; .indexOf('.') = 2
-        //"10.001"    .length = 6; .indexOf('.') = 2
-        if (amountAsText.length() - amountAsText.indexOf('.') <= 3) {
-            return true;
-        } else if (amountAsText.contains("E")) {
-            String[] amountAsScientificNotation = amountAsText.split("E");
-            if (amountAsScientificNotation[0].length() - 2 - Integer.parseInt(amountAsScientificNotation[1]) <= 2) {
-                return true;
-            } else {
-                throw new TooManyDecimalsException("Max 2 decimaler");
-            }
-        } else {
-            throw new TooManyDecimalsException("Max 2 decimaler");
-        }
-    }
-    */
-
     /**
      * Kontrollerar godtyckligt om ett namn matas in.
      *

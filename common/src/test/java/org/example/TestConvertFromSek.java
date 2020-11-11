@@ -17,11 +17,10 @@ public class TestConvertFromSek {
      */
     @Test
     public void testNoDecimal() {
+        String inputSek = "100";
         try {
-            assertEquals(10000, UnitConversion.convertFromSek(100));
-        } catch (TooManyDecimalsException e) {
-            System.out.println("Oväntat fel testNoDecimal()");
-        } catch (TooBigNumberException e) {
+            assertEquals(10000, UnitConversion.convertFromSek(inputSek));
+        } catch (Exception e) {
             System.out.println("Oväntat fel testNoDecimal()");
         }
     }
@@ -31,11 +30,10 @@ public class TestConvertFromSek {
      */
     @Test
     public void testOneDecimal() {
+        String inputSek = "100.9";
         try {
-            assertEquals(10090, UnitConversion.convertFromSek(100.9));
-        } catch (TooManyDecimalsException e) {
-            System.out.println("Oväntat fel testOneDecimal()");
-        } catch (TooBigNumberException e) {
+            assertEquals(10090, UnitConversion.convertFromSek(inputSek));
+        } catch (Exception e) {
             System.out.println("Oväntat fel testOneDecimal()");
         }
     }
@@ -45,11 +43,10 @@ public class TestConvertFromSek {
      */
     @Test
     public void testTwoDecimal() {
+        String inputSek = "100.99";
         try {
-            assertEquals(10099, UnitConversion.convertFromSek(100.99));
-        } catch (TooManyDecimalsException e) {
-            System.out.println("Oväntat fel testTwoDecimal()");
-        } catch (TooBigNumberException e) {
+            assertEquals(10099, UnitConversion.convertFromSek(inputSek));
+        } catch (Exception e) {
             System.out.println("Oväntat fel testTwoDecimal()");
         }
     }
@@ -59,15 +56,14 @@ public class TestConvertFromSek {
      */
     @Test
     public void testThreeDecimal() {
+        String inputSek = "100.999";
         String message = "Oväntat fel i testThreeDecimal";
         try {
-            UnitConversion.convertFromSek(100.999);
-        } catch (TooManyDecimalsException e) {
+            UnitConversion.convertFromSek(inputSek);
+        } catch (Exception e) {
             message = e.getMessage();
-        } catch (TooBigNumberException e) {
-            System.out.println("Oväntat fel testThreeDecimal()");
         }
-        assertEquals("Input får ha max 2 decimalers precision", message);
+        assertEquals("Felaktig inmatning. Max två decimaler och inom intervallet -92233720368547758.08 >= amountSek <= 92233720368547758.07", message);
     }
 
     /**
@@ -75,12 +71,11 @@ public class TestConvertFromSek {
      */
     @Test
     public void testDoubleMaxNoDecimal() {
-        long expected = 7036874417766300L;
+        String inputSek = "92233720368547758";
+        long expected = 9223372036854775800L;
         try {
-            assertEquals(expected, UnitConversion.convertFromSek(70368744177663.0));
-        } catch (TooManyDecimalsException e) {
-            System.out.println("Oväntat fel i testDoubleMaxNoDecimal()");
-        } catch (TooBigNumberException e) {
+            assertEquals(expected, UnitConversion.convertFromSek(inputSek));
+        } catch (Exception e) {
             System.out.println("Oväntat fel i testDoubleMaxNoDecimal()");
         }
     }
@@ -90,12 +85,11 @@ public class TestConvertFromSek {
      */
     @Test
     public void testDoubleMaxWithOneDecimal() {
-        long expected = 7036874417766390L;
+        String inputSek = "92233720368547757.9";
+        long expected = 9223372036854775790L;
         try {
-            assertEquals(expected, UnitConversion.convertFromSek(70368744177663.9));
-        } catch (TooManyDecimalsException e) {
-            System.out.println("Oväntat fel i testDoubleMax()");
-        } catch (TooBigNumberException e) {
+            assertEquals(expected, UnitConversion.convertFromSek(inputSek));
+        } catch (Exception e) {
             System.out.println("Oväntat fel i testDoubleMax()");
         }
     }
@@ -105,12 +99,11 @@ public class TestConvertFromSek {
      */
     @Test
     public void testDoubleMaxWithTwoDecimal() {
-        long expected = 7036874417766398L;
+        String inputSek = "92233720368547758.070";
+        long expected = 9223372036854775807L;
         try {
-            assertEquals(expected, UnitConversion.convertFromSek(70368744177663.98));
-        } catch (TooManyDecimalsException e) {
-            System.out.println("Oväntat fel i testDoubleMax()");
-        } catch (TooBigNumberException e) {
+            assertEquals(expected, UnitConversion.convertFromSek(inputSek));
+        } catch (Exception e) {
             System.out.println("Oväntat fel i testDoubleMax()");
         }
     }
@@ -120,13 +113,12 @@ public class TestConvertFromSek {
      */
     @Test
     public void testOverflowMaxWithTwoDecimalAndExtraZero() {
-        long expected = 7036874417766398L;
+        String inputSek = "92233720368547758.07";
+        long expected = 9223372036854775807L;
         try {
-            assertEquals(expected, UnitConversion.convertFromSek(70368744177663.980));
-        } catch (TooManyDecimalsException e) {
+            assertEquals(expected, UnitConversion.convertFromSek(inputSek));
+        } catch (Exception e) {
             System.out.println("Oväntat fel i testOverflowMaxWithThreeDecimal() 1");
-        } catch (TooBigNumberException e) {
-            System.out.println("Oväntat fel i testOverflowMaxWithThreeDecimal() 2");
         }
     }
 
@@ -135,16 +127,15 @@ public class TestConvertFromSek {
      */
     @Test
     public void testOverflowMaxWithThreeDecimals() {
+        String inputSek = "92233720368547758.081";
         String message = "Oväntat fel i testOverflowMaxWithThreeDecimals()";
         //"Input får ha max 2 decimalers precision"
         try {
-            UnitConversion.convertFromSek(70368744177663.981);
-        } catch (TooManyDecimalsException e) {
+            UnitConversion.convertFromSek(inputSek);
+        } catch (Exception e) {
             message = e.getMessage();
-        } catch (TooBigNumberException e) {
-            System.out.println("Oväntat fel i testOverflowMaxWithThreeDecimal() 2");
         }
-        assertEquals("Input får ha max 2 decimalers precision", message);
+        assertEquals("Felaktig inmatning. Max två decimaler och inom intervallet -92233720368547758.08 >= amountSek <= 92233720368547758.07", message);
     }
 
     /**
@@ -152,167 +143,204 @@ public class TestConvertFromSek {
      */
     @Test
     public void testOverflow() {
+        String inputSek = "92233720368547758.09";
         String message = "Oväntat fel i testDoubleOverflow()";
         try {
-            UnitConversion.convertFromSek(70368744177663.99);
-        } catch (TooManyDecimalsException e) {
-            System.out.println("Oväntat fel");
-        } catch (TooBigNumberException e) {
+            UnitConversion.convertFromSek(inputSek);
+        } catch (Exception e) {
             message = e.getMessage();
         }
-        assertEquals("Argument måste vara mindre än 70368744177663.99", message);
+        assertEquals("Felaktig inmatning. Max två decimaler och inom intervallet -92233720368547758.08 >= amountSek <= 92233720368547758.07", message);
     }
 
     //negativa
 
     /**
-     * Test inmatning utan decimal
+     * Test inmatning negativt utan decimal
      */
     @Test
     public void testNegativeNoDecimal() {
+        String inputSek = "-100.00";
+        long expected = -10000;
         try {
-            assertEquals(UnitConversion.convertFromSek(-100), -10000);
-        } catch (TooManyDecimalsException e) {
-            System.out.println("Oväntat fel testNoDecimal()");
-        } catch (TooBigNumberException e) {
+            assertEquals(UnitConversion.convertFromSek(inputSek), expected);
+        } catch (Exception e) {
             System.out.println("Oväntat fel testNoDecimal()");
         }
     }
 
     /**
-     * Test inmatning, en decimal
+     * Test inmatning, negativt, en decimal
      */
     @Test
     public void testNegativeOneDecimal() {
+        String inputSek = "-100.90";
+        long expected = -10090;
         try {
-            assertEquals(UnitConversion.convertFromSek(-100.9), -10090);
-        } catch (TooManyDecimalsException e) {
-            System.out.println("Oväntat fel testOneDecimal()");
-        } catch (TooBigNumberException e) {
+            assertEquals(UnitConversion.convertFromSek(inputSek), expected);
+        } catch (Exception e) {
             System.out.println("Oväntat fel testOneDecimal()");
         }
     }
 
     /**
-     * Test inmatning, två decimaler
+     * Test inmatning, negativt, två decimaler
      */
     @Test
     public void testNegativeTwoDecimal() {
+        String inputSek = "-100.99";
+        long expected = -10099;
         try {
-            assertEquals(UnitConversion.convertFromSek(-100.99), -10099);
-        } catch (TooManyDecimalsException e) {
-            System.out.println("Oväntat fel testTwoDecimal()");
-        } catch (TooBigNumberException e) {
+            assertEquals(UnitConversion.convertFromSek(inputSek), expected);
+        } catch (Exception e) {
             System.out.println("Oväntat fel testTwoDecimal()");
         }
     }
 
     /**
-     * Test inmatning, tre decimaler
+     * Test inmatning, negativt, tre decimaler
      */
     @Test
     public void testNegativeThreeDecimal() {
+        String inputSek = "-100.999";
         String message = "Oväntat fel i testThreeDecimal";
         try {
-            UnitConversion.convertFromSek(-100.999);
-        } catch (TooManyDecimalsException e) {
+            UnitConversion.convertFromSek(inputSek);
+        } catch (Exception e) {
             message = e.getMessage();
-        } catch (TooBigNumberException e) {
-            System.out.println("Oväntat fel testThreeDecimal()");
         }
-        assertEquals("Input får ha max 2 decimalers precision", message);
+        assertEquals("Felaktig inmatning. Max två decimaler och inom intervallet -92233720368547758.08 >= amountSek <= 92233720368547758.07", message);
     }
 
     /**
-     * Test inmatning, max heltal utan decimaler
+     * Test inmatning, negativt max heltal utan decimaler
      */
     @Test
     public void testNegativeDoubleMaxNoDecimal() {
-        long expected = -7036874417766300L;
+        String inputSek = "-92233720368547758.00";
+        long expected = -9223372036854775800L;
         try {
-            assertEquals(expected, UnitConversion.convertFromSek(-70368744177663.0));
-        } catch (TooManyDecimalsException e) {
-            System.out.println("Oväntat fel i testDoubleMaxNoDecimal()");
-        } catch (TooBigNumberException e) {
+            assertEquals(expected, UnitConversion.convertFromSek(inputSek));
+        } catch (Exception e) {
             System.out.println("Oväntat fel i testDoubleMaxNoDecimal()");
         }
     }
 
     /**
-     * Test inmatning, max heltal med en decimal
+     * Test inmatning, negativt max heltal med en decimal
      */
     @Test
     public void testNegativeDoubleMaxWithOneDecimal() {
-        long expected = -7036874417766390L;
+        String inputSek = "-92233720368547757.9";
+        long expected = -9223372036854775790L;
         try {
-            assertEquals(expected, UnitConversion.convertFromSek(-70368744177663.9));
-        } catch (TooManyDecimalsException e) {
-            System.out.println("Oväntat fel i testDoubleMax()");
-        } catch (TooBigNumberException e) {
-            System.out.println("Oväntat fel i testDoubleMax()");
+            assertEquals(expected, UnitConversion.convertFromSek(inputSek));
+        } catch (Exception e) {
+            System.out.println("testNegativeDoubleMaxWithOneDecimal()");
         }
     }
 
     /**
-     * Test inmatning, max heltal med två decimaler
+     * Test inmatning, negativt max heltal med två decimaler
      */
     @Test
     public void testNegativeDoubleMaxWithTwoDecimal() {
-        long expected = -7036874417766398L;
+        String inputSek = "-92233720368547758.08";
+        long expected = -9223372036854775808L;
         try {
-            assertEquals(expected, UnitConversion.convertFromSek(-70368744177663.98));
-        } catch (TooManyDecimalsException e) {
-            System.out.println("Oväntat fel i testDoubleMax()");
-        } catch (TooBigNumberException e) {
+            assertEquals(expected, UnitConversion.convertFromSek(inputSek));
+        } catch (Exception e) {
             System.out.println("Oväntat fel i testDoubleMax()");
         }
     }
 
     /**
-     * Test inmatning, max heltal med två decimaler och en extra nolla efter
+     * Test inmatning, negativt max heltal med två decimaler och en extra nolla efter
      */
     @Test
     public void testNegativeOverflowMaxWithTwoDecimalAndExtraZero() {
-        long expected = -7036874417766398L;
+        String inputSek = "-92233720368547758.080";
+        long expected = -9223372036854775808L;
         try {
-            assertEquals(expected, UnitConversion.convertFromSek(-70368744177663.980));
-        } catch (TooManyDecimalsException e) {
-            System.out.println("Oväntat fel i testOverflowMaxWithThreeDecimal() 1");
-        } catch (TooBigNumberException e) {
-            System.out.println("Oväntat fel i testOverflowMaxWithThreeDecimal() 2");
+            assertEquals(expected, UnitConversion.convertFromSek(inputSek));
+        } catch (Exception e) {
+            System.out.println("Oväntat fel i testNegativeOverflowMaxWithTwoDecimalAndExtraZero()");
         }
     }
 
     /**
-     * Test inmatning, max heltal med tre decimaler
+     * Test inmatning, negativt max heltal med tre decimaler
      */
     @Test
     public void testNegativeOverflowMaxWithThreeDecimals() {
-        String message = "Oväntat fel i testOverflowMaxWithThreeDecimals()";
+        String inputSek = "-92233720368547757.073";
+        String message = "Oväntat fel i testNegativeOverflowMaxWithThreeDecimals()";
         //"Input får ha max 2 decimalers precision"
         try {
-            UnitConversion.convertFromSek(-70368744177663.981);
-        } catch (TooManyDecimalsException e) {
+            UnitConversion.convertFromSek(inputSek);
+        } catch (Exception e) {
             message = e.getMessage();
-        } catch (TooBigNumberException e) {
-            System.out.println("Oväntat fel i testOverflowMaxWithThreeDecimal() 2");
         }
-        assertEquals("Input får ha max 2 decimalers precision", message);
+        assertEquals("Felaktig inmatning. Max två decimaler och inom intervallet -92233720368547758.08 >= amountSek <= 92233720368547758.07", message);
     }
 
     /**
-     * Test inmatning, för stort tal
+     * Test inmatning, för stort tal, negativt
      */
     @Test
     public void testNegativeOverflow() {
-        String message = "Oväntat fel i testDoubleOverflow()";
+        String inputSek = "-92233720368547758.09";
+        String message = "Oväntat fel i testNegativeOverflow()";
         try {
-            UnitConversion.convertFromSek(-70368744177663.99);
-        } catch (TooManyDecimalsException e) {
-            System.out.println("Oväntat fel");
-        } catch (TooBigNumberException e) {
+            UnitConversion.convertFromSek(inputSek);
+        } catch (Exception e) {
             message = e.getMessage();
         }
-        assertEquals("Argument måste vara mindre än 70368744177663.99", message);
+        assertEquals("Felaktig inmatning. Max två decimaler och inom intervallet -92233720368547758.08 >= amountSek <= 92233720368547758.07", message);
+    }
+
+    /**
+     * Test med inmatning som inte är ett tal
+     */
+    @Test
+    public void testNonNumerical() {
+        String inputSek = "asdf";
+        String message = "Felaktig inmatning. Inmatning måste vara ett tal";
+        try {
+            UnitConversion.convertFromSek(inputSek);
+        } catch (Exception e) {
+            message = e.getMessage();
+        }
+        assertEquals("Felaktig inmatning. Inmatning måste vara ett tal", message);
+    }
+
+    /**
+     * Test med inmatning som är ett tal, men innehåller för många decimaltecken
+     */
+    @Test
+    public void testAlmostNumericalButTooManyDots() {
+        String inputSek = "123.33.33";
+        String message = "Felaktig inmatning. Inmatning måste vara ett tal";
+        try {
+            UnitConversion.convertFromSek(inputSek);
+        } catch (Exception e) {
+            message = e.getMessage();
+        }
+        assertEquals("Felaktig inmatning. Inmatning måste vara ett tal", message);
+    }
+
+    /**
+     * String som är null
+     */
+    @Test
+    public void testEmptyString() {
+        String inputSek = "";
+        String message = "Felaktig inmatning. Inmatning måste vara ett tal";
+        try {
+            UnitConversion.convertFromSek(inputSek);
+        } catch (Exception e) {
+            message = e.getMessage();
+        }
+        assertEquals("Felaktig inmatning. Inmatning måste vara ett tal", message);
     }
 }
