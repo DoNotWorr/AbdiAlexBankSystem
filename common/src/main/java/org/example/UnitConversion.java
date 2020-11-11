@@ -1,13 +1,10 @@
 package org.example;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.math.RoundingMode;
 
 public class UnitConversion {
-    //Belopp i sek som ska konverteras till cent (ören) måste vara mindre än absoluteBoundSek och större än -absoluteBoundSek
-    public static final double absoluteBoundSekToCent = 70368744177663.99;
-
-    /**
+     /**
      * @param amountCent belopp i hela ören, exempelvis: 1234
      * @return belopp i kronor som decimaltal, exempelvis 12,34
      * @author Alex, Abdi
@@ -25,7 +22,8 @@ public class UnitConversion {
     }
 
     /**
-     * @param amountCent belopp i hela ören, exempelvis: 1234
+     * Metod för att konvertera belopp väldigt stora belopp (ören) till kronor. Validerar inte inmatning
+     * @param amountCent belopp i hela ören, exempelvis: 123456789123456789123456789123456789
      * @return belopp i kronor som decimaltal, exempelvis 12,34
      * @author Alex, Abdi
      * Konverterar ett belopp från ören (1234 öre) till kronor (12,34 kr)
@@ -44,26 +42,20 @@ public class UnitConversion {
     /**
      * Räknar om ett belopp i kronor till motsvarande belopp i ören.
      *
-     * @param amountSek ett belopp i kronor med max två decimaler (exempelvis 123 eller 123.45)
+     * @param amountSek String med ett belopp i kronor med max två decimaler (exempelvis "123" eller "123.45"). Max två decimaler och inom intervallet -92233720368547758.08 >= amountSek <= 92233720368547758.07
      * @return beloppet konverterat till ören (exempelvis 12300 eller 12345)
-     * @throws TooManyDecimalsException om amountInSek innehåller mer än två decimaler (exempelvis 123.456), för att undvika avrundningsfel
+     * @throws NonNumericalException om argument inte går att göra om till ett tal
+     * @throws NumberNotInBoundsException om argument är ett tal som inte kan hanteras. Max två decimaler och inom intervallet -92233720368547758.08 >= amountSek <= 92233720368547758.07
      * @author Alex
      */
-
-    public static long convertFromSek(double amountSek) throws TooManyDecimalsException, TooBigNumberException {
-        //All kontroll sker i ValidationService.INSTANCE.isValidArgumentConvertFromSek()
-        if (amountSek < absoluteBoundSekToCent && amountSek > -absoluteBoundSekToCent) {
-            try {
-                //Om amountSek innehöll mer än 2 decimalers precision så blir det ArithmeticException.
-                return BigDecimal.valueOf(amountSek).movePointRight(2).setScale(0).longValueExact();
-            } catch (ArithmeticException e) {
-                //Skapar eget exception för att påtvinga hantering av fel där metoden används
-                throw new TooManyDecimalsException("Input får ha max 2 decimalers precision");
-            }
-        } else {
-            throw new TooBigNumberException("Argument måste vara mindre än 70368744177663.99");
+    public static long convertFromSek(String amountSek) throws NonNumericalException, NumberNotInBoundsException {
+        try {
+            //Om amountSek innehöll mer än 2 decimalers precision så blir det ArithmeticException.
+            return new BigDecimal(amountSek).movePointRight(2).setScale(0, RoundingMode.UNNECESSARY).longValueExact();
+        } catch (NumberFormatException e) {
+            throw new NonNumericalException("Felaktig inmatning. Inmatning måste vara ett tal");
+        } catch (ArithmeticException e) {
+            throw new NumberNotInBoundsException("Felaktig inmatning. Max två decimaler och inom intervallet -92233720368547758.08 >= amountSek <= 92233720368547758.07");
         }
     }
-
-
 }

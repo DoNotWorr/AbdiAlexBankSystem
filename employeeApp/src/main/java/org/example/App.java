@@ -200,7 +200,6 @@ public class App {
         boolean keepgoings = true;
 
         switch (choice) {
-
             case 1:
                 while (keepgoing) {
                     String ownerID = findCutomer("%-5s %-10s %-10s %-10s\n", "Den valda kundens personner är: ");
@@ -227,7 +226,7 @@ public class App {
                 }
                 while (keepgoings) {
                     try {
-                        double amount = 0;
+                        String amount;
                         System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka betalningsuppdraget ifrån: ");
                         String fromAccountNumber = scanner.nextLine();
                         Account fromAccount = allAccounts.get(fromAccountNumber);
@@ -238,7 +237,7 @@ public class App {
                             Account toAccount = allAccounts.get(toAccountNumber);
                             if (allAccounts.containsKey(toAccountNumber)) {
                                 System.out.println("Hur mycket pengar vill du skicka över: ");
-                                amount = Double.parseDouble(scanner.nextLine());
+                                amount = scanner.nextLine();
                                 System.out.println("Ange datumet yy-mm-dd när du vill betalningsuppdraget ska skickas: ");
                                 String transferDate = scanner.nextLine();
 
@@ -256,12 +255,10 @@ public class App {
                                 keepgoings = false;
                             }
                         }
-                    } catch (NumberFormatException e) {
-                        System.out.println("Felaktig inmatning. Ange ett sifferbelopp i kronor som tex. \"100\" eller \"10.00\"");
-                    } catch (TooManyDecimalsException e) {
-                        System.out.println("Felaktig inmatning. Ange sifferbelopp med max två decimaler.");
-                    } catch (TooBigNumberException e) {
-                        System.out.println("Felaktig inmatning. Ange sifferbelopp som är mindre än " + UnitConversion.absoluteBoundSekToCent + " kronor");
+                    } catch (NonNumericalException e) {
+                        System.out.println("Felaktig inmatning. Beloppet måste vara ett tal.");
+                    } catch (NumberNotInBoundsException e) {
+                        System.out.println("Felaktig inmatning. Kan inte hantera för stora eller små tal. Kan inte hantera tal med mer än två decimaler.");
                     }
                 }
                 scanner.nextLine();
@@ -320,7 +317,7 @@ public class App {
                     if (allAccounts.containsKey(toAccountNumber)) {
                         Account toAccount = allAccounts.get(toAccountNumber);
                         System.out.println("Hur mycket pengar vill du skicka över: ");
-                        double amount = Double.parseDouble(scanner.nextLine());
+                        String amount = scanner.nextLine();
                         if (fromAccount.directTransfer(toAccount, UnitConversion.convertFromSek(amount))) {
                             System.out.println("Pengarnade överförades till: "
                                     + toAccount.getAccountNumber());
@@ -336,12 +333,10 @@ public class App {
                     System.out.println("Fanns inget konto som matchade det du skrev in: " + fromAccountNumber
                             + "\nVänligen försök igen! ");
                 }
-            } catch (NumberFormatException e) {
-                System.out.println("Felaktig inmatning. Ange ett sifferbelopp i kronor som tex. \"100\" eller \"10.00\"");
-            } catch (TooManyDecimalsException e) {
-                System.out.println("Felaktig inmatning. Ange sifferbelopp med max två decimaler.");
-            } catch (TooBigNumberException e) {
-                System.out.println("Felaktig inmatning. Ange sifferbelopp som är mindre än " + UnitConversion.absoluteBoundSekToCent + " kronor");
+            } catch (NonNumericalException e) {
+                System.out.println("Felaktig inmatning. Beloppet måste vara ett tal.");
+            } catch (NumberNotInBoundsException e) {
+                System.out.println("Felaktig inmatning. Kan inte hantera för stora eller små tal. Kan inte hantera tal med mer än två decimaler.");
             }
         }
         scanner.nextLine();
@@ -386,7 +381,7 @@ public class App {
                 for (Account thisAccount : allAccounts.values()) {
                     if (thisAccount.getAccountNumber().equals(accountNumber)) {
                         System.out.println("Hur mycket vill du ta ut från kontot: ");
-                        double amount = Double.parseDouble(scanner.nextLine());
+                        String amount = scanner.nextLine();
                         if (thisAccount.withdrawMoney(UnitConversion.convertFromSek(amount))) {
                             System.out.println("Den valda kundens personnummer är: " + thisAccount.getOwnerID());
                             System.out.println("Kontonamn: "
@@ -407,12 +402,10 @@ public class App {
                         }
                     }
                 }
-            } catch (NumberFormatException e) {
-                System.out.println("Felaktig inmatning. Ange ett sifferbelopp i kronor som tex. \"100\" eller \"10.00\"");
-            } catch (TooManyDecimalsException e) {
-                System.out.println("Felaktig inmatning. Ange sifferbelopp med max två decimaler.");
-            } catch (TooBigNumberException e) {
-                System.out.println("Felaktig inmatning. Ange sifferbelopp som är mindre än " + UnitConversion.absoluteBoundSekToCent + " kronor");
+            } catch (NonNumericalException e) {
+                System.out.println("Felaktig inmatning. Beloppet måste vara ett tal.");
+            } catch (NumberNotInBoundsException e) {
+                System.out.println("Felaktig inmatning. Kan inte hantera för stora eller små tal. Kan inte hantera tal med mer än två decimaler.");
             }
         }
         scanner.nextLine();
@@ -455,7 +448,7 @@ public class App {
                 for (Account thisAccount : allAccounts.values()) {
                     if (thisAccount.getAccountNumber().equals(accountNumber)) {
                         System.out.println("Hur mycket vill du sätta in: ");
-                        double amount = Double.parseDouble(scanner.nextLine());
+                        String amount = scanner.nextLine();
                         if (thisAccount.depositMoney(UnitConversion.convertFromSek(amount))) {
                             System.out.println("Den valda kundens personnummer är: " + thisAccount.getOwnerID());
                             System.out.println("Kontonamn: " + thisAccount.getAccountName() + "\n"
@@ -468,12 +461,10 @@ public class App {
                         }
                     }
                 }
-            } catch (NumberFormatException e) {
-                System.out.println("Felaktig inmatning. Ange ett sifferbelopp i kronor som tex. \"100\" eller \"10.00\"");
-            } catch (TooManyDecimalsException e) {
-                System.out.println("Felaktig inmatning. Ange sifferbelopp med max två decimaler.");
-            } catch (TooBigNumberException e) {
-                System.out.println("Felaktig inmatning. Ange sifferbelopp som är mindre än " + UnitConversion.absoluteBoundSekToCent + " kronor");
+            } catch (NonNumericalException e) {
+                System.out.println("Felaktig inmatning. Beloppet måste vara ett tal.");
+            } catch (NumberNotInBoundsException e) {
+                System.out.println("Felaktig inmatning. Kan inte hantera för stora eller små tal. Kan inte hantera tal med mer än två decimaler.");
             }
         }
         scanner.nextLine();
@@ -632,7 +623,7 @@ public class App {
     private static void inspectSafe() {
         BigInteger totalBalance = new BigInteger("0");
         for (Account account : allAccounts.values()) {
-            totalBalance.add(BigInteger.valueOf(account.getBalance()));
+            totalBalance = totalBalance.add(BigInteger.valueOf(account.getBalance()));
         }
         System.out.println("Det finns " + UnitConversion.convertToSek(totalBalance.toString()) + " kr i kassavalvet.\n");
     }

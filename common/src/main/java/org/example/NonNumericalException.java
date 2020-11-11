@@ -1,7 +1,7 @@
 package org.example;
 
-public class TooBigNumberException extends Exception {
-    public TooBigNumberException(String message) {
+public class NonNumericalException extends Exception {
+    public NonNumericalException(String message) {
         super(message);
     }
 }

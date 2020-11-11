@@ -1,7 +1,7 @@
 package org.example;
 
-public class TooManyDecimalsException extends Exception {
-    public TooManyDecimalsException(String message) {
+public class NumberNotInBoundsException extends Exception {
+    public NumberNotInBoundsException(String message) {
         super(message);
     }
 }
