@@ -17,8 +17,7 @@
         <ListView fx:id="currentTransfersListView"/>
         <HBox>
             <Button onAction="#createTransfer" text="Skapa ny transaktion"/>
-            <Button onAction="#removeTransfer" text="Ta bort transaktion"/>
+            <Button fx:id="removeTransfer" onAction="#removeTransfer" text="Ta bort transaktion"/>
         </HBox>
-
     </VBox>
 </Pane>

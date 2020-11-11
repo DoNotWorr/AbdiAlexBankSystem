@@ -2,10 +2,7 @@ package org.example;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.PopupControl;
+import javafx.scene.control.*;
 
 
 import java.io.IOException;
@@ -18,8 +15,12 @@ public class MainController {
     @FXML
     ListView<Account> currentAccountsListView;
 
+    //todo disable knappen removeTransfer innan man har valt något
     @FXML
     ListView<Transfer> currentTransfersListView;
+
+    @FXML
+    Button removeTransfer;
 
     @FXML
     public void logout() {
@@ -33,6 +34,8 @@ public class MainController {
 
     @FXML
     public void createTransfer() {
+        customerApp.transferController.setDefaultFields();
+
         //Byter scen och visar den scenen
         customerApp.primaryStage.setScene(customerApp.myScenes.get("transferScene"));
         customerApp.primaryStage.show();
@@ -40,7 +43,7 @@ public class MainController {
 
     @FXML
     public void removeTransfer() {
-        //todo Avbryt transaktion som är markerad i listan med transaktioner
+        //todo Avbryt transaktion som är markerad i listan med transaktioner.
         currentTransfersListView.getSelectionModel().getSelectedItem().setStatus(Transfer.TransferStatus.CANCELLED);
     }
 
