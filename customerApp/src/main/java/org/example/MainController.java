@@ -75,6 +75,7 @@ public class MainController {
 
     /**
      * Fyller lista med innehåll
+     *
      * @param accounts konton som ska visas
      */
     public void updateAccounts(ObservableList<Account> accounts) {
@@ -86,6 +87,7 @@ public class MainController {
 
     /**
      * Fyller lista med innehåll
+     *
      * @param transfers lista som ska visas
      */
     public void updateTransfers(ObservableList<Transfer> transfers) {

@@ -36,7 +36,8 @@
                 </toggleGroup>
             </RadioButton>
         </HBox>
-        <DatePicker fx:id="laterDatePicker" editable="false"/> <!-- editable="false" för att undvika felaktig inmatning. Kan ändras till true om inmatning valideras -->
+        <DatePicker fx:id="laterDatePicker"
+                    editable="false"/> <!-- editable="false" för att undvika felaktig inmatning. Kan ändras till true om inmatning valideras -->
         <HBox>
             <Button onAction="#addTransaction" text="Skapa transaktion"/>
             <Button onAction="#leaveTransaction" text="Avbryt"/>
