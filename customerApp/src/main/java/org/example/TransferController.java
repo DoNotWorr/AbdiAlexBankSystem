@@ -1,12 +1,11 @@
 package org.example;
 
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.util.StringConverter;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class TransferController {
     CustomerApp customerApp = null;
@@ -32,38 +31,72 @@ public class TransferController {
     @FXML
     DatePicker laterDatePicker = null;
 
+    /**
+     * Läser inmatad info och skapar transaktion om det är möjligt.
+     */
     @FXML
     public void addTransaction() {
         Account fromAccount = fromAccountList.getValue();
-
         Account toAccount = CustomerApp.allAccounts.get(toAccountNumber.getText());
-        long amountCent;
-        //todo Fortsätt när UnitConversion.convertFromSek() tar emot en String istället för en double
+        String amountInput = amountSek.getText();
+
+        //todo ta bort testprints
+        System.out.println("Före:");
+        System.out.println("Konto-instans: " + fromAccount.getBalance());
+        System.out.println("UserSession konto-instans: " + UserSession.getInstance().getAccounts().get(0).getBalance());
+        System.out.println("Konto i customerApp.allAccounts: " + CustomerApp.allAccounts.get(fromAccount.getAccountNumber()).getBalance());
 
 
-        //todo fortsätt när Account.addTransfer() kaster exception, så man slipper nedanstående kod
-        /*if(Objects.isNull(toAccount)) {
-
-        }*/
-
-        //Todo gör sedan färdigt så den skapar en transfer
-        /*if(onCurrentDate.isSelected()) {
-            //skapa direktöverföring
-            fromAccount.directTransfer(toAccount, )
-        } else if (onLaterDate.isSelected()) { //todo Är det möjligt att ingen RadioButton är selected?
-            //skapa bankuppdrag
-            fromAccount.addTransfer()
-        }*/
-
-        if (true) {
-            //todo Lägg upp transaktion eller genomför direktöverföring
-
-            //Byter scen och visar den scenen
-            customerApp.primaryStage.setScene(customerApp.myScenes.get("mainScene"));
-            customerApp.primaryStage.show();
+        try {
+            if (onCurrentDate.isSelected()) {
+                //skapa direktöverföring (genomförs direkt)
+                //todo toAccount kan vara null, uppdatera directTransfer
+                fromAccount.directTransfer(toAccount, UnitConversion.convertFromSek(amountInput));
+            } else if (onLaterDate.isSelected()) {
+                //skapa bankuppdrag och lägg i lista
+                Transfer brandNewTransfer = fromAccount.addTransfer(toAccount, UnitConversion.convertFromSek(amountInput), laterDatePicker.getValue());
+                CustomerApp.allTransfers.add(brandNewTransfer);
+                UserSession.getInstance().getTransfers().add(brandNewTransfer);
+            }
+        } catch (NonNumericalException e) {
+            e.printStackTrace();
+            return;
+        } catch (NumberNotInBoundsException e) {
+            e.printStackTrace();
+            return;
+        } catch (NullToAccountException e) {
+            e.printStackTrace();
+            return;
+        } catch (NotLaterDateException e) {
+            e.printStackTrace();
+            return;
         }
+        //todo info till användaren om vad som blev fel, istället för att återställa fälten och byta tillbaka till mainScene
+
+        //todo ta bort testprints
+        System.out.println("Efter:");
+        System.out.println("Konto-instans: " + fromAccount.getBalance());
+        System.out.println("UserSession konto-instans: " + UserSession.getInstance().getAccounts().get(0).getBalance());
+        System.out.println("Konto i customerApp.allAccounts: " + CustomerApp.allAccounts.get(fromAccount.getAccountNumber()).getBalance());
+        System.out.println("Konto i ChoiceBox: " + fromAccountList.getValue().getBalance());
+
+        //Ställer in valen i fönstret till standard
+        setDefaultFields();
+
+        //Läser accounts på nytt för att uppdatera listor i mainScene
+        customerApp.mainController.updateAccounts(UserSession.getInstance().getAccounts());
+
+        //Läser transfers på nytt för att uppdatera listor i mainScene
+        customerApp.mainController.updateTransfers(UserSession.getInstance().getTransfers());
+
+        //Byter scen och visar den scenen
+        customerApp.primaryStage.setScene(customerApp.myScenes.get("mainScene"));
+        customerApp.primaryStage.show();
     }
 
+    /**
+     * Tömmer alla fält och byter till mainScene
+     */
     @FXML
     public void leaveTransaction() {
         //Ställer in valen i fönstret till standard
@@ -74,11 +107,23 @@ public class TransferController {
         customerApp.primaryStage.show();
     }
 
-    public void fillListViewAccounts(ObservableList<Account> accounts) {
+    /**
+     * Fyller scrollista med konton som man kan välja i transfer-fönster
+     *
+     * @param accounts konton som ska visas
+     */
+    public void updateAccounts(ObservableList<Account> accounts) {
         //Fyller lista med överföringar
+
         fromAccountList.setItems(accounts);
+
+        //todo behöver uppdatera listan?
+
     }
 
+    /**
+     * Återställer standardvärden i transfer-fönster
+     */
     public void setDefaultFields() {
         //Ställer ChoiceBox fromAccount till första kontot i listan
         fromAccountList.setValue(UserSession.getInstance().getAccounts().get(0));
@@ -86,14 +131,16 @@ public class TransferController {
         //Tömmer TextField toAccount
         toAccountNumber.setText("");
 
+        //Tömmer TextField amountSek
+        amountSek.setText("");
+
         //Väljer RadioButton till "omgående"
         setInstant();
     }
 
-    public void isFutureDate() {
-        //Kontrollera att valt datum inte är dagens datum eller tidigare
-    }
-
+    /**
+     *
+     */
     public void setInstant() {
         //Välj dagens datum i datepicker
         laterDatePicker.setValue(LocalDate.now());
@@ -103,7 +150,6 @@ public class TransferController {
 
         //Välj RadioButton "omgående"
         onCurrentDate.setSelected(true);
-
     }
 
     public void setDelayed() {

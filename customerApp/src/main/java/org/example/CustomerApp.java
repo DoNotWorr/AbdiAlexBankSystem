@@ -138,7 +138,5 @@ public class CustomerApp extends Application {
         }
         return currentTransfers;
     }
-
-
 }
 

@@ -188,7 +188,7 @@ public class Account {
      * @return formatet på utskriften
      */
     public String toString() {
-        return this.accountName + "(" + this.getAccountNumber() + ")";
+        return this.accountName + "(" + this.getAccountNumber() + ")" + UnitConversion.convertToSek(this.getBalance()) + " kr";
     }
 }
 

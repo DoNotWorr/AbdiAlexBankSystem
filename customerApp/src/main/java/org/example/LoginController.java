@@ -1,5 +1,6 @@
 package org.example;
 
+import javafx.collections.ListChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -19,12 +20,12 @@ public class LoginController {
             //Skapar användarsession
             UserSession.setInstance(customerApp.allCustomers.get(textField.getText()));
 
-            //Fyller listor i main-fönstret med innehåll från UserSession
-            customerApp.mainController.fillListViewAccounts(UserSession.getInstance().getAccounts());
-            customerApp.mainController.fillListViewTransfers(UserSession.getInstance().getTransfers());
+            //Uppdaterar listor i main-fönstret med innehåll från UserSession
+            customerApp.mainController.updateAccounts(UserSession.getInstance().getAccounts());
+            customerApp.mainController.updateTransfers(UserSession.getInstance().getTransfers());
 
             //Fyller listor i transfer-fönstret med innehåll från UserSession
-            customerApp.transferController.fillListViewAccounts(UserSession.getInstance().getAccounts());
+            customerApp.transferController.updateAccounts(UserSession.getInstance().getAccounts());
 
             //Byter scen och visar den scenen
             customerApp.primaryStage.setScene(customerApp.myScenes.get("mainScene"));
@@ -39,18 +40,4 @@ public class LoginController {
     public void btn_exit(MouseEvent mouseEvent) {
         System.exit(0);
     }
-
-
-    /*
-    //Kommenterat ut flera olika lösningar medan jag söker lösning
-    public ListView<Account> getCurrentAccounts(Customer customer) {
-        ListView<Account> currentAccounts = new ListView<>();
-        for (Account account : customerApp.allAccounts.values()) {
-            if (account.getOwnerID().equals(customer.getOwnerID())) {
-                currentAccounts.getItems().add(account);
-            }
-        }
-        return currentAccounts;
-    }
-     */
 }

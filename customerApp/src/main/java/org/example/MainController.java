@@ -56,6 +56,10 @@ public class MainController {
 
     @FXML
     public void createTransfer() {
+        //Fyller listor i transfer-fönstret med innehåll från UserSession
+        customerApp.transferController.updateAccounts(UserSession.getInstance().getAccounts());
+
+        //Ställer in valen i fönstret till standard
         customerApp.transferController.setDefaultFields();
 
         //Byter scen och visar den scenen
@@ -69,13 +73,25 @@ public class MainController {
         currentTransfersListView.getSelectionModel().getSelectedItem().setStatus(Transfer.TransferStatus.CANCELLED);
     }
 
-    public void fillListViewAccounts(ObservableList<Account> accounts) {
+    /**
+     * Fyller lista med innehåll
+     * @param accounts konton som ska visas
+     */
+    public void updateAccounts(ObservableList<Account> accounts) {
         //Fyller lista med konton
         currentAccountsListView.setItems(accounts);
+        //enligt dokumentation ska setItems() automatiskt göra en refresh(), men en manuell refresh() verkar krävas ändå
+        currentAccountsListView.refresh();
     }
 
-    public void fillListViewTransfers(ObservableList<Transfer> transfers) {
+    /**
+     * Fyller lista med innehåll
+     * @param transfers lista som ska visas
+     */
+    public void updateTransfers(ObservableList<Transfer> transfers) {
         //Fyller lista med överföringar
         currentTransfersListView.setItems(transfers);
+        //enligt dokumentation ska setItems() automatiskt göra en refresh(), men en manuell refresh() verkar krävas ändå
+        currentTransfersListView.refresh();
     }
 }
