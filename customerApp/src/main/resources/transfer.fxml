@@ -11,17 +11,19 @@
     <VBox>
         <HBox>
             <Label text="Från kontonummer"/>
-            <ChoiceBox fx:id="fromAccountList"/>
+            <ListView fx:id="fromAccountList"/>
         </HBox>
 
         <HBox>
             <Label text="Till kontonummer"/>
             <TextField fx:id="toAccountNumber"/>
+            <Label fx:id="errorMsgToAccount" textFill="red"/>
         </HBox>
         <HBox>
             <Label text="Belopp"/>
             <TextField fx:id="amountSek"/>
             <Label text="kr"/>
+            <Label fx:id="errorMsgAmount" textFill="red"/>
         </HBox>
 
         <HBox>

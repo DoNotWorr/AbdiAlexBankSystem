@@ -6,18 +6,25 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class TransferController {
     CustomerApp customerApp = null;
 
     @FXML
-    ChoiceBox<Account> fromAccountList;
+    ListView<Account> fromAccountList;
 
     @FXML
     TextField toAccountNumber;
 
     @FXML
+    Label errorMsgToAccount;
+
+    @FXML
     TextField amountSek;
+
+    @FXML
+    Label errorMsgAmount;
 
     @FXML
     ToggleGroup whenTransaction;
@@ -36,49 +43,48 @@ public class TransferController {
      */
     @FXML
     public void addTransaction() {
-        Account fromAccount = fromAccountList.getValue();
+        errorMsgAmount.setText("");
+        errorMsgToAccount.setText("");
+        Account fromAccount = fromAccountList.getSelectionModel().getSelectedItem();
         Account toAccount = CustomerApp.allAccounts.get(toAccountNumber.getText());
         String amountInput = amountSek.getText();
-
-        //todo ta bort testprints
-        System.out.println("Före:");
-        System.out.println("Konto-instans: " + fromAccount.getBalance());
-        System.out.println("UserSession konto-instans: " + UserSession.getInstance().getAccounts().get(0).getBalance());
-        System.out.println("Konto i customerApp.allAccounts: " + CustomerApp.allAccounts.get(fromAccount.getAccountNumber()).getBalance());
-
+        long amountCent;
 
         try {
             if (onCurrentDate.isSelected()) {
+                if(Objects.isNull(toAccount)) {
+                    errorMsgToAccount.setText("Hittade ingen mottagare");
+                }
+                amountCent = UnitConversion.convertFromSek(amountInput);
                 //skapa direktöverföring (genomförs direkt)
-                //todo toAccount kan vara null, uppdatera directTransfer
-                fromAccount.directTransfer(toAccount, UnitConversion.convertFromSek(amountInput));
+                if (fromAccount.directTransfer(toAccount, amountCent) == false) {
+                    if(amountCent > fromAccount.getBalance()) {
+                        errorMsgAmount.setText("För lågt saldo");
+                    }
+                    return;
+                }
             } else if (onLaterDate.isSelected()) {
                 //skapa bankuppdrag och lägg i lista
                 Transfer brandNewTransfer = fromAccount.addTransfer(toAccount, UnitConversion.convertFromSek(amountInput), laterDatePicker.getValue());
                 CustomerApp.allTransfers.add(brandNewTransfer);
                 UserSession.getInstance().getTransfers().add(brandNewTransfer);
             }
+            //errorMsgToAccount
+            //            errorMsgAmount
         } catch (NonNumericalException e) {
-            e.printStackTrace();
+            errorMsgAmount.setText("Fyll i korrekt belopp");
             return;
         } catch (NumberNotInBoundsException e) {
-            e.printStackTrace();
+            errorMsgAmount.setText("Fyll i korrekt belopp");
             return;
         } catch (NullToAccountException e) {
-            e.printStackTrace();
+            errorMsgToAccount.setText("Hittade ingen mottagare");
             return;
         } catch (NotLaterDateException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //Kan inte uppstå
             return;
         }
         //todo info till användaren om vad som blev fel, istället för att återställa fälten och byta tillbaka till mainScene
-
-        //todo ta bort testprints
-        System.out.println("Efter:");
-        System.out.println("Konto-instans: " + fromAccount.getBalance());
-        System.out.println("UserSession konto-instans: " + UserSession.getInstance().getAccounts().get(0).getBalance());
-        System.out.println("Konto i customerApp.allAccounts: " + CustomerApp.allAccounts.get(fromAccount.getAccountNumber()).getBalance());
-        System.out.println("Konto i ChoiceBox: " + fromAccountList.getValue().getBalance());
 
         //Ställer in valen i fönstret till standard
         setDefaultFields();
@@ -114,11 +120,10 @@ public class TransferController {
      */
     public void updateAccounts(ObservableList<Account> accounts) {
         //Fyller lista med överföringar
-
         fromAccountList.setItems(accounts);
 
-        //todo behöver uppdatera listan?
-
+        //Uppdaterar lista
+        fromAccountList.refresh();
     }
 
     /**
@@ -126,13 +131,16 @@ public class TransferController {
      */
     public void setDefaultFields() {
         //Ställer ChoiceBox fromAccount till första kontot i listan
-        fromAccountList.setValue(UserSession.getInstance().getAccounts().get(0));
+        fromAccountList.getSelectionModel().selectFirst();
 
         //Tömmer TextField toAccount
         toAccountNumber.setText("");
 
         //Tömmer TextField amountSek
         amountSek.setText("");
+
+        errorMsgAmount.setText("");
+        errorMsgToAccount.setText("");
 
         //Väljer RadioButton till "omgående"
         setInstant();
