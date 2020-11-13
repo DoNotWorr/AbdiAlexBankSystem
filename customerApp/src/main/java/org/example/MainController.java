@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import org.example.DataClasses.*;
+
 import java.util.Comparator;
 
 public class MainController {
@@ -70,9 +71,9 @@ public class MainController {
     @FXML
     public void removeTransfer() {
         //Om en transaktion är vald, dvs "...getSelectedItem != null"
-        if(currentTransfersListView.getSelectionModel().getSelectedItem() != null) {
+        if (currentTransfersListView.getSelectionModel().getSelectedItem() != null) {
             //Sätter status som CANCELLED om det går.
-            if(currentTransfersListView.getSelectionModel().getSelectedItem().setStatus(Transfer.TransferStatus.CANCELLED)) { //I den nuvarande versionen är if-satsen överflödig eftersom listan visar enbart PENDING och det alltid går att byta från PENDING till CANCELLED
+            if (currentTransfersListView.getSelectionModel().getSelectedItem().setStatus(Transfer.TransferStatus.CANCELLED)) { //I den nuvarande versionen är if-satsen överflödig eftersom listan visar enbart PENDING och det alltid går att byta från PENDING till CANCELLED
                 updateTransfers(UserSession.getInstance().getTransfers());
             }
         } else {
@@ -108,7 +109,7 @@ public class MainController {
         }
 
         //Om listan med pågående transfers är tom
-        if(pendingTransfers.size() == 0) {
+        if (pendingTransfers.size() == 0) {
             //Går inte att trycka på "Ta bort transaktion"
             removeTransfer.setDisable(true);
         } else {

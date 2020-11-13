@@ -25,7 +25,7 @@ public class LoginController {
             customerApp.mainController.updateTransfers(UserSession.getInstance().getTransfers());
 
             //Om listan med användarens konton har storlek 0
-            if(UserSession.getInstance().getAccounts().size() == 0) {
+            if (UserSession.getInstance().getAccounts().size() == 0) {
                 //Det går inte att trycka på knappen "Skapa ny transaktion"
                 customerApp.mainController.addTransfer.setDisable(true);
             } else {
