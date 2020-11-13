@@ -280,7 +280,7 @@ public class App {
                         System.out.println("Ange hur många kronor du vill skicka över: ");
                         amountInput = scanner.nextLine();
                         amount = UnitConversion.convertFromSek(amountInput);
-                        if(amount > 0) {
+                        if (amount > 0) {
                             keepRunningPartFour = false;
                         }
                     } catch (NonNumericalException e) {

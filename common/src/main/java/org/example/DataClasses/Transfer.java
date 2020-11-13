@@ -7,6 +7,7 @@ import java.time.LocalDate;
 /**
  * Fyra variabler (fromAccountNumber, toAccountNumber, amount, transferDate) är obligatoriska i klassens enda konstruktor. Dessa fyra saknar setter-metoder.
  * Den femte variabeln status, har både getter och setter.
+ *
  * @author Alex
  */
 public class Transfer {
@@ -42,6 +43,7 @@ public class Transfer {
 
     /**
      * Getter fromAccountNumber
+     *
      * @return kontonumret som pengar ska skickas ifrån
      */
     public String getFromAccountNumber() {
@@ -50,6 +52,7 @@ public class Transfer {
 
     /**
      * Getter toAccountNumber
+     *
      * @return kontnumret som pengar ska göras till
      */
     public String getToAccountNumber() {
@@ -57,7 +60,6 @@ public class Transfer {
     }
 
     /**
-     *
      * @return
      */
     public long getAmount() {
@@ -66,6 +68,7 @@ public class Transfer {
 
     /**
      * Getter transferDate
+     *
      * @return Datum som pengarna ska skickas
      */
     public LocalDate getTransferDate() {
@@ -74,6 +77,7 @@ public class Transfer {
 
     /**
      * Getter transferStatus
+     *
      * @return status på transfer
      */
     public TransferStatus getStatus() {
