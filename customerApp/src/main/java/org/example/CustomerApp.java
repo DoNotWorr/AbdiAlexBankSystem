@@ -3,16 +3,19 @@ package org.example;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import jdk.jfr.internal.tool.Main;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -60,6 +63,7 @@ public class CustomerApp extends Application {
             }
         };
 
+
         primaryStage.setTitle("Newton First Bank");
 
         //Login window
@@ -84,9 +88,14 @@ public class CustomerApp extends Application {
         Parent rootMain = loaderMain.load();
         mainController = loaderMain.getController();
         mainController.customerApp = this;
-        Scene mainScene = new Scene(rootMain, 300, 900);
+        Scene mainScene = new Scene(rootMain, 800, 520);
         // lägg här så man fattar bättre
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.setScene(mainScene);
+        mainScene.setFill(Color.TRANSPARENT);
         rootMain.addEventHandler(MouseEvent.MOUSE_DRAGGED, draggedWindow);
+
+
         myScenes.put("mainScene", mainScene);
 
 
@@ -106,6 +115,7 @@ public class CustomerApp extends Application {
     //Kommenterat ut flera olika lösningar medan jag söker lösning
     public static ObservableList<Account> getAccountsInCustomer(Customer customer) {
         ObservableList<Account> currentAccounts = FXCollections.observableArrayList();
+
         for (Account account : allAccounts.values()) {
             if (account.getOwnerID().equals(customer.getOwnerID())) {
                 currentAccounts.add(account);

@@ -1,23 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.effect.Reflection?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<Pane prefHeight="200.0" prefWidth="400.0" maxWidth="200.0" maxHeight="400.0" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.MainController"
-      fx:id="Pane">
-    <VBox>
-        <Button id="logoutButton" onAction="#logout" mnemonicParsing="false" text="Logga ut"/>
-        <Label text="Mina konton"/>
-        <ListView fx:id="currentAccountsListView"/>
+<AnchorPane prefHeight="520" prefWidth="800"
+            style="-fx-background-color: linear-gradient(to right top, #1802fb, #1b49ff, #3e6fff, #6590ff, #8eafff, #91bfff, #9bceff, #acdbff, #8ee0ff, #69e6ff, #41ebf6, #23eee2);; -fx-background-radius: 4em;"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.MainController">
+    <children>
+        <Button id="logoutButton" layoutX="701.0" layoutY="451.0" mnemonicParsing="false" onAction="#logout"
+                style="-fx-background-radius: 1em;" text="Logga ut"/>
 
-        <Label text="Kommande transaktioner"/>
-        <ListView fx:id="currentTransfersListView"/>
-        <HBox>
-            <Button onAction="#createTransfer" text="Skapa ny transaktion"/>
-            <Button fx:id="removeTransfer" onAction="#removeTransfer" text="Ta bort transaktion"/>
-        </HBox>
-    </VBox>
-</Pane>
+        <ListView fx:id="currentAccountsListView" layoutX="22.0" layoutY="102.0" prefHeight="92.0" prefWidth="345.0"/>
+        <ListView fx:id="currentTransfersListView" layoutX="20.0" layoutY="295.0" prefHeight="100.0" prefWidth="428.0"/>
+        <Button fx:id="removeTransfer" layoutX="194.0" layoutY="419.0" onAction="#removeTransfer"
+                style="-fx-background-radius: 1em;" text="Ta bort transaktion"/>
+        <Button layoutX="30.0" layoutY="419.0" onAction="#createTransfer" style="-fx-background-radius: 1em;"
+                text="Skapa ny transaktion"/>
+        <Label layoutX="30.0" layoutY="70.0" text="Mina konton"/>
+
+        <Label layoutX="30.0" layoutY="251.0" text="Kommande transaktioner"/>
+        <ImageView fx:id="Imageview" fitHeight="215.0" fitWidth="372.0" layoutX="463.0" layoutY="53.0"
+                   pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@Bank.jpg"/>
+            </image>
+            <effect>
+                <Reflection/>
+            </effect>
+        </ImageView>
+        <Label accessibleRole="BUTTON" alignment="CENTER" layoutX="765.0" layoutY="14.0" onMouseClicked="#mainBtn_exit"
+               text="X">
+            <font>
+                <Font name="Bell MT Italic" size="16"/>
+            </font>
+        </Label>
+        <Label alignment="CENTER" layoutX="93.0" layoutY="9.0" prefHeight="39.0" prefWidth="523.0"
+               text="Dress like you own the bank, not like you need a loan from it.">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

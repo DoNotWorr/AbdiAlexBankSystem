@@ -78,6 +78,7 @@ public class Transfer {
 
     /**
      * Metod för utskrift av överföring. Används i CustomerApp-modulen.
+     *
      * @return Utskrift i formatet "XYZ kr från AAAA-AAAA-AAAA till BBBB-BBBB-BBBB den YYYY-MM-DD"
      */
     public String toString() {
