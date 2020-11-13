@@ -10,56 +10,57 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="419.0" prefWidth="558.0"
+<AnchorPane prefHeight="430.0" prefWidth="548.0"
             style="-fx-background-color: linear-gradient(to right top, #1207fb, #005bff, #0083ff, #00a3ff, #00bef9, #36caf5, #5ad6f0, #7ae0ec, #6be3f0, #58e7f3, #3eeaf6, #02edf8);; -fx-background-radius: 2em;"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.example.TransferController">
-    <Label fx:id="errorMsgToAccount" textFill="red"
-           text="testErrorMsgToAccount"/> <!-- todo flytta till rätt ställe, ta bort test-text sen -->
-    <Label fx:id="errorMsgAmount" textFill="red"
-           text="testErrorMsgAmount"/> <!-- todo flytta till rätt ställe, ta bort test-text sen -->
+    <Label fx:id="errorMsgToAccount" layoutX="26.0" layoutY="180.0" text="ErrorMsgToAccount" textFill="red">
+        <font>
+            <Font name="Bell MT Bold" size="14.0"/>
+        </font>
+    </Label>
+    <Label fx:id="errorMsgAmount" layoutX="32.0" layoutY="271.0" text="ErrorMsgAmount" textFill="red">
+        <font>
+            <Font name="Bell MT Bold" size="14.0"/>
+        </font>
+    </Label>
 
-    <ListView fx:id="fromAccountList" layoutX="24.0" layoutY="53.0" prefHeight="20" prefWidth="243.0"/>
+    <ListView fx:id="fromAccountList" layoutX="21.0" layoutY="45.0" prefHeight="62.0" prefWidth="273.0"
+              style="-fx-background-radius: 1em;"/>
     <Label layoutX="24.0" layoutY="21.0" text="Från kontonummer"/>
-    <TextField fx:id="toAccountNumber" layoutX="24.0" layoutY="132.0"/>
-    <Label layoutX="28.0" layoutY="100.0" text="Till kontonummer"/>
-    <Label layoutX="25.0" layoutY="183.0" text="Belopp"/>
-    <TextField fx:id="amountSek" layoutX="24.0" layoutY="215.0"/>
-    <Label layoutX="183.0" layoutY="219.0" text="kr"/>
-    <RadioButton fx:id="onCurrentDate" layoutX="23.0" layoutY="266.0" onAction="#setInstant" text="Omgående">
+    <TextField fx:id="toAccountNumber" layoutX="24.0" layoutY="143.0" style="-fx-background-radius: 1em;"/>
+    <Label layoutX="23.0" layoutY="116.0" text="Till kontonummer"/>
+    <Label layoutX="27.0" layoutY="207.0" text="Belopp"/>
+    <TextField fx:id="amountSek" layoutX="24.0" layoutY="236.0" style="-fx-background-radius: 1em;"/>
+    <Label layoutX="181.0" layoutY="240.0" text="kr"/>
+    <RadioButton fx:id="onCurrentDate" layoutX="23.0" layoutY="301.0" onAction="#setInstant" text="Omgående">
         <toggleGroup>
             <ToggleGroup fx:id="whenTransaction"/>
         </toggleGroup>
     </RadioButton>
-    <RadioButton fx:id="onLaterDate" layoutX="112.0" layoutY="266.0" onAction="#setDelayed" text="På datum">
+    <RadioButton fx:id="onLaterDate" layoutX="114.0" layoutY="301.0" onAction="#setDelayed" text="På datum">
         <toggleGroup>
             <fx:reference source="whenTransaction"/>
         </toggleGroup>
     </RadioButton>
-    <DatePicker fx:id="laterDatePicker" editable="false" layoutX="24.0" layoutY="291.0"/>
-    <Button layoutX="25.0" layoutY="323.0" onAction="#addTransaction" text="Skapa transaktion"/>
-    <Button layoutX="135.0" layoutY="323.0" onAction="#leaveTransaction" text="Avbryt"/>
-    <ImageView fx:id="payment" fitHeight="183.0" fitWidth="210.0" layoutX="331.0" layoutY="17.0" pickOnBounds="true"
+    <DatePicker fx:id="laterDatePicker" editable="false" layoutX="26.0" layoutY="329.0"/>
+    <Button layoutX="27.0" layoutY="370.0" onAction="#addTransaction" style="-fx-background-radius: 1em;"
+            text="Skapa transaktion"/>
+    <Button layoutX="148.0" layoutY="370.0" onAction="#leaveTransaction" style="-fx-background-radius: 1em;"
+            text="Avbryt"/>
+    <ImageView fx:id="payment" fitHeight="183.0" fitWidth="210.0" layoutX="344.0" layoutY="14.0" pickOnBounds="true"
                preserveRatio="true">
         <image>
             <Image url="@payment.jpg"/>
         </image>
     </ImageView>
-    <ImageView fx:id="loans" fitHeight="183.0" fitWidth="401.0" layoutX="331.0" layoutY="212.0" pickOnBounds="true"
+    <ImageView fx:id="loans" fitHeight="183.0" fitWidth="401.0" layoutX="344.0" layoutY="210.0" pickOnBounds="true"
                preserveRatio="true">
         <image>
             <Image url="@loan.png"/>
         </image>
     </ImageView>
-    <Label accessibleRole="BUTTON" alignment="CENTER" layoutX="532.0" layoutY="4.0" onMouseClicked="#transferBtn_exit"
-           text="X">
-        <font>
-            <Font name="Bell MT" size="16"/>
-        </font>
-    </Label>
 
 </AnchorPane>

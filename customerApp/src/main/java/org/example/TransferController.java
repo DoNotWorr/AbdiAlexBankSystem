@@ -190,9 +190,4 @@ public class TransferController {
         //Välj RadioButton "på datum"
         onLaterDate.setSelected(true);
     }
-
-    @FXML
-    public void transferBtn_exit(MouseEvent mouseEvent) {
-        System.exit(0);
-    }
 }

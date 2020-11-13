@@ -34,11 +34,6 @@ public class MainController {
     }
 
     @FXML
-    public void mainBtn_exit(MouseEvent mouseEvent) {
-        System.exit(0);
-    }
-
-    @FXML
     public void removeAccount(MouseEvent mouseevent) {
         int selectedIdx = 0;
         if (selectedIdx == currentAccountsListView.getItems().size()) {
