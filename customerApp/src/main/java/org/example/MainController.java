@@ -1,11 +1,14 @@
 package org.example;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import org.example.DataClasses.Account;
 import org.example.DataClasses.Transfer;
+
+import java.util.Comparator;
 
 public class MainController {
     CustomerApp customerApp = null;
@@ -81,8 +84,19 @@ public class MainController {
      * @param transfers lista som ska visas
      */
     public void updateTransfers(ObservableList<Transfer> transfers) {
+        //Skapar ObservableList med transfers som är pågående.
+        ObservableList<Transfer> pendingTransfers = FXCollections.observableArrayList();
+        for(Transfer transfer : transfers) {
+            if(transfer.getStatus() == Transfer.TransferStatus.PENDING) {
+                pendingTransfers.add(transfer);
+            }
+        }
+
+        //Sorterar listan på datum
+        pendingTransfers.sort(Comparator.comparing(Transfer::getTransferDate));
+
         //Fyller lista med överföringar
-        currentTransfersListView.setItems(transfers);
+        currentTransfersListView.setItems(pendingTransfers);
         //enligt dokumentation ska setItems() automatiskt göra en refresh(), men en manuell refresh() verkar krävas ändå
         currentTransfersListView.refresh();
     }
