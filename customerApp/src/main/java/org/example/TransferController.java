@@ -43,8 +43,11 @@ public class TransferController {
      */
     @FXML
     public void addTransaction() {
+        //Tar bort eventuell text i felmeddelande
         errorMsgAmount.setText("");
         errorMsgToAccount.setText("");
+
+
         Account fromAccount = fromAccountList.getSelectionModel().getSelectedItem();
         Account toAccount = CustomerApp.allAccounts.get(toAccountNumber.getText());
         String amountInput = amountSek.getText();
@@ -52,13 +55,13 @@ public class TransferController {
 
         try {
             if (onCurrentDate.isSelected()) {
-                if(Objects.isNull(toAccount)) {
+                if (Objects.isNull(toAccount)) {
                     errorMsgToAccount.setText("Hittade ingen mottagare");
                 }
                 amountCent = UnitConversion.convertFromSek(amountInput);
                 //skapa direktöverföring (genomförs direkt)
                 if (fromAccount.directTransfer(toAccount, amountCent) == false) {
-                    if(amountCent > fromAccount.getBalance()) {
+                    if (amountCent > fromAccount.getBalance()) {
                         errorMsgAmount.setText("För lågt saldo");
                     }
                     return;
@@ -84,7 +87,6 @@ public class TransferController {
             e.printStackTrace(); //Kan inte uppstå
             return;
         }
-        //todo info till användaren om vad som blev fel, istället för att återställa fälten och byta tillbaka till mainScene
 
         //Ställer in valen i fönstret till standard
         setDefaultFields();
@@ -139,10 +141,11 @@ public class TransferController {
         //Tömmer TextField amountSek
         amountSek.setText("");
 
+        //Tömmer felmeddelanden
         errorMsgAmount.setText("");
         errorMsgToAccount.setText("");
 
-        //Väljer RadioButton till "omgående"
+        //Väljer RadioButton "omgående"
         setInstant();
     }
 

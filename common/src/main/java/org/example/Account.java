@@ -125,7 +125,7 @@ public class Account {
      * @return Den retunerar true om det gick att skicka över pengar eller false om det inte gick genom.
      */
     public boolean directTransfer(Account toAccount, long amount) {
-        if(Objects.isNull(toAccount)) {
+        if (Objects.isNull(toAccount)) {
             return false;
         }
         if (amount > 0 && amount <= this.getBalance()) {
