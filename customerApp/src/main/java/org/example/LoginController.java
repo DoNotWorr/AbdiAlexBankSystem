@@ -28,11 +28,9 @@ public class LoginController {
             if(UserSession.getInstance().getAccounts().size() == 0) {
                 //Det går inte att trycka på knappen "Skapa ny transaktion"
                 customerApp.mainController.addTransfer.setDisable(true);
-                customerApp.mainController.removeTransfer.setDisable(true);
             } else {
-                //Det går att trycka på knappen "Skapa ny transaktion"
+                //Det går att trycka på knapparna "Skapa ny transaktion"
                 customerApp.mainController.addTransfer.setDisable(false);
-                customerApp.mainController.removeTransfer.setDisable(false);
                 //Fyller listor i transfer-fönstret med innehåll från UserSession
                 customerApp.transferController.updateAccounts(UserSession.getInstance().getAccounts());
             }

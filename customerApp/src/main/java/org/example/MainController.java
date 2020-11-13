@@ -99,6 +99,15 @@ public class MainController {
             }
         }
 
+        //Om listan med pågående transfers är tom
+        if(pendingTransfers.size() == 0) {
+            //Går inte att trycka på "Ta bort transaktion"
+            removeTransfer.setDisable(true);
+        } else {
+            //Går att trycka på "Ta bort transaktion"
+            removeTransfer.setDisable(false);
+        }
+
         //Sorterar listan på datum
         pendingTransfers.sort(Comparator.comparing(Transfer::getTransferDate));
 
