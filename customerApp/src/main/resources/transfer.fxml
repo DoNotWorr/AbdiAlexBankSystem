@@ -11,17 +11,19 @@
     <VBox>
         <HBox>
             <Label text="Från kontonummer"/>
-            <ChoiceBox fx:id="fromAccountList"/>
+            <ListView fx:id="fromAccountList"/>
         </HBox>
 
         <HBox>
             <Label text="Till kontonummer"/>
             <TextField fx:id="toAccountNumber"/>
+            <Label fx:id="errorMsgToAccount" textFill="red"/>
         </HBox>
         <HBox>
             <Label text="Belopp"/>
             <TextField fx:id="amountSek"/>
             <Label text="kr"/>
+            <Label fx:id="errorMsgAmount" textFill="red"/>
         </HBox>
 
         <HBox>
@@ -36,8 +38,8 @@
                 </toggleGroup>
             </RadioButton>
         </HBox>
-        <DatePicker fx:id="laterDatePicker" editable="false"
-                    onAction="#isFutureDate"/> <!-- editable="false" för att undvika felaktig inmatning. Kan ändras till true om inmatning valideras -->
+        <DatePicker fx:id="laterDatePicker"
+                    editable="false"/> <!-- editable="false" för att undvika felaktig inmatning. Kan ändras till true om inmatning valideras -->
         <HBox>
             <Button onAction="#addTransaction" text="Skapa transaktion"/>
             <Button onAction="#leaveTransaction" text="Avbryt"/>

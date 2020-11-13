@@ -30,7 +30,8 @@
                 <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <children>
-                <TextField fx:id="textField" GridPane.columnIndex="1"/>
+                <TextField fx:id="textField" GridPane.columnIndex="1"
+                           text="19920317-0577"/> <!--todo ta bort text="19920317-0577"-->
                 <Label prefHeight="29.0" prefWidth="175.0" text="Personnummer">
                     <font>
                         <Font name="System Italic" size="14.0"/>

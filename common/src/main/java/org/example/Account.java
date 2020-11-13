@@ -125,6 +125,9 @@ public class Account {
      * @return Den retunerar true om det gick att skicka över pengar eller false om det inte gick genom.
      */
     public boolean directTransfer(Account toAccount, long amount) {
+        if (Objects.isNull(toAccount)) {
+            return false;
+        }
         if (amount > 0 && amount <= this.getBalance()) {
             this.withdrawMoney(amount);
             toAccount.depositMoney(amount);
@@ -188,7 +191,7 @@ public class Account {
      * @return formatet på utskriften
      */
     public String toString() {
-        return this.accountName + "(" + this.getAccountNumber() + ")";
+        return this.accountName + "(" + this.getAccountNumber() + ")" + UnitConversion.convertToSek(this.getBalance()) + " kr";
     }
 }
 
