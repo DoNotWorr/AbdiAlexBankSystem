@@ -8,15 +8,15 @@ import java.util.Objects;
 import java.util.Random;
 
 /**
- * @author Abdi
+ * @author Abdi, Alex
+ * Abdi skrev klassen. Alex la till kontroller i metoder som använder setBalance() för att man inte ska kunna skapa tal som inte kan hanteras av en long.
  */
-
 public class Account {
 
     private String accountName;
     private String accountNumber;
     private String ownerID;
-    private long balance;
+    private long balance; //Kan inte vara ett negativt tal pga
     private int previousTransaction;
 
     /**
@@ -75,17 +75,24 @@ public class Account {
     }
 
     /**
+     * Metod för att skapa
+     *
      * @param amount beloppet som personen ska sätta in i kontot.
      * @return den retunerar true om det gick att sätta in pengar i kontot eller false om det inte gick.
+     * @author Abdi, Alex
+     * Abdi skrev metoden. Alex la till kontroll för att hantering
      */
 
     public boolean depositMoney(long amount) {
+        //Beloppet måste vara större än 0
         if (amount > 0) {
-            setBalance(balance + amount);
-            return true;
-        } else {
-            return false;
+            //Long.MAX_VALUE - this.getBalance() ger det maximala beloppet som kan sättas in utan att orsaka overflow
+            if (amount <= Long.MAX_VALUE - this.getBalance()) {
+                this.setBalance(this.getBalance() + amount);
+                return true;
+            }
         }
+        return false;
     }
 
     /**
@@ -100,9 +107,11 @@ public class Account {
      * @return den retunerar true om det gick att göra ett uttag från kontot eller false om det inte gick.
      */
     public boolean withdrawMoney(long amount) {
+        //Belopp är större än noll
         if (amount > 0) {
-            if (balance >= amount) {
-                setBalance(balance - amount);
+            //Belopp är mindre än eller lika med saldo på kontot
+            if (amount <= this.balance) {
+                this.setBalance(this.balance - amount);
                 return true;
             }
         }
@@ -123,21 +132,30 @@ public class Account {
     }
 
     /**
-     * Metod för direktövering.
+     * Gör en direktöverföring om det är möjligt. Kontrollerar att både mottagare klarar av att ta emot pengar och avsändare klarar av att skicka pengar.
      *
-     * @return Den retunerar true om det gick att skicka över pengar eller false om det inte gick genom.
+     * @param toAccount mottagarens konto
+     * @param amount    belopp i öre
+     * @return True om direktöverföring genomfördes, annars false.
      */
     public boolean directTransfer(Account toAccount, long amount) {
-        if (Objects.isNull(toAccount)) {
-            return false;
+        //toAccount kan inte vara null så går det inte att göra en överföring
+        if (Objects.nonNull(toAccount)) {
+            //Kontrollerar att mottagarkonto och avsändarkonto inte är samma konto
+            if (!this.accountNumber.equals(toAccount.getAccountNumber())) {
+                //Kontroll att avsändare klarar att skicka pengar
+                if (amount > 0 && amount <= this.balance) {
+                    //Kontroll att mottagare klarar av att ta emot pengar. Behöver inte kontrollera att belopp är större än 0 igen.
+                    if (amount <= Long.MAX_VALUE - toAccount.getBalance()) {
+                        this.setBalance(this.getBalance() - amount);
+                        toAccount.setBalance(toAccount.getBalance() + amount);
+                        return true;
+                    }
+                }
+            }
         }
-        if (amount > 0 && amount <= this.getBalance()) {
-            this.withdrawMoney(amount);
-            toAccount.depositMoney(amount);
-            return true;
-        } else {
-            return false;
-        }
+        //Om någon av kontrollerna inte klarades så returnerar metoden false
+        return false;
     }
 
     /**
