@@ -33,7 +33,7 @@ public class TransferController {
     ToggleGroup whenTransaction;
 
     @FXML
-    RadioButton onCurrentDate = null;
+    RadioButton onCurrentDate;
 
     @FXML
     RadioButton onLaterDate = null;
@@ -59,6 +59,7 @@ public class TransferController {
             if (onCurrentDate.isSelected()) {
                 if (Objects.isNull(toAccount)) {
                     errorMsgToAccount.setText("Hittade ingen mottagare");
+                    return; //La till return. Annars så visades fel felmeddelande eftersom metoden körde vidare /Abdi
                 }
                 amountCent = UnitConversion.convertFromSek(amountInput);
                 //skapa direktöverföring (genomförs direkt)
@@ -76,8 +77,6 @@ public class TransferController {
                 CustomerApp.allTransfers.add(brandNewTransfer);
                 UserSession.getInstance().getTransfers().add(brandNewTransfer);
             }
-            //errorMsgToAccount
-            //            errorMsgAmount
         } catch (NonNumericalException e) {
             errorMsgAmount.setText("Fyll i korrekt belopp");
             return;

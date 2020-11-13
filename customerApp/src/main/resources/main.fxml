@@ -9,30 +9,41 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="480" prefWidth="800" style="-fx-background-color: linear-gradient(to right top, #1802fb, #1b49ff, #3e6fff, #6590ff, #8eafff, #91bfff, #9bceff, #acdbff, #8ee0ff, #69e6ff, #41ebf6, #23eee2);; -fx-background-radius: 4em;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.MainController">
+<AnchorPane prefHeight="480" prefWidth="800"
+            style="-fx-background-color: linear-gradient(to right top, #1802fb, #1b49ff, #3e6fff, #6590ff, #8eafff, #91bfff, #9bceff, #acdbff, #8ee0ff, #69e6ff, #41ebf6, #23eee2);; -fx-background-radius: 4em;"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.MainController">
     <children>
-        <Button id="logoutButton" layoutX="536.0" layoutY="419.0" mnemonicParsing="false" onAction="#logout" style="-fx-background-radius: 1em;" text="Logga ut" />
+        <Button id="logoutButton" layoutX="536.0" layoutY="419.0" mnemonicParsing="false" onAction="#logout"
+                style="-fx-background-radius: 1em;" text="Logga ut"/>
 
-        <ListView fx:id="currentAccountsListView" layoutX="22.0" layoutY="102.0" prefHeight="92.0" prefWidth="345.0" style="-fx-background-radius: 1em;" />
-        <ListView fx:id="currentTransfersListView" layoutX="20.0" layoutY="295.0" prefHeight="100.0" prefWidth="428.0" style="-fx-background-radius: 1em;" />
-        <Button fx:id="removeTransfer" layoutX="194.0" layoutY="419.0" onAction="#removeTransfer" style="-fx-background-radius: 1em;" text="Ta bort transaktion" />
-        <Button layoutX="30.0" layoutY="419.0" onAction="#createTransfer" style="-fx-background-radius: 1em;" text="Skapa ny transaktion" />
-        <Label layoutX="30.0" layoutY="70.0" text="Mina konton" />
+        <ListView fx:id="currentAccountsListView" layoutX="22.0" layoutY="102.0" prefHeight="92.0" prefWidth="345.0"
+                  style="-fx-background-radius: 1em;"/>
+        <ListView fx:id="currentTransfersListView" layoutX="20.0" layoutY="295.0" prefHeight="100.0" prefWidth="428.0"
+                  style="-fx-background-radius: 1em;"/>
+        <Button fx:id="removeTransfer" layoutX="194.0" layoutY="419.0" onAction="#removeTransfer"
+                style="-fx-background-radius: 1em;" text="Ta bort transaktion"/>
+        <Button fx:id="addTransfer" layoutX="30.0" layoutY="419.0" onAction="#createTransfer"
+                style="-fx-background-radius: 1em;" text="Skapa ny transaktion"/>
+        <Label layoutX="30.0" layoutY="70.0" text="Mina konton"/>
 
-        <Label layoutX="30.0" layoutY="251.0" text="Kommande transaktioner" />
-        <ImageView fx:id="Imageview" fitHeight="215.0" fitWidth="372.0" layoutX="463.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+        <Label layoutX="30.0" layoutY="251.0" text="Kommande transaktioner"/>
+        <ImageView fx:id="Imageview" fitHeight="215.0" fitWidth="372.0" layoutX="463.0" layoutY="53.0"
+                   pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@Bank.jpg" />
+                <Image url="@Bank.jpg"/>
             </image>
             <effect>
-                <Reflection />
+                <Reflection/>
             </effect>
         </ImageView>
-        <Label alignment="CENTER" layoutX="93.0" layoutY="9.0" prefHeight="39.0" prefWidth="523.0" text="Dress like you own the bank, not like you need a loan from it.">
+        <Label alignment="CENTER" layoutX="93.0" layoutY="9.0" prefHeight="39.0" prefWidth="523.0"
+               text="Dress like you own the bank, not like you need a loan from it.">
             <font>
-                <Font size="18.0" />
+                <Font size="18.0"/>
             </font>
         </Label>
-        <Button fx:id="LoggautOavsluta" layoutX="635.0" layoutY="419.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="140.0" style="-fx-background-radius: 1em;" text="Logga ut och avsluta" />
+        <Button fx:id="LoggautOavsluta" layoutX="635.0" layoutY="419.0" mnemonicParsing="false" prefHeight="32.0"
+                prefWidth="140.0" style="-fx-background-radius: 1em;" text="Logga ut och avsluta"/>
     </children>
 </AnchorPane>

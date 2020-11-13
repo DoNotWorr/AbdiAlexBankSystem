@@ -635,12 +635,12 @@ public class App {
                 System.out.println("Efternamn: ");
                 String lastname = scanner.nextLine();
 
-                System.out.println("Personnummer med 4 siffror i årtalet: ");
+                System.out.println("Personnummer i formatet yyyymmdd-xxxx: ");
                 String ownerID = scanner.nextLine();
 
                 String password;
                 while (true) {
-                    System.out.println("Ange ett lösenord som är minst 3 tecken: ");
+                    System.out.println("Ange ett lösenord som är minst 4 tecken långt: ");
                     password = scanner.nextLine();
 
                     System.out.println("Upprepa lösenordet: ");
