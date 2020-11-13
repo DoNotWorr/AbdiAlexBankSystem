@@ -85,7 +85,7 @@ public class CustomerApp extends Application {
         mainController = loaderMain.getController();
         mainController.customerApp = this;
         Scene mainScene = new Scene(rootMain, 800, 520);
-        // lägg här så man fattar bättre
+
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(mainScene);
         mainScene.setFill(Color.TRANSPARENT);
@@ -100,7 +100,10 @@ public class CustomerApp extends Application {
         Parent rootTransfer = loaderTransfer.load();
         transferController = loaderTransfer.getController();
         transferController.customerApp = this;
-        Scene transferScene = new Scene(rootTransfer, 900, 900);
+        Scene transferScene = new Scene(rootTransfer, 558, 419);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.setScene(transferScene);
+        transferScene.setFill(Color.TRANSPARENT);
         rootTransfer.addEventHandler(MouseEvent.MOUSE_DRAGGED, draggedWindow);
         myScenes.put("transferScene", transferScene);
 

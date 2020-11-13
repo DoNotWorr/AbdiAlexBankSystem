@@ -1,9 +1,9 @@
 package org.example;
 
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -182,5 +182,10 @@ public class TransferController {
 
         //Välj RadioButton "på datum"
         onLaterDate.setSelected(true);
+    }
+
+    @FXML
+    public void transferBtn_exit(MouseEvent mouseEvent) {
+        System.exit(0);
     }
 }

@@ -1,49 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.TransferController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="419.0" prefWidth="558.0"
+            style="-fx-background-color: linear-gradient(to right top, #1207fb, #005bff, #0083ff, #00a3ff, #00bef9, #36caf5, #5ad6f0, #7ae0ec, #6be3f0, #58e7f3, #3eeaf6, #02edf8);; -fx-background-radius: 2em;"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.TransferController">
 
-    <VBox>
+    <VBox layoutX="300.0" layoutY="240.0">
+        <HBox/>
+
         <HBox>
-            <Label text="Från kontonummer"/>
-            <ListView fx:id="fromAccountList"/>
-        </HBox>
-
-        <HBox>
-            <Label text="Till kontonummer"/>
-            <TextField fx:id="toAccountNumber"/>
             <Label fx:id="errorMsgToAccount" textFill="red"/>
         </HBox>
         <HBox>
-            <Label text="Belopp"/>
-            <TextField fx:id="amountSek"/>
-            <Label text="kr"/>
             <Label fx:id="errorMsgAmount" textFill="red"/>
         </HBox>
 
-        <HBox>
-            <RadioButton fx:id="onCurrentDate" text="Omgående" onAction="#setInstant">
-                <toggleGroup>
-                    <ToggleGroup fx:id="whenTransaction"/>
-                </toggleGroup>
-            </RadioButton>
-            <RadioButton fx:id="onLaterDate" text="På datum" onAction="#setDelayed">
-                <toggleGroup>
-                    <fx:reference source="whenTransaction"/>
-                </toggleGroup>
-            </RadioButton>
-        </HBox>
-        <DatePicker fx:id="laterDatePicker"
-                    editable="false"/> <!-- editable="false" för att undvika felaktig inmatning. Kan ändras till true om inmatning valideras -->
-        <HBox>
-            <Button onAction="#addTransaction" text="Skapa transaktion"/>
-            <Button onAction="#leaveTransaction" text="Avbryt"/>
-        </HBox>
+        <HBox/> <!-- editable="false" för att undvika felaktig inmatning. Kan ändras till true om inmatning valideras -->
+        <HBox/>
     </VBox>
+    <ListView fx:id="fromAccountList" layoutX="24.0" layoutY="53.0" prefHeight="20" prefWidth="243.0"/>
+    <Label layoutX="24.0" layoutY="21.0" text="Från kontonummer"/>
+    <TextField fx:id="toAccountNumber" layoutX="24.0" layoutY="132.0"/>
+    <Label layoutX="28.0" layoutY="100.0" text="Till kontonummer"/>
+    <Label layoutX="25.0" layoutY="183.0" text="Belopp"/>
+    <TextField fx:id="amountSek" layoutX="24.0" layoutY="215.0"/>
+    <Label layoutX="183.0" layoutY="219.0" text="kr"/>
+    <RadioButton fx:id="onCurrentDate" layoutX="23.0" layoutY="266.0" onAction="#setInstant" text="Omgående">
+        <toggleGroup>
+            <ToggleGroup fx:id="whenTransaction"/>
+        </toggleGroup>
+        <toggleGroup>
+            <ToggleGroup fx:id="whenTransactions"/>
+        </toggleGroup>
+    </RadioButton>
+    <RadioButton fx:id="onLaterDate" layoutX="112.0" layoutY="266.0" onAction="#setDelayed" text="På datum"/>
+    <DatePicker fx:id="laterDatePicker" editable="false" layoutX="24.0" layoutY="291.0"/>
+    <Button layoutX="25.0" layoutY="323.0" onAction="#addTransaction" text="Skapa transaktion"/>
+    <Button layoutX="135.0" layoutY="323.0" onAction="#leaveTransaction" text="Avbryt"/>
+    <ImageView fx:id="payment" fitHeight="183.0" fitWidth="210.0" layoutX="331.0" layoutY="17.0" pickOnBounds="true"
+               preserveRatio="true">
+        <image>
+            <Image url="@payment.jpg"/>
+        </image>
+    </ImageView>
+    <ImageView fx:id="loans" fitHeight="183.0" fitWidth="401.0" layoutX="331.0" layoutY="212.0" pickOnBounds="true"
+               preserveRatio="true">
+        <image>
+            <Image url="@loan.png"/>
+        </image>
+    </ImageView>
+    <Label accessibleRole="BUTTON" alignment="CENTER" layoutX="532.0" layoutY="4.0" onMouseClicked="#transferBtn_exit"
+           text="X">
+        <font>
+            <Font name="Bell MT" size="16"/>
+        </font>
+    </Label>
 
 </AnchorPane>
