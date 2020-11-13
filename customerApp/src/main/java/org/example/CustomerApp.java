@@ -82,7 +82,7 @@ public class CustomerApp extends Application {
         Parent rootMain = loaderMain.load();
         mainController = loaderMain.getController();
         mainController.customerApp = this;
-        Scene mainScene = new Scene(rootMain, 800, 520);
+        Scene mainScene = new Scene(rootMain, 800, 480);
 
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(mainScene);

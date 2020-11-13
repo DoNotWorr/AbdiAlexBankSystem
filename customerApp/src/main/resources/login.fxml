@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="330" prefWidth="330"
-            style="-fx-background-color: linear-gradient(to right top, #1802fb, #0047ff, #2b6bff, #5589ff, #7da5fa, #80b6fc, #8cc6fc, #9fd4fb, #8adeff, #73e9ff, #62f2fd, #5ffbf1); -fx-background-radius: 2em;"
+            style="-fx-background-color: linear-gradient(to right top, #1802fb, #0047ff, #2b6bff, #5589ff, #7da5fa, #80b6fc, #8cc6fc, #9fd4fb, #8adeff, #73e9ff, #62f2fd, #5ffbf1); -fx-background-radius: 3em;"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.example.LoginController">
     <children>
@@ -30,17 +36,18 @@
                 <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <children>
-                <TextField fx:id="textField" GridPane.columnIndex="1"
-                           text="19920317-0577"/> <!--todo ta bort text="19920317-0577"-->
+                <TextField fx:id="textField" style="-fx-background-radius: 1em;" text="19920317-0577"
+                           GridPane.columnIndex="1"/> <!--todo ta bort text="19920317-0577"-->
                 <Label prefHeight="29.0" prefWidth="175.0" text="Personnummer">
                     <font>
                         <Font name="System Italic" size="14.0"/>
                     </font>
                 </Label>
-                <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <PasswordField style="-fx-background-radius: 1em;" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                 <Button id="loginButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="-Infinity"
-                        mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="72.0" text="Logga in"
-                        GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="72.0"
+                        style="-fx-background-radius: 1em;" text="Logga in" GridPane.columnIndex="1"
+                        GridPane.rowIndex="3">
                     <cursor>
                         <Cursor fx:constant="DEFAULT"/>
                     </cursor>
