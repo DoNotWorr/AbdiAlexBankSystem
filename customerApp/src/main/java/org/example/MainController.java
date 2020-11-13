@@ -85,8 +85,8 @@ public class MainController {
     public void updateTransfers(ObservableList<Transfer> transfers) {
         //Skapar ObservableList med transfers som är pågående.
         ObservableList<Transfer> pendingTransfers = FXCollections.observableArrayList();
-        for(Transfer transfer : transfers) {
-            if(transfer.getStatus() == Transfer.TransferStatus.PENDING) {
+        for (Transfer transfer : transfers) {
+            if (transfer.getStatus() == Transfer.TransferStatus.PENDING) {
                 pendingTransfers.add(transfer);
             }
         }
