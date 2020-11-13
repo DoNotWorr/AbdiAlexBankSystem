@@ -17,11 +17,26 @@ public class UnitConversion {
      */
     public static String convertToSek(long amountCent) {
         StringBuilder amountSek = new StringBuilder();
+        int indexOfNewZero;
+        int minLength;
         amountSek.append(amountCent);
-        //2020 öre
-        while (amountSek.toString().length() < 3) {  // Fixade bugg när amountSek var mindre än 3 siffror //Abdi
-            amountSek.insert(0, '0');
+
+        //Fixade en bug för små negativa tal (till exempel -10 eller -1) /Alex
+        //Kollar om beloppet är positivt eller negativt och justerar därefter (eftersom "-x" innehåller ett tecken mer än "x")
+        if(amountCent >= 0) {
+            indexOfNewZero = 0;
+            minLength = 3;
+        } else {
+            indexOfNewZero = 1;
+            minLength = 4;
         }
+
+        //Fixade bugg när amountSek var mindre än 3 siffror /Abdi
+        //Justerar små tal så man kan stoppa in en punkt två steg till vänster om sista tecknet, till exempel "1" -> "001"
+        while (amountSek.toString().length() < minLength) {
+            amountSek.insert(indexOfNewZero, '0');
+        }
+        //Stoppar in en punkt två tecken till vänster om det sista tecknet, till exempel "001" -> "0.01"
         amountSek.insert(amountSek.length() - 2, '.');
         return amountSek.toString();
     }
