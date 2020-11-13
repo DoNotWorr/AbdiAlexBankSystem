@@ -33,7 +33,7 @@ public class TransferController {
     ToggleGroup whenTransaction;
 
     @FXML
-    RadioButton onCurrentDate = null;
+    RadioButton onCurrentDate;
 
     @FXML
     RadioButton onLaterDate = null;
