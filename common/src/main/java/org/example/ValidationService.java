@@ -1,12 +1,31 @@
 package org.example;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public enum ValidationService {
     INSTANCE;
 
     /**
-     * Kontrollerar godtyckligt om ett namn matas in.
+     * Kontrollerar om ett lösenord är tillräckligt starkt. Har satt den väldigt
+     * @param plainPassword lösenord i plaintext
+     * @return true om plainPassword är längre än 3 tecken. False om plainPassword är för kort eller plainPassword är null
+     */
+    public boolean isValidPassword(String plainPassword) {
+        boolean isValid = false;
+        if(Objects.nonNull(plainPassword)) {
+            if(plainPassword.length() > 3) {
+                isValid = true;
+            } else {
+                isValid = false;
+            }
+        }
+
+        return isValid;
+    }
+
+    /**
+     * Kontrollerar godtyckligt om en textsträng är ett namn
      *
      * @param name för- eller efternamn som ska valideras
      * @return true om namnet är minst ett tecken långt och börjar med en stor bokstav som (eventuellt) följs av små bokstäver. Vissa korrekta namn returnerar false (till exempel "Therése", eftersom 'é' inte ingår i det vanliga alfabetet).
