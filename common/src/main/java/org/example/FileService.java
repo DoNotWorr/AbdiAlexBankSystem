@@ -2,6 +2,9 @@ package org.example;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.example.DataClasses.Account;
+import org.example.DataClasses.Customer;
+import org.example.DataClasses.Transfer;
 
 import java.io.File;
 import java.io.FileNotFoundException;

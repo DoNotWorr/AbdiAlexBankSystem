@@ -1,9 +1,10 @@
-package org.example;
+package org.example.DataClasses;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.example.Exceptions.InvalidNameException;
 import org.example.Exceptions.InvalidOwnerIDException;
 import org.example.Exceptions.InvalidPasswordException;
+import org.example.ValidationService;
 
 /**
  * @author Alex

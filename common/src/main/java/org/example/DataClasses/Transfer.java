@@ -1,10 +1,12 @@
-package org.example;
+package org.example.DataClasses;
+
+import org.example.UnitConversion;
 
 import java.time.LocalDate;
 
 /**
- * Transfer har fyra variabler (fromAccountNumber, toAccountNumber, amount, transferDate) som
- *
+ * Fyra variabler (fromAccountNumber, toAccountNumber, amount, transferDate) är obligatoriska i klassens enda konstruktor. Dessa fyra saknar setter-metoder.
+ * Den femte variabeln status, har både getter och setter.
  * @author Alex
  */
 public class Transfer {
@@ -28,9 +30,9 @@ public class Transfer {
      * @param fromAccountNumber kontot som pengar ska dras ifrån
      * @param toAccountNumber   kontot som pengar ska föras över till
      * @param amount            ören som ska föras över
-     * @param transferDate      vilket datum överföringen ska görasgi
+     * @param transferDate      vilket datum överföringen ska göras
      */
-    public Transfer(String fromAccountNumber, String toAccountNumber, long amount, LocalDate transferDate) {
+    protected Transfer(String fromAccountNumber, String toAccountNumber, long amount, LocalDate transferDate) {
         this.fromAccountNumber = fromAccountNumber;
         this.toAccountNumber = toAccountNumber;
         this.amount = amount;
@@ -38,22 +40,42 @@ public class Transfer {
         this.status = TransferStatus.PENDING;
     }
 
+    /**
+     * Getter fromAccountNumber
+     * @return kontonumret som pengar ska skickas ifrån
+     */
     public String getFromAccountNumber() {
         return fromAccountNumber;
     }
 
+    /**
+     * Getter toAccountNumber
+     * @return kontnumret som pengar ska göras till
+     */
     public String getToAccountNumber() {
         return toAccountNumber;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getAmount() {
         return amount;
     }
 
+    /**
+     * Getter transferDate
+     * @return Datum som pengarna ska skickas
+     */
     public LocalDate getTransferDate() {
         return transferDate;
     }
 
+    /**
+     * Getter transferStatus
+     * @return status på transfer
+     */
     public TransferStatus getStatus() {
         return status;
     }
