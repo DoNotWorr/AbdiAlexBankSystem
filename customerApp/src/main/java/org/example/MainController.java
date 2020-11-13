@@ -69,8 +69,16 @@ public class MainController {
 
     @FXML
     public void removeTransfer() {
-        //todo Avbryt transaktion som är markerad i listan med transaktioner.
-        currentTransfersListView.getSelectionModel().getSelectedItem().setStatus(Transfer.TransferStatus.CANCELLED);
+        //Om en transaktion är vald, dvs "...getSelectedItem != null"
+        if(currentTransfersListView.getSelectionModel().getSelectedItem() != null) {
+            //Sätter status som CANCELLED om det går.
+            if(currentTransfersListView.getSelectionModel().getSelectedItem().setStatus(Transfer.TransferStatus.CANCELLED)) { //I den nuvarande versionen är if-satsen överflödig eftersom listan visar enbart PENDING och det alltid går att byta från PENDING till CANCELLED
+                updateTransfers(UserSession.getInstance().getTransfers());
+            }
+        } else {
+            //todo lägg till label errorMsgSelectedTransfer med text "Välj en transaktion"
+        }
+
     }
 
     /**
