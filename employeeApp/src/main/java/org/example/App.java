@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.Exceptions.*;
+
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -366,7 +368,6 @@ public class App {
             try {
                 System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka ifrån: ");
                 String fromAccountNumber = scanner.nextLine();
-
                 if (allAccounts.containsKey(fromAccountNumber)) {
                     Account fromAccount = allAccounts.get(fromAccountNumber);
                     System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka till: ");
@@ -376,7 +377,7 @@ public class App {
                         System.out.println("Hur mycket pengar vill du skicka över: ");
                         String amount = scanner.nextLine();
                         if (fromAccount.directTransfer(toAccount, UnitConversion.convertFromSek(amount))) {
-                            System.out.println("Pengarnade överförades till: "
+                            System.out.println("Pengarna överfördes till: "
                                     + toAccount.getAccountNumber());
                             keepgoings = false;
                         } else {
@@ -627,10 +628,24 @@ public class App {
                 System.out.println("Efternamn: ");
                 String lastname = scanner.nextLine();
 
-                System.out.println("Personnummer: yyyymmdd-XXXX ");
+                System.out.println("Personnummer med 4 siffror i årtalet: ");
                 String ownerID = scanner.nextLine();
 
-                Customer newCustomer = new Customer(firstname, lastname, ownerID);
+                String password;
+                while (true) {
+                    System.out.println("Ange ett lösenord som är minst 3 tecken: ");
+                    password = scanner.nextLine();
+
+                    System.out.println("Upprepa lösenordet: ");
+                    String passwordRepeat = scanner.nextLine();
+                    if (password.equals(passwordRepeat)) {
+                        break;
+                    } else {
+                        System.out.println("Du måste ange samma lösenord två gånger.");
+                    }
+                }
+
+                Customer newCustomer = new Customer(firstname, lastname, ownerID, password);
                 allCustomers.put(ownerID, newCustomer);
 
                 System.out.println("Nu skapas en ny kund i systemet:\n"
@@ -642,10 +657,11 @@ public class App {
                         + newCustomer.getOwnerID());
                 keepgoing = false;
             } catch (InvalidNameException invalidNameException) {
-                System.out.println("Namnet får inte innehålla siffor!\nVänligen försök igen!\n");
-
+                System.out.println("Ogiltigt namn\nVänligen försök igen!\n");
             } catch (InvalidOwnerIDException invalidOwnerIDException) {
-                System.out.println("Ogiltig personnummer\nVänligen försök igen! ");
+                System.out.println("Ogiltig personnummer\nVänligen försök igen!\n");
+            } catch (InvalidPasswordException e) {
+                System.out.println("Ogiltig lösenord\nVänligen försök igen!\n");
             }
         }
     }

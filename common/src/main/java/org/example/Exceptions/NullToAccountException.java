@@ -1,7 +1,7 @@
-package org.example;
+package org.example.Exceptions;
 
 public class NullToAccountException extends Exception {
-    NullToAccountException(String message) {
+    public NullToAccountException(String message) {
         super(message);
     }
 }
