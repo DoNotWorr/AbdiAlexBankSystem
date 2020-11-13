@@ -108,6 +108,6 @@ public class Transfer {
      * @return Utskrift i formatet "XYZ kr från AAAA-AAAA-AAAA till BBBB-BBBB-BBBB den YYYY-MM-DD"
      */
     public String toString() {
-        return UnitConversion.convertToSek(this.getAmount()) + " kr från " + this.getFromAccountNumber() + " till " + this.getToAccountNumber() + " den " + this.getTransferDate() + "(" + this.getStatus() + ")";
+        return UnitConversion.convertToSek(this.getAmount()) + " kr från " + this.getFromAccountNumber() + " till " + this.getToAccountNumber() + " den " + this.getTransferDate();
     }
 }

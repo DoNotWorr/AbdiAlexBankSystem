@@ -23,7 +23,7 @@ public class UnitConversion {
 
         //Fixade en bug för små negativa tal (till exempel -10 eller -1) /Alex
         //Kollar om beloppet är positivt eller negativt och justerar därefter (eftersom "-x" innehåller ett tecken mer än "x")
-        if(amountCent >= 0) {
+        if (amountCent >= 0) {
             indexOfNewZero = 0;
             minLength = 3;
         } else {
