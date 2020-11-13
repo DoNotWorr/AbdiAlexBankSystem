@@ -1,25 +1,13 @@
 package org.example;
 
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-
-
-import java.io.IOException;
-import java.util.Objects;
-
-import static com.sun.corba.se.impl.util.Utility.printStackTrace;
 
 public class MainController {
     CustomerApp customerApp = null;
 
-    @FXML
-    private ImageView imageView;
     @FXML
     ListView<Account> currentAccountsListView;
 
