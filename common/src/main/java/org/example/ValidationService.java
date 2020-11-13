@@ -8,19 +8,19 @@ public enum ValidationService {
 
     /**
      * Kontrollerar om ett lösenord är tillräckligt starkt. Har satt den väldigt
+     *
      * @param plainPassword lösenord i plaintext
      * @return true om plainPassword är längre än 3 tecken. False om plainPassword är för kort eller plainPassword är null
      */
     public boolean isValidPassword(String plainPassword) {
         boolean isValid = false;
-        if(Objects.nonNull(plainPassword)) {
-            if(plainPassword.length() > 3) {
+        if (Objects.nonNull(plainPassword)) {
+            if (plainPassword.length() > 3) {
                 isValid = true;
             } else {
                 isValid = false;
             }
         }
-
         return isValid;
     }
 

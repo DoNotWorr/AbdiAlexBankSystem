@@ -1,10 +1,15 @@
 package org.example;
 
+import org.example.Exceptions.NonNumericalException;
+import org.example.Exceptions.NumberNotInBoundsException;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class UnitConversion {
     /**
+     * Metod för att konvertera ett belopp (öre) till ett belopp i kronor
+     *
      * @param amountCent belopp i hela ören, exempelvis: 1234
      * @return belopp i kronor som decimaltal, exempelvis 12,34
      * @author Alex, Abdi
@@ -22,9 +27,9 @@ public class UnitConversion {
     }
 
     /**
-     * Metod för att konvertera belopp väldigt stora belopp (ören) till kronor. Validerar inte inmatning
+     * Metod för att konvertera belopp väldigt stora belopp (öre) till kronor. Validerar inte inmatning
      *
-     * @param amountCent belopp i hela ören, exempelvis: 123456789123456789123456789123456789
+     * @param amountCent String-representation av ett heltal, exempelvis: "123456789123456789123456789123456789"
      * @return belopp i kronor som decimaltal, exempelvis 12,34
      * @author Alex, Abdi
      * Konverterar ett belopp från ören (1234 öre) till kronor (12,34 kr)

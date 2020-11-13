@@ -1,8 +1,9 @@
 package org.example;
 
 import org.apache.commons.codec.digest.DigestUtils;
-
-import java.util.ArrayList;
+import org.example.Exceptions.InvalidNameException;
+import org.example.Exceptions.InvalidOwnerIDException;
+import org.example.Exceptions.InvalidPasswordException;
 
 /**
  * @author Alex
@@ -14,15 +15,16 @@ public class Customer {
     private String passwordHash;
 
     /**
-     * Konstruktor som kräver alla parametrar. En tom ArrayList med konton skapas i varje instans
+     * Konstruktor som kräver alla parametrar.
      *
-     * @param firstName kundens förnamn
-     * @param lastName  kundens efternamn
-     * @param ownerID   kundens personnummer
-     * @throws InvalidNameException    om namnet ör ogiltigt. Ett giltigt namn måste bestå av minst en bokstav. Den första bokstaven måste vara stor och följande bokstäver måste vara små.
-     * @throws InvalidOwnerIDException om personnumret är ogiltigt. Ett giltigt personnummer måste ha formatet "yyyyMMdd-XXXX".
+     * @param firstName     förnamn
+     * @param lastName      efternamn
+     * @param ownerID       personnummer i formatet "yyyymmdd-xxxx"
+     * @param plainPassword lösenord i plaintext med minst 4 tecken
+     * @throws InvalidNameException     om namnet ör ogiltigt. Ett giltigt namn måste bestå av minst en bokstav. Den första bokstaven måste vara stor och följande bokstäver måste vara små.
+     * @throws InvalidOwnerIDException  om personnumret är ogiltigt. Ett giltigt personnummer måste ha formatet "yyyyMMdd-XXXX".
+     * @throws InvalidPasswordException om lösenordet är ogiltigt. Ett giltigt lösenord måste ha minst 4 tecken
      */
-
     public Customer(String firstName, String lastName, String ownerID, String plainPassword) throws InvalidNameException, InvalidOwnerIDException, InvalidPasswordException {
         //Kontrollerar att förnamn är ett giltigt namn
         if (ValidationService.INSTANCE.isValidName(firstName)) {
@@ -70,7 +72,10 @@ public class Customer {
         return ownerID;
     }
 
-
-    //förnamn, efternamn, ägare-ID) Tillägg? ArrayList<String kontonr> yourAccounts
-    //metod listAccounts
+    /**
+     * @return passwordHash
+     */
+    public String getPasswordHash() {
+        return this.passwordHash;
+    }
 }

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Exceptions;
 
 public class InvalidPasswordException extends Exception {
     public InvalidPasswordException(String message) {
