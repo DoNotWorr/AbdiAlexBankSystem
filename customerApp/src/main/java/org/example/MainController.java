@@ -5,9 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import org.example.DataClasses.Account;
-import org.example.DataClasses.Transfer;
-
+import org.example.DataClasses.*;
 import java.util.Comparator;
 
 public class MainController {
@@ -21,16 +19,31 @@ public class MainController {
     ListView<Transfer> currentTransfersListView;
 
     @FXML
+    Button addTransfer;
+
+    @FXML
     Button removeTransfer;
 
     @FXML
     public void logout() {
+        //Sparar alla ändringar
+        saveEverything();
+
         //Tömmer användarsession
         UserSession.getInstance().clearInstance();
 
         //Byter scen och visar den scenen
         customerApp.primaryStage.setScene(customerApp.myScenes.get("loginScene"));
         customerApp.primaryStage.show();
+    }
+
+    /**
+     *
+     */
+    private void saveEverything() {
+        CustomerApp.allCustomers = FileService.INSTANCE.loadCustomers();
+        CustomerApp.allAccounts = FileService.INSTANCE.loadAccounts();
+        CustomerApp.allTransfers = FileService.INSTANCE.loadTransfers();
     }
 
     @FXML

@@ -27,7 +27,7 @@ public class CustomerApp extends Application {
     public MainController mainController = null;
     public TransferController transferController = null;
 
-    public HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers();
+    public static HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers();
     public static HashMap<String, Account> allAccounts = FileService.INSTANCE.loadAccounts();
     public static ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
 
