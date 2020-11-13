@@ -18,6 +18,51 @@ public class TestConvertToSek {
         assertEquals(expected, actual);
     }
 
+    /**
+     * testar att konvertera väldigt litet negativt tal.
+     */
+    @Test
+    public void testConvertVerySmallNegativeNumber() {
+        String expected = "-0.10";
+        long amountCent = -10;
+        String actual = UnitConversion.convertToSek(amountCent);
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * testar att konvertera väldigt väldigt litet negativt tal.
+     */
+    @Test
+    public void testConvertVeryVerySmallNegativeNumber() {
+        String expected = "-0.01";
+        long amountCent = -1;
+        String actual = UnitConversion.convertToSek(amountCent);
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * testar att konvertera väldigt litet negativt tal.
+     */
+    @Test
+    public void testConvertZero() {
+        String expected = "0.00";
+        long amountCent = 0;
+        String actual = UnitConversion.convertToSek(amountCent);
+        assertEquals(expected, actual);
+    }
+
+
+    /**
+     * testar att konvertera väldigt litet positivt tal.
+     */
+    @Test
+    public void testConvertVerySmallPositiveNumber() {
+        String expected = "0.10";
+        long amountCent = 10;
+        String actual = UnitConversion.convertToSek(amountCent);
+        assertEquals(expected, actual);
+    }
+
     @Test
     public void testNegativeSmallNumber() {
         String expected = "-1.00";
