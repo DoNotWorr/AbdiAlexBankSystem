@@ -368,7 +368,6 @@ public class App {
             try {
                 System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka ifrån: ");
                 String fromAccountNumber = scanner.nextLine();
-
                 if (allAccounts.containsKey(fromAccountNumber)) {
                     Account fromAccount = allAccounts.get(fromAccountNumber);
                     System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka till: ");
@@ -378,7 +377,7 @@ public class App {
                         System.out.println("Hur mycket pengar vill du skicka över: ");
                         String amount = scanner.nextLine();
                         if (fromAccount.directTransfer(toAccount, UnitConversion.convertFromSek(amount))) {
-                            System.out.println("Pengarnade överförades till: "
+                            System.out.println("Pengarna överfördes till: "
                                     + toAccount.getAccountNumber());
                             keepgoings = false;
                         } else {
