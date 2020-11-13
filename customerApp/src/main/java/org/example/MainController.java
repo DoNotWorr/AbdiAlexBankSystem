@@ -43,7 +43,6 @@ public class MainController {
         int selectedIdx = 0;
         if (selectedIdx == currentAccountsListView.getItems().size()) {
             currentAccountsListView.getItems().remove(this.currentAccountsListView.getItems().size() - 1);
-
         }
     }
 

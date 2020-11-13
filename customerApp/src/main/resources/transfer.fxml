@@ -18,8 +18,8 @@
             style="-fx-background-color: linear-gradient(to right top, #1207fb, #005bff, #0083ff, #00a3ff, #00bef9, #36caf5, #5ad6f0, #7ae0ec, #6be3f0, #58e7f3, #3eeaf6, #02edf8);; -fx-background-radius: 2em;"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.example.TransferController">
-    <Label fx:id="errorMsgToAccount" textFill="red" text="test"/> <!-- todo flytta till rätt ställe, ta bort test-text sen -->
-    <Label fx:id="errorMsgAmount" textFill="red" text="test"/> <!-- todo flytta till rätt ställe, ta bort test-text sen -->
+    <Label fx:id="errorMsgToAccount" textFill="red" text="testErrorMsgToAccount"/> <!-- todo flytta till rätt ställe, ta bort test-text sen -->
+    <Label fx:id="errorMsgAmount" textFill="red" text="testErrorMsgAmount"/> <!-- todo flytta till rätt ställe, ta bort test-text sen -->
 
     <ListView fx:id="fromAccountList" layoutX="24.0" layoutY="53.0" prefHeight="20" prefWidth="243.0"/>
     <Label layoutX="24.0" layoutY="21.0" text="Från kontonummer"/>

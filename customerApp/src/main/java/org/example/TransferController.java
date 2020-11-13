@@ -50,7 +50,6 @@ public class TransferController {
         errorMsgAmount.setText("");
         errorMsgToAccount.setText("");
 
-
         Account fromAccount = fromAccountList.getSelectionModel().getSelectedItem();
         Account toAccount = CustomerApp.allAccounts.get(toAccountNumber.getText());
         String amountInput = amountSek.getText();
@@ -66,6 +65,8 @@ public class TransferController {
                 if (fromAccount.directTransfer(toAccount, amountCent) == false) {
                     if (amountCent > fromAccount.getBalance()) {
                         errorMsgAmount.setText("För lågt saldo");
+                    } else {
+                        errorMsgToAccount.setText("Samma konto som du skickar ifrån");
                     }
                     return;
                 }
