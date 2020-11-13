@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.DataClasses.Account;
+import org.example.DataClasses.Customer;
+import org.example.DataClasses.Transfer;
 import org.example.Exceptions.*;
 
 import java.math.BigInteger;
@@ -277,7 +280,9 @@ public class App {
                         System.out.println("Ange hur många kronor du vill skicka över: ");
                         amountInput = scanner.nextLine();
                         amount = UnitConversion.convertFromSek(amountInput);
-                        keepRunningPartFour = false;
+                        if (amount > 0) {
+                            keepRunningPartFour = false;
+                        }
                     } catch (NonNumericalException e) {
                         System.out.println("Felaktig inmatning. Beloppet måste vara ett tal.");
                     } catch (NumberNotInBoundsException e) {
@@ -314,9 +319,11 @@ public class App {
                         System.out.println("Se till att beloppet finns på kontot före " + transferDate.toString() + ", annars kommer betalning inte gå igenom!");
                     }
                 } catch (NullToAccountException e) {
-                    e.printStackTrace(); //Har redan kontrollerat
+                    e.printStackTrace(); //Har redan kontrollerat. Behåller dubbletter ifall vi lägger till ett annat exception.
                 } catch (NotLaterDateException e) {
-                    e.printStackTrace(); //Har redan kontrollerat. Behåller dubblett ifall vi lägger till ett annat exception.
+                    e.printStackTrace(); //Har redan kontrollerat.
+                } catch (TooSmallNumberException e) {
+                    e.printStackTrace(); //Har redan kontrollerat.
                 }
 
                 System.out.println("Tryck enter för att återgå till huvudmenyn.");

@@ -7,17 +7,15 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import jdk.jfr.internal.tool.Main;
+import org.example.DataClasses.Account;
+import org.example.DataClasses.Customer;
+import org.example.DataClasses.Transfer;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 

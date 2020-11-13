@@ -1,7 +1,9 @@
-package org.example;
+package org.example.DataClasses;
 
 import org.example.Exceptions.NotLaterDateException;
 import org.example.Exceptions.NullToAccountException;
+import org.example.Exceptions.TooSmallNumberException;
+import org.example.UnitConversion;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -167,9 +169,12 @@ public class Account {
      * @return retunerar den nya Transfer objektet.
      * @author Alex
      */
-    public Transfer addTransfer(Account toAccount, long amount, LocalDate transferDate) throws NullToAccountException, NotLaterDateException {
+    public Transfer addTransfer(Account toAccount, long amount, LocalDate transferDate) throws NullToAccountException, NotLaterDateException, TooSmallNumberException {
         if (Objects.isNull(toAccount)) {
             throw new NullToAccountException("toAccount är null");
+        }
+        if (amount <= 0) {
+            throw new TooSmallNumberException("amount är 0 eller mindre");
         }
         if (transferDate.isBefore(LocalDate.now().plusDays(1))) {
             throw new NotLaterDateException("Datumet måste vara imorgon eller längre fram i tiden");

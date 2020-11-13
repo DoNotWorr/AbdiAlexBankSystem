@@ -2,7 +2,9 @@
 package org.example;
 
 import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
+import org.example.DataClasses.Account;
+import org.example.DataClasses.Customer;
+import org.example.DataClasses.Transfer;
 
 //todo final?
 public class UserSession {

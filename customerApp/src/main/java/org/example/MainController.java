@@ -4,6 +4,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import org.example.DataClasses.Account;
+import org.example.DataClasses.Transfer;
 
 public class MainController {
     CustomerApp customerApp = null;
