@@ -93,4 +93,24 @@ public class TestConvertToSek {
         String expected = "1234567891234567891234567891234567891234567891234567891234567891234567.89";
         assertEquals(expected, UnitConversion.convertToSek(input));
     }
+
+    /**
+     * testar att konvertera väldigt stora tal.
+     */
+    @Test
+    public void testConvertSmallNumber() {
+        String input = "10";
+        String expected = "0.10";
+        assertEquals(expected, UnitConversion.convertToSek(input));
+    }
+
+    /**
+     * testar att konvertera väldigt stora tal.
+     */
+    @Test
+    public void testConvertSmallNegativeNumber() {
+        String input = "-10";
+        String expected = "-0.10";
+        assertEquals(expected, UnitConversion.convertToSek(input));
+    }
 }

@@ -2,21 +2,22 @@ package org.example;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import org.example.DataClasses.*;
 
 import java.util.Comparator;
 
+/**
+ * @author Alex och Abdi
+ * Se kommentera på varje enskild metod
+ */
 public class MainController {
     CustomerApp customerApp = null;
 
     @FXML
     ListView<Account> currentAccountsListView;
 
-    //todo disable knappen removeTransfer innan man har valt något
     @FXML
     ListView<Transfer> currentTransfersListView;
 
@@ -26,6 +27,11 @@ public class MainController {
     @FXML
     Button removeTransfer;
 
+    /**
+     * Sparar all data, rensar användarsession, återställer loginfönstret och byter till loginfönstret
+     *
+     * @author Alex
+     */
     @FXML
     public void logout() {
         //Sparar alla ändringar
@@ -35,7 +41,7 @@ public class MainController {
         UserSession.getInstance().clearInstance();
 
         // Rensar personnummer och lösenord efter man har loggat ut
-        customerApp.loginController.deleteUser();
+        customerApp.loginController.setDefaultFields();
 
         //Byter scen och visar den scenen
         customerApp.primaryStage.setScene(customerApp.myScenes.get("loginScene"));
@@ -43,7 +49,9 @@ public class MainController {
     }
 
     /**
+     * Sparar customer, accounts, transfers
      *
+     * @author Abdi
      */
     private void saveEverything() {
         FileService.INSTANCE.saveCustomers(CustomerApp.allCustomers);
@@ -51,6 +59,11 @@ public class MainController {
         FileService.INSTANCE.saveTransfers(CustomerApp.allTransfers);
     }
 
+    /**
+     * Förbereder transferScene med data från UserSession. Byter scene till transferScene.
+     *
+     * @author Alex
+     */
     @FXML
     public void createTransfer() {
         //Fyller listor i transfer-fönstret med innehåll från UserSession
@@ -64,6 +77,9 @@ public class MainController {
         customerApp.primaryStage.show();
     }
 
+    /**
+     * Tar bort en transfer ifrån lista med kommande transfers. Observera att transfer enbart markeras som "cancelled" men finns kvar
+     */
     @FXML
     public void removeTransfer() {
         //Om en transaktion är vald, dvs "...getSelectedItem != null"
@@ -72,14 +88,11 @@ public class MainController {
             if (currentTransfersListView.getSelectionModel().getSelectedItem().setStatus(Transfer.TransferStatus.CANCELLED)) { //I den nuvarande versionen är if-satsen överflödig eftersom listan visar enbart PENDING och det alltid går att byta från PENDING till CANCELLED
                 updateTransfers(UserSession.getInstance().getTransfers());
             }
-        } else {
-            //todo lägg till label errorMsgSelectedTransfer med text "Välj en transaktion"
         }
-
     }
 
     /**
-     * Fyller lista med innehåll
+     * Fyller kontolista med innehåll
      *
      * @param accounts konton som ska visas
      */
@@ -91,9 +104,9 @@ public class MainController {
     }
 
     /**
-     * Fyller lista med innehåll
+     * Fyller transferlista med transfers som har status "pending". Om det inte finns några sådana så kan man inte trycka på remove-transfer.
      *
-     * @param transfers lista som ska visas
+     * @param transfers lista med alla transfers
      */
     public void updateTransfers(ObservableList<Transfer> transfers) {
         //Skapar ObservableList med transfers som är pågående.
@@ -123,6 +136,7 @@ public class MainController {
     }
 
     /**
+     * Logga ut och avsluta programmet med samma knapp
      * author Abdi
      */
     @FXML

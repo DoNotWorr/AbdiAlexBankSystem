@@ -12,10 +12,13 @@ import java.util.HashMap;
 import java.util.*;
 
 /**
- * @author Abdi
+ * employeeApp får tillgång till common-modulen genom Maven
+ *
+ * @author Abdi, Alex
+ * Abdi har skrivit hela klassen. Alex har gjort småändringar i enstaka metoder. Det finns en author-notation på dessa metoder
  */
 
-public class App {
+public class employeeApp {
     public static HashMap<String, Customer> allCustomers = FileService.INSTANCE.loadCustomers(); //HashMap K: ownerID (String), V: customer (Customer)
     public static HashMap<String, Account> allAccounts = FileService.INSTANCE.loadAccounts(); //HashMap K: accountNumber (String), V: account (Account)
     public static ArrayList<Transfer> allTransfers = FileService.INSTANCE.loadTransfers();
@@ -25,7 +28,9 @@ public class App {
         menuNavigation();
     }
 
-
+    /**
+     * Metod för att navigera i huvudmenyn
+     */
     private static void menuNavigation() {
 
         System.out.println("--------Välkommen till Newton bank--------");
@@ -104,7 +109,6 @@ public class App {
     }
 
     /**
-     * @author Abdi
      * Den här metoden tar fram kunden först och sen den personens konto och deras betalningsuppdrag som finns. Därefter kan man välja från listan vilken av dom som man vill avbryta.
      */
     private static void deletePayment() {
@@ -349,14 +353,13 @@ public class App {
     }
 
     /**
-     * Den här metoden loppar genom alla kunder för att hitta specifik kund och sen hitta konton som
-     * tillhör den. Sen väljer man kontot som man vill skicka pengar ifrån och sen väljer man kontot som man vill skicka pengarna till.
+     * Den här metoden loppar genom alla kunder för att hitta specifik kund och sen hitta konton som tillhör den. Sen väljer man kontot som man vill skicka pengar ifrån och sen väljer man kontot som man vill skicka pengarna till.
      */
     private static void createNewTransfer() {
-        boolean keepgoing = true;
-        boolean keepgoings = true;
+        boolean keepGoingOne = true;
+        boolean keepGoingTwo = true;
 
-        while (keepgoing) {
+        while (keepGoingOne) {
             String ownerID = findCutomer("%-5s %-10s %-10s %-10s\n", "Den valda kundens personnumer är: ");
             if (!allCustomers.containsKey(ownerID)) {
                 System.out.println("Felaktig inmatning! ");
@@ -374,12 +377,12 @@ public class App {
                                 UnitConversion.convertToSek(accounts.getBalance()) + " kr"
                         );
                         counters++;
-                        keepgoing = false;
+                        keepGoingOne = false;
                     }
                 }
             }
         }
-        while (keepgoings) {
+        while (keepGoingTwo) {
             try {
                 System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka ifrån: ");
                 String fromAccountNumber = scanner.nextLine();
@@ -394,7 +397,7 @@ public class App {
                         if (fromAccount.directTransfer(toAccount, UnitConversion.convertFromSek(amount))) {
                             System.out.println("Pengarna överfördes till: "
                                     + toAccount.getAccountNumber());
-                            keepgoings = false;
+                            keepGoingTwo = false;
                         } else {
                             System.out.println("Pengarna kunde inte skickas till kontot: "
                                     + toAccount.getAccountNumber());
@@ -417,14 +420,13 @@ public class App {
     }
 
     /**
-     * Den här metoden loppar genom alla kunder för att hitta specifik kund och sen hitta konton som
-     * tillhör den. Sen väljer man kontot som man vill göra ett uttag från.
+     * Den här metoden loppar genom alla kunder för att hitta specifik kund och sen hitta konton som tillhör den. Sen väljer man kontot som man vill göra ett uttag från.
      */
     private static void withdrawMoney() {
-        boolean keepgoing = true;
-        boolean keepgoings = true;
+        boolean keepGoingOne = true;
+        boolean keepGoingTwo = true;
 
-        while (keepgoing) {
+        while (keepGoingOne) {
             String ownerID = findCutomer("%-5s %-10s %-10s %-10s\n", "Den valda kundens personnumer är: ");
             if (!allCustomers.containsKey(ownerID)) {
                 System.out.println("Felaktig inmatning! ");
@@ -442,12 +444,12 @@ public class App {
                                 UnitConversion.convertToSek(accounts.getBalance()) + " kr"
                         );
                         counters++;
-                        keepgoing = false;
+                        keepGoingOne = false;
                     }
                 }
             }
         }
-        while (keepgoings) {
+        while (keepGoingTwo) {
             try {
                 System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill ta ut pengarna ifrån: ");
                 String accountNumber = scanner.nextLine();
@@ -464,7 +466,7 @@ public class App {
                                     + thisAccount.getAccountNumber() + "\n"
                                     + "Saldo: "
                                     + UnitConversion.convertToSek(thisAccount.getBalance()) + " kr");
-                            keepgoings = false;
+                            keepGoingTwo = false;
                         } else {
                             System.out.println("För lite saldo i kontot!\n"
                                     + "Kontonamn: "
@@ -487,13 +489,12 @@ public class App {
     }
 
     /**
-     * Den här metoden loppar genom alla kunder för att hitta specifik kund och sen hitta konton som
-     * tillhör den. Sen väljer man kontot som man vill göra insättning i.
+     * Den här metoden loppar genom alla kunder för att hitta specifik kund och sen hitta konton som tillhör den. Sen väljer man kontot som man vill göra insättning i.
      */
     private static void depositeMoney() {
-        boolean keepgoing = true;
-        boolean keepgoings = true;
-        while (keepgoing) {
+        boolean keepGoingOne = true;
+        boolean keepGoingTwo = true;
+        while (keepGoingOne) {
             String ownerID = findCutomer("%-4s%-8s%-10s%-10s\n", "Den valda kundens personnummer är: ");
             if (!allCustomers.containsKey(ownerID)) {
                 System.out.println("Felaktig inmatning! ");
@@ -510,12 +511,12 @@ public class App {
                                 thisAccount.getOwnerID() + " ",
                                 UnitConversion.convertToSek(thisAccount.getBalance()) + " kr");
                         counter++;
-                        keepgoing = false;
+                        keepGoingOne = false;
                     }
                 }
             }
         }
-        while (keepgoings) {
+        while (keepGoingTwo) {
             try {
                 System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill sätta in pengarna på: ");
                 String accountNumber = scanner.nextLine();
@@ -530,7 +531,7 @@ public class App {
                                     + "Kontonummer: "
                                     + thisAccount.getAccountNumber() + "\n"
                                     + "Saldo: " + UnitConversion.convertToSek(thisAccount.getBalance()) + " kr");
-                            keepgoings = false;
+                            keepGoingTwo = false;
                         } else {
                             System.out.println("Insättningar måste vara positiv och inget negativa belopp.\nVänligen försök igen!");
                         }

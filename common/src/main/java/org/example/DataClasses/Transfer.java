@@ -5,7 +5,7 @@ import org.example.UnitConversion;
 import java.time.LocalDate;
 
 /**
- * Fyra variabler (fromAccountNumber, toAccountNumber, amount, transferDate) är obligatoriska i klassens enda konstruktor. Dessa fyra saknar setter-metoder.
+ * Fyra variabler (fromAccountNumber, toAccountNumber, amount, transferDate) är obligatoriska i klassens enda konstruktor. Dessa fyra saknar setter-metoder. Om man skriver fel uppgifter när man skapar en transfer så får man avbryta den istället.
  * Den femte variabeln status, har både getter och setter.
  *
  * @author Alex
@@ -25,8 +25,7 @@ public class Transfer {
     }
 
     /**
-     * //todo kolla med Jon om användning av accessmodifier
-     * Konstruktor för att skapa bankuppdrag.
+     * Konstruktor för att skapa bankuppdrag. Konstruktor är protected. Använd addTransfer() i Account för att skapa transfer.
      *
      * @param fromAccountNumber kontot som pengar ska dras ifrån
      * @param toAccountNumber   kontot som pengar ska föras över till
@@ -60,7 +59,9 @@ public class Transfer {
     }
 
     /**
-     * @return
+     * Getter amount
+     *
+     * @return beloppet som ska överföras
      */
     public long getAmount() {
         return amount;
@@ -85,10 +86,10 @@ public class Transfer {
     }
 
     /**
-     * Ändrar status på en Transfer-instans. En instans kan ändra status enbart en gång.
+     * Ändrar status på en Transfer-instans. En instans kan ändra status enbart en gång. Den nuvarande statusen måste vara PENDING för att en ändring ska vara tillåten
      *
      * @param newStatus den nya statusen
-     * @return True om status ändrades. False om status inte är tillåten. Den nuvarande statusen måste vara PENDING för att en ändring ska vara tillåten
+     * @return True om status ändrades. False om status-ändring inte är tillåten.
      */
     public boolean setStatus(TransferStatus newStatus) {
         //Det går inte att ändra status till pending

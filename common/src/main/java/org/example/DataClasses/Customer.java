@@ -7,6 +7,8 @@ import org.example.Exceptions.InvalidPasswordException;
 import org.example.ValidationService;
 
 /**
+ * Alex skrev klassen. Metoder som saknar author-notation är skrivna av Alex. Annars finns author-notation samt förklaring
+ *
  * @author Alex
  */
 public class Customer {
@@ -16,7 +18,7 @@ public class Customer {
     private String passwordHash;
 
     /**
-     * Konstruktor som kräver alla parametrar.
+     * Konstruktor
      *
      * @param firstName     förnamn
      * @param lastName      efternamn
@@ -53,6 +55,8 @@ public class Customer {
     }
 
     /**
+     * Getter firstName
+     *
      * @return förnamn (String)
      */
     public String getFirstName() {
@@ -60,6 +64,8 @@ public class Customer {
     }
 
     /**
+     * Getter lastName
+     *
      * @return efternamn (String)
      */
     public String getLastName() {
@@ -67,6 +73,8 @@ public class Customer {
     }
 
     /**
+     * Getter ownerID/personnummer
+     *
      * @return ownerID/personnummer (String)
      */
     public String getOwnerID() {
@@ -74,6 +82,8 @@ public class Customer {
     }
 
     /**
+     * Getter passwordHash. Använd DigestUtils.sha256Hex() för att konvertera från plain text till passwordHash
+     *
      * @return passwordHash
      */
     public String getPasswordHash() {

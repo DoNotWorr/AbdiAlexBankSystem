@@ -6,6 +6,10 @@ import org.example.Exceptions.NumberNotInBoundsException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+/**
+ * @Author Alex, Abdi
+ * Alex har skrivit klassen. Metoder som är skrivna enbart av Alex saknar author-notation. I metoder där Abdi har hjälpt till finns en author-notation samt förklaring
+ */
 public class UnitConversion {
     /**
      * Metod för att konvertera ett belopp (öre) till ett belopp i kronor
@@ -13,7 +17,7 @@ public class UnitConversion {
      * @param amountCent belopp i hela ören, exempelvis: 1234
      * @return belopp i kronor som decimaltal, exempelvis 12,34
      * @author Alex, Abdi
-     * Konverterar ett belopp från ören (1234 öre) till kronor (12,34 kr)
+     * Alex skrev metod. Abdi fixade bug för små tal. Alex fixade sedan bug för små negativa tal.
      */
     public static String convertToSek(long amountCent) {
         StringBuilder amountSek = new StringBuilder();
@@ -21,9 +25,8 @@ public class UnitConversion {
         int minLength;
         amountSek.append(amountCent);
 
-        //Fixade en bug för små negativa tal (till exempel -10 eller -1) /Alex
         //Kollar om beloppet är positivt eller negativt och justerar därefter (eftersom "-x" innehåller ett tecken mer än "x")
-        if (amountCent >= 0) {
+        if (amountCent >= 0) {      //Fixade en bug för små negativa tal (till exempel -10 eller -1) /Alex
             indexOfNewZero = 0;
             minLength = 3;
         } else {
@@ -31,9 +34,8 @@ public class UnitConversion {
             minLength = 4;
         }
 
-        //Fixade bugg när amountSek var mindre än 3 siffror /Abdi
         //Justerar små tal så man kan stoppa in en punkt två steg till vänster om sista tecknet, till exempel "1" -> "001"
-        while (amountSek.toString().length() < minLength) {
+        while (amountSek.toString().length() < minLength) {     //Fixade bugg när amountSek var mindre än 3 siffror /Abdi
             amountSek.insert(indexOfNewZero, '0');
         }
         //Stoppar in en punkt två tecken till vänster om det sista tecknet, till exempel "001" -> "0.01"
@@ -47,21 +49,34 @@ public class UnitConversion {
      * @param amountCent String-representation av ett heltal, exempelvis: "123456789123456789123456789123456789"
      * @return belopp i kronor som decimaltal, exempelvis 12,34
      * @author Alex, Abdi
-     * Konverterar ett belopp från ören (1234 öre) till kronor (12,34 kr)
+     * Alex skrev metod. Abdi fixade bug för små tal. Alex fixade sedan bug för små negativa tal.
      */
     public static String convertToSek(String amountCent) {
         StringBuilder amountSek = new StringBuilder();
+        int indexOfNewZero;
+        int minLength;
         amountSek.append(amountCent);
-        //2020 öre
-        while (amountSek.toString().length() < 3) {  // Fixade bugg när amountSek var mindre än 3 siffror //Abdi
-            amountSek.insert(0, '0');
+
+        //Kollar om beloppet är positivt eller negativt och justerar därefter (eftersom "-x" innehåller ett tecken mer än "x")
+        if (amountCent.charAt(0) != '-') {      //Fixade en bug för små negativa tal (till exempel -10 eller -1) /Alex
+            indexOfNewZero = 0;
+            minLength = 3;
+        } else {
+            indexOfNewZero = 1;
+            minLength = 4;
         }
+
+        //Justerar små tal så man kan stoppa in en punkt två steg till vänster om sista tecknet, till exempel "1" -> "001"
+        while (amountSek.toString().length() < minLength) {     //Fixade bugg när amountSek var mindre än 3 siffror /Abdi
+            amountSek.insert(indexOfNewZero, '0');
+        }
+        //Stoppar in en punkt två tecken till vänster om det sista tecknet, till exempel "001" -> "0.01"
         amountSek.insert(amountSek.length() - 2, '.');
         return amountSek.toString();
     }
 
     /**
-     * Räknar om ett belopp i kronor till motsvarande belopp i ören.
+     * Räknar om ett belopp i kronor till motsvarande belopp i ören. Validerar inmatning.
      *
      * @param amountSek String med ett belopp i kronor med max två decimaler (exempelvis "123" eller "123.45"). Max två decimaler och inom intervallet -92233720368547758.08 >= amountSek <= 92233720368547758.07
      * @return beloppet konverterat till ören (exempelvis 12300 eller 12345)

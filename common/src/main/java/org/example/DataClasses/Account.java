@@ -12,19 +12,18 @@ import java.util.Random;
 
 /**
  * @author Abdi, Alex
- * Abdi skrev klassen. Alex la till kontroller i metoder som använder setBalance() för att man inte ska kunna skapa tal som inte kan hanteras av en long.
+ * Abdi skrev klassen. Metoder som saknar author-notation är skrivna av Abdi. Annars finns author-notation samt förklaring
  */
 public class Account {
 
     private String accountName;
     private String accountNumber;
     private String ownerID;
-    private long balance; //Kan inte vara ett negativt tal pga
-    private int previousTransaction;
+    private long balance;
 
     /**
-     * @param accountName Kontonamn.
-     * @param customer    kundens ownerID/personnummer.
+     * @param accountName Kontonamn
+     * @param customer    kundens ownerID/personnummer
      */
     public Account(String accountName, Customer customer) {
         this.accountName = accountName;
@@ -69,7 +68,7 @@ public class Account {
     }
 
     /**
-     * Metod som får fram kundens saldo i kontot.
+     * Metod som får fram kontos saldo
      *
      * @return saldo på konto i ören.
      */
@@ -78,12 +77,12 @@ public class Account {
     }
 
     /**
-     * Metod för att skapa
+     * Metod för att göra insättning på konto
      *
      * @param amount beloppet som personen ska sätta in i kontot.
      * @return den retunerar true om det gick att sätta in pengar i kontot eller false om det inte gick.
      * @author Abdi, Alex
-     * Abdi skrev metoden. Alex la till kontroll för att hantering
+     * Abdi skrev metoden. Alex la till kontroll för att insättningen inte ska skapa long overflow
      */
 
     public boolean depositMoney(long amount) {
@@ -99,13 +98,15 @@ public class Account {
     }
 
     /**
-     * Metod för att få fram rätt balance för att kunna ändra saldot i kontot.
+     * Setter för balance. Metoden är private för att man inte ska kunna ändra hur som helst. Använd andra metoder, till exempel withdrawMoney(), depositMoney()
      */
     private void setBalance(long balance) {
         this.balance = balance;
     }
 
     /**
+     * Metod för att ta ut pengar från konto
+     *
      * @param amount beloppet som personen ska ta ut från kontot.
      * @return den retunerar true om det gick att göra ett uttag från kontot eller false om det inte gick.
      */
@@ -122,24 +123,13 @@ public class Account {
     }
 
     /**
-     * Den här metoden visar historiken i alla insättningar och kontantuttag.
-     */
-    public void previousTransaction() {
-        if (previousTransaction > 0) {
-            System.out.println("Insättningar: " + previousTransaction);
-        } else if (previousTransaction < 0) {
-            System.out.println("Kontantuttag: " + Math.abs(previousTransaction));// Använder metoden Math för att kunna se uttraget som positivt istället för minus 1000kr
-        } else {
-            System.out.println("inget transaktionen har hänt än ");
-        }
-    }
-
-    /**
-     * Gör en direktöverföring om det är möjligt. Kontrollerar att både mottagare klarar av att ta emot pengar och avsändare klarar av att skicka pengar.
+     * Gör en direktöverföring om det är möjligt. Kontrollerar både att mottagare klarar av att ta emot pengar och att avsändare klarar av att skicka pengar.
      *
      * @param toAccount mottagarens konto
      * @param amount    belopp i öre
      * @return True om direktöverföring genomfördes, annars false.
+     * @Author Abdi, Alex
+     * Abdi skrev metoden. Alex gjorde om så att metoden inte skapa long overflow i mottagarens konto
      */
     public boolean directTransfer(Account toAccount, long amount) {
         //toAccount kan inte vara null så går det inte att göra en överföring
@@ -162,7 +152,7 @@ public class Account {
     }
 
     /**
-     * Metod för att skapa bankuppdrag.
+     * Metod för att skapa en överföring som inte ska ske på direkten
      *
      * @param toAccount    kontonummer betalning ska ske till
      * @param amount       antal ören (inte SEK)
@@ -187,11 +177,12 @@ public class Account {
     }
 
     /**
-     * @param accountNumber ska generera kontonummer som börjar med 55
-     * @author Abdi
+     * Genererar kontonummer och grupperar kontonumret i formatet XXXX-XXXX-XXXX
+     *
+     * @param accountNumber vilka tecken kontonumret ska börja på
+     * @return kontonumret som genererats
      */
     public static String generateAccountNumber(String accountNumber) {
-        //accountNumber = "55";
         Random value = new Random();
 
         // Generera 8 tal som ska ha 55 i början.
@@ -221,7 +212,7 @@ public class Account {
      * @return formatet på utskriften
      */
     public String toString() {
-        return this.accountName + "(" + this.getAccountNumber() + ")" + UnitConversion.convertToSek(this.getBalance()) + " kr";
+        return this.accountName + " (" + this.getAccountNumber() + ") " + UnitConversion.convertToSek(this.getBalance()) + " kr";
     }
 }
 

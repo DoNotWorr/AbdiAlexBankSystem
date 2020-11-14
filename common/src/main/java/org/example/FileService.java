@@ -145,13 +145,9 @@ public enum FileService {
      * @param dataToWrite den textrad som skrivs till textfil
      */
     private void save(String fileName, String dataToWrite) {
-        //todo implementera save() som använder en absolut filsökväg
-
         //getFile skapar File-objekt som pekar på filen som
         File dataFile = getFile(fileName);
-        if (dataFile == null) return; //todo ändra till eget exception??
-
-        //todo implementera exakt samma i load()
+        if (dataFile == null) return;
 
         //Om datafil existerar så läses filen in
         try {
@@ -172,12 +168,11 @@ public enum FileService {
      * @return Returnerar File-instans som pekar på filen om den existerar. Returnerar null om filen inte existerar och inte heller gick att skapa.
      */
     private File getFile(String fileName) {
-        //todo tänk på att om filen redan existerar så ska programmet ändå fortsätta
         //Kontrollerar om mapp existerar, skapar annars
         StringBuilder filePathBuilder = getDirectory();
 
         //Kontrollerar det gick att skapa mapp
-        if (Objects.isNull(filePathBuilder)) { //todo ändra till eget exeception?
+        if (Objects.isNull(filePathBuilder)) {
             return null;
         }
 
@@ -206,7 +201,6 @@ public enum FileService {
      *
      * @return StringBuilder-instans med sökväg till mappen. Returnerar null om mapp inte existerade och inte gick att skapa.
      */
-    //todo eget exception?
     private StringBuilder getDirectory() {
         StringBuilder filePathBuilder = new StringBuilder();
 
