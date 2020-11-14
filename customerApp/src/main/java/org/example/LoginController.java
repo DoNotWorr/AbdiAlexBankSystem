@@ -5,6 +5,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import org.apache.commons.codec.digest.DigestUtils;
 
 
 public class LoginController {
@@ -14,9 +15,19 @@ public class LoginController {
     TextField textField = null;
 
     @FXML
+    PasswordField password = null;
+
+    @FXML
+    Label loginErrorMsg = null;
+
+    @FXML
     public void login(Event e) {
-        //Om angivet personnummer stämmer överens med existerande användare
-        if (CustomerApp.allCustomers.containsKey(textField.getText())) {
+        //Nollställer eventuellt felmeddelande
+        loginErrorMsg.setText("");
+
+        //Om angivet personnummer finns i hashmap och lösenord stämmer överens. Lösenord är hashade med DigestUtils.sha256hex() så kör det inmatade lösenordet i samma metod.
+        if (CustomerApp.allCustomers.containsKey(textField.getText()) && CustomerApp.allCustomers.get(textField.getText()).getPasswordHash().equals(DigestUtils.sha256Hex(password.getText()))) {
+
             //Skapar användarsession
             UserSession.setInstance(CustomerApp.allCustomers.get(textField.getText()));
 
@@ -38,6 +49,9 @@ public class LoginController {
             //Byter scen och visar den scenen
             customerApp.primaryStage.setScene(customerApp.myScenes.get("mainScene"));
             customerApp.primaryStage.show();
+        } else {
+            password.setText("");
+            loginErrorMsg.setText("Felaktiga uppgifter");
         }
     }
 
