@@ -60,6 +60,7 @@ public class LoginController {
      */
     public void deleteUser() {
         textField.clear();
+        password.clear();
     }
 
     /**
