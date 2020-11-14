@@ -2,6 +2,7 @@ package org.example.DataClasses;
 
 import org.example.Exceptions.NotLaterDateException;
 import org.example.Exceptions.NullToAccountException;
+import org.example.Exceptions.SameAccountException;
 import org.example.Exceptions.TooSmallNumberException;
 import org.example.UnitConversion;
 
@@ -169,9 +170,12 @@ public class Account {
      * @return retunerar den nya Transfer objektet.
      * @author Alex
      */
-    public Transfer addTransfer(Account toAccount, long amount, LocalDate transferDate) throws NullToAccountException, NotLaterDateException, TooSmallNumberException {
+    public Transfer addTransfer(Account toAccount, long amount, LocalDate transferDate) throws NullToAccountException, NotLaterDateException, TooSmallNumberException, SameAccountException {
         if (Objects.isNull(toAccount)) {
             throw new NullToAccountException("toAccount är null");
+        }
+        if (toAccount.getAccountNumber().equals(this.accountNumber)) {
+            throw new SameAccountException("Kan inte lägga upp transfer till sitt eget konto");
         }
         if (amount <= 0) {
             throw new TooSmallNumberException("amount är 0 eller mindre");

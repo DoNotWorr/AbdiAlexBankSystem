@@ -216,6 +216,7 @@ public class App {
                 Account fromAccount = null;
                 Account toAccount = null;
                 String toAccountNumber = null;
+                String fromAccountNumber = null;
                 long amount = 0;
                 String amountInput = null;
                 LocalDate transferDate = null;
@@ -248,7 +249,7 @@ public class App {
                 //Väljer vilket av kundens konto som ska användas
                 while (keepRunningPartTwo) {
                     System.out.println("Ange kontonummret xxxx-xxxx-xxxx som du vill skicka betalningsuppdraget ifrån: ");
-                    String fromAccountNumber = scanner.nextLine();
+                    fromAccountNumber = scanner.nextLine();
                     if (fromAccountNumber.length() == 0) {
                         return;
                     }
@@ -269,8 +270,12 @@ public class App {
                         return;
                     }
                     if (allAccounts.containsKey(toAccountNumber)) {
-                        toAccount = allAccounts.get(toAccountNumber);
-                        keepRunningPartThree = false;
+                        if (fromAccountNumber.equals(toAccountNumber)) {
+                            System.out.println("Mottagarkonto kan inte vara samma som avsändarkonto.");
+                        } else {
+                            toAccount = allAccounts.get(toAccountNumber);
+                            keepRunningPartThree = false;
+                        }
                     } else {
                         System.out.println("Hittade inte kontot");
                     }
@@ -324,6 +329,8 @@ public class App {
                 } catch (NotLaterDateException e) {
                     e.printStackTrace(); //Har redan kontrollerat.
                 } catch (TooSmallNumberException e) {
+                    e.printStackTrace(); //Har redan kontrollerat.
+                } catch (SameAccountException e) {
                     e.printStackTrace(); //Har redan kontrollerat.
                 }
 
