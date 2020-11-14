@@ -270,7 +270,7 @@ public class App {
                         return;
                     }
                     if (allAccounts.containsKey(toAccountNumber)) {
-                        if(fromAccountNumber.equals(toAccountNumber)) {
+                        if (fromAccountNumber.equals(toAccountNumber)) {
                             System.out.println("Mottagarkonto kan inte vara samma som avsändarkonto.");
                         } else {
                             toAccount = allAccounts.get(toAccountNumber);
