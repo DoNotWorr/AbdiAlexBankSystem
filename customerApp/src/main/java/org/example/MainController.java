@@ -2,6 +2,7 @@ package org.example;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -33,6 +34,9 @@ public class MainController {
         //Tömmer användarsession
         UserSession.getInstance().clearInstance();
 
+        // Rensar personnummer och lösenord efter man har loggat ut
+        customerApp.loginController.deleteUser();
+
         //Byter scen och visar den scenen
         customerApp.primaryStage.setScene(customerApp.myScenes.get("loginScene"));
         customerApp.primaryStage.show();
@@ -42,17 +46,9 @@ public class MainController {
      *
      */
     private void saveEverything() {
-        CustomerApp.allCustomers = FileService.INSTANCE.loadCustomers();
-        CustomerApp.allAccounts = FileService.INSTANCE.loadAccounts();
-        CustomerApp.allTransfers = FileService.INSTANCE.loadTransfers();
-    }
-
-    @FXML
-    public void removeAccount(MouseEvent mouseevent) {
-        int selectedIdx = 0;
-        if (selectedIdx == currentAccountsListView.getItems().size()) {
-            currentAccountsListView.getItems().remove(this.currentAccountsListView.getItems().size() - 1);
-        }
+        FileService.INSTANCE.saveCustomers(CustomerApp.allCustomers);
+        FileService.INSTANCE.saveAccounts(CustomerApp.allAccounts);
+        FileService.INSTANCE.saveTransfers(CustomerApp.allTransfers);
     }
 
     @FXML
@@ -124,5 +120,16 @@ public class MainController {
         currentTransfersListView.setItems(pendingTransfers);
         //enligt dokumentation ska setItems() automatiskt göra en refresh(), men en manuell refresh() verkar krävas ändå
         currentTransfersListView.refresh();
+    }
+
+    /**
+     * author Abdi
+     */
+    @FXML
+    public void logOutAndQuit() {
+        //Sparar alla ändringar
+        saveEverything();
+        
+        System.exit(0);
     }
 }

@@ -36,8 +36,8 @@
                 <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <children>
-                <TextField fx:id="textField" style="-fx-background-radius: 1em;" text="19920317-0577"
-                           GridPane.columnIndex="1"/> <!--todo ta bort text="19920317-0577"-->
+                <TextField fx:id="textField" style="-fx-background-radius: 1em;"
+                           GridPane.columnIndex="1"/>
                 <Label prefHeight="29.0" prefWidth="175.0" text="Personnummer">
                     <font>
                         <Font name="System Italic" size="14.0"/>

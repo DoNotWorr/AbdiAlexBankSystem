@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="430.0" prefWidth="548.0"
             style="-fx-background-color: linear-gradient(to right top, #1207fb, #005bff, #0083ff, #00a3ff, #00bef9, #36caf5, #5ad6f0, #7ae0ec, #6be3f0, #58e7f3, #3eeaf6, #02edf8);; -fx-background-radius: 2em;"
@@ -27,8 +20,7 @@
         </font>
     </Label>
 
-    <ListView fx:id="fromAccountList" layoutX="21.0" layoutY="45.0" prefHeight="62.0" prefWidth="273.0"
-              style="-fx-background-radius: 1em;"/>
+    <ListView fx:id="fromAccountList" layoutX="21.0" layoutY="45.0" prefHeight="62.0" prefWidth="273.0"/>
     <Label layoutX="24.0" layoutY="21.0" text="Från kontonummer"/>
     <TextField fx:id="toAccountNumber" layoutX="24.0" layoutY="143.0" style="-fx-background-radius: 1em;"/>
     <Label layoutX="23.0" layoutY="116.0" text="Till kontonummer"/>
