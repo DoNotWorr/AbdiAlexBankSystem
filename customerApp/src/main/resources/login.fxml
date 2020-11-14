@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<!--Abdi har designat FXML. Alex har lagt till vissa fx:id-->
 <AnchorPane prefHeight="330" prefWidth="330"
             style="-fx-background-color: linear-gradient(to right top, #1802fb, #0047ff, #2b6bff, #5589ff, #7da5fa, #80b6fc, #8cc6fc, #9fd4fb, #8adeff, #73e9ff, #62f2fd, #5ffbf1); -fx-background-radius: 3em;"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"

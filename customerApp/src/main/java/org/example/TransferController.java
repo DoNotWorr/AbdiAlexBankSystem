@@ -6,11 +6,14 @@ import javafx.scene.control.*;
 import org.example.DataClasses.Account;
 import org.example.DataClasses.Transfer;
 import org.example.Exceptions.*;
-import javafx.scene.input.MouseEvent;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * @author Abdi, Alex
+ * Se tagg på varje metod
+ */
 public class TransferController {
     CustomerApp customerApp = null;
 
@@ -42,7 +45,10 @@ public class TransferController {
     DatePicker laterDatePicker = null;
 
     /**
-     * Läser inmatad info och skapar transaktion om det är möjligt.
+     * Läser inmatad info och skapar transaktion om det är möjligt. Byter sedan till mainScene. Om det inte är möjligt skrivs istället lämpligt felmeddelande ut och användaren får chans att korrigera.
+     *
+     * @author Alex, Abdi
+     * Alex skrev ursprungliga metoden. Abdi och Alex fixade buggar tillsammans så rätt felmeddelande skrivs ut.
      */
     @FXML
     public void addTransaction() {
@@ -112,6 +118,7 @@ public class TransferController {
     }
 
     /**
+     * @author Alex
      * Tömmer alla fält och byter till mainScene
      */
     @FXML
@@ -128,6 +135,7 @@ public class TransferController {
      * Fyller scrollista med konton som man kan välja i transfer-fönster
      *
      * @param accounts konton som ska visas
+     * @author Alex
      */
     public void updateAccounts(ObservableList<Account> accounts) {
         //Fyller lista med överföringar
@@ -138,7 +146,9 @@ public class TransferController {
     }
 
     /**
-     * Återställer standardvärden i transfer-fönster
+     * Återställer standardvärden i transfer-fönster.
+     *
+     * @author Alex
      */
     public void setDefaultFields() {
         //Ställer ChoiceBox fromAccount till första kontot i listan
@@ -159,7 +169,9 @@ public class TransferController {
     }
 
     /**
+     * När man väljer "omgående" så går det inte att välja ett datum. För att det ska bli tydligt för användaren så visar datumväljaren dagens datum.
      *
+     * @author Alex
      */
     public void setInstant() {
         //Välj dagens datum i datepicker
@@ -168,10 +180,15 @@ public class TransferController {
         // disable datepicker så man inte kan välja ett datum (gör den grå)
         laterDatePicker.setDisable(true);
 
-        //Välj RadioButton "omgående"
+        //Välj RadioButton "omgående".
         onCurrentDate.setSelected(true);
     }
 
+    /**
+     * Om man väljer "på datum" så tillgängliggörs datepicker, men ogiltiga datum går inte att trycka på
+     *
+     * @author Alex
+     */
     public void setDelayed() {
         //https://stackoverflow.com/questions/48238855/how-to-disable-past-dates-in-datepicker-of-javafx-scene-builder
         //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DatePicker.html -> setDayCellFactory

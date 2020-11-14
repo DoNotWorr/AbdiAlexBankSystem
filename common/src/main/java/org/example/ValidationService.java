@@ -3,6 +3,9 @@ package org.example;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * @author Alex
+ */
 public enum ValidationService {
     INSTANCE;
 
@@ -25,11 +28,10 @@ public enum ValidationService {
     }
 
     /**
-     * Kontrollerar godtyckligt om en textsträng är ett namn
+     * Kontrollerar godtyckligt om en textsträng är ett namn. Vissa "korrekta" namn returnerar ändå false (till exempel "Therése", eftersom 'é' inte ingår i det vanliga alfabetet).
      *
      * @param name för- eller efternamn som ska valideras
-     * @return true om namnet är minst ett tecken långt och börjar med en stor bokstav som (eventuellt) följs av små bokstäver. Vissa korrekta namn returnerar false (till exempel "Therése", eftersom 'é' inte ingår i det vanliga alfabetet).
-     * @author Alex
+     * @return true om namnet är minst ett tecken långt och börjar med en stor bokstav som (eventuellt) följs av små bokstäver.
      */
     public boolean isValidName(String name) {
         boolean isCorrectName = false;
@@ -50,12 +52,11 @@ public enum ValidationService {
     }
 
     /**
-     * Kontrollerar om en ownerID är ett giltigt personnummer. Den enda ålderskontrollen som görs är att personen måste vara född.
-     * Till exempel är "00000101-0008" ett giltigt personnummer (1: januari år 0). Mest relevant är att personen kan vara under 18 eller till och med nyfödd, så länge personnumret i sig är giltigt.
+     * Kontrollerar om ownerID är ett giltigt personnummer. Den enda ålderskontrollen som görs är att personen måste vara född.
+     * Till exempel är "00000101-0008" ett giltigt personnummer (1:a januari år 0). Personen kan alltså vara under 18 eller till och med nyfödd, så länge personnumret i sig är giltigt.
      *
      * @param ownerID ett personnummer i formatet "yyyyMMdd-xxxx"
      * @return true om ownerID är ett giltigt personnummer
-     * @author Alex
      */
     public boolean isValidOwnerID(String ownerID) {
         boolean isCorrectOwnerID = false; // Kommer returneras i slutet. För att den ska ändras till "true" måste String ownerID klara alla kontroller.

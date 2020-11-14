@@ -40,7 +40,8 @@ public class CustomerApp extends Application {
      *
      * @param primaryStage
      * @throws Exception
-     * @author Alex
+     * @author Alex, Abdi
+     * Alex har skrivit grunden. Abdi har gjort EventHandler och justeringar som har med design att göra (transparent stage, storlek på fönster m.m)
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -109,7 +110,12 @@ public class CustomerApp extends Application {
         primaryStage.show();
     }
 
-    //Kommenterat ut flera olika lösningar medan jag söker lösning
+    /**
+     * Skapar en ObservableList med alla konton som hör till en Customer
+     *
+     * @param customer kunden
+     * @return lista med kundens konton
+     */
     public static ObservableList<Account> getAccountsInCustomer(Customer customer) {
         ObservableList<Account> currentAccounts = FXCollections.observableArrayList();
 
@@ -121,6 +127,12 @@ public class CustomerApp extends Application {
         return currentAccounts;
     }
 
+    /**
+     * Skapar en ObservableList med alla transfers som hör till en Customers olika konton
+     *
+     * @param customer kunden
+     * @return lista med kundens transfers
+     */
     public static ObservableList<Transfer> getTransfersInCustomer(Customer customer) {
         ObservableList<Transfer> currentTransfers = FXCollections.observableArrayList();
 

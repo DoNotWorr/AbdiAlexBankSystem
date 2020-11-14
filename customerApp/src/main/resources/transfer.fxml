@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<!--Abdi har designat FXML. Alex har lagt till vissa fx:id-->
 <AnchorPane prefHeight="430.0" prefWidth="548.0"
             style="-fx-background-color: linear-gradient(to right top, #1207fb, #005bff, #0083ff, #00a3ff, #00bef9, #36caf5, #5ad6f0, #7ae0ec, #6be3f0, #58e7f3, #3eeaf6, #02edf8);; -fx-background-radius: 2em;"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
@@ -45,13 +46,13 @@
     <ImageView fx:id="payment" fitHeight="183.0" fitWidth="210.0" layoutX="344.0" layoutY="14.0" pickOnBounds="true"
                preserveRatio="true">
         <image>
-            <Image url="@payment.jpg"/>
+            <Image url="@Images/payment.jpg"/>
         </image>
     </ImageView>
     <ImageView fx:id="loans" fitHeight="183.0" fitWidth="401.0" layoutX="344.0" layoutY="210.0" pickOnBounds="true"
                preserveRatio="true">
         <image>
-            <Image url="@loan.png"/>
+            <Image url="@Images/loan.png"/>
         </image>
     </ImageView>
 

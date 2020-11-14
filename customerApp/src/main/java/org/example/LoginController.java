@@ -1,13 +1,15 @@
 package org.example;
 
-import javafx.collections.ListChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import org.apache.commons.codec.digest.DigestUtils;
 
-
+/**
+ * @author Alex och Abdi
+ * Se kommentera på varje enskild metod
+ */
 public class LoginController {
     CustomerApp customerApp = null;
 
@@ -20,8 +22,12 @@ public class LoginController {
     @FXML
     Label loginErrorMsg = null;
 
+    /**
+     * @author Alex
+     * Läser från login-fönstret och loggar in användare om personnr/password stämmer. Vid inloggning fylls nästa fönster med data från den inloggade användaren
+     */
     @FXML
-    public void login(Event e) {
+    public void login() {
         //Nollställer eventuellt felmeddelande
         loginErrorMsg.setText("");
 
@@ -56,18 +62,20 @@ public class LoginController {
     }
 
     /**
+     * @author Abdi
      * Skapade en metod som rensar från personnummret och lösenordet efter man har loggat ut.
      */
-    public void deleteUser() {
-        textField.clear();
+    public void setDefaultFields() {
+        textField.setText("yyyymmdd-xxxx");
         password.clear();
     }
 
     /**
-     * @param mouseEvent Eftersom jag gjorde bakgrunden transparent så behöver jag skapa mustryckning för att kunna avsluta fönstret.
+     * metod för att kunna avsluta programmet. Eftersom primaryStage är transparent så finns inte den vanliga knappen för att avsluta programmet
+     *
      * @author Abdi
      */
-    public void btn_exit(MouseEvent mouseEvent) {
+    public void btn_exit() {
         System.exit(0);
     }
 }
