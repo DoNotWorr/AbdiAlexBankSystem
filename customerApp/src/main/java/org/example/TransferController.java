@@ -92,6 +92,9 @@ public class TransferController {
         } catch (TooSmallNumberException e) {
             errorMsgAmount.setText("Fyll i giltigt belopp");
             return;
+        } catch (SameAccountException e) {
+            errorMsgToAccount.setText("Samma konto som du skickar ifrån");
+            return;
         }
 
         //Ställer in valen i fönstret till standard
