@@ -179,6 +179,7 @@ public class App {
                             }
                         }
                     }
+                    System.out.println("Tryck enter för att återgå till huvudmenyn.");
                     scanner.nextLine();
 
                     break;
@@ -404,6 +405,7 @@ public class App {
                 System.out.println("Felaktig inmatning. Kan inte hantera för stora eller små tal. Kan inte hantera tal med mer än två decimaler.");
             }
         }
+        System.out.println("Tryck enter för att återgå till huvudmenyn.");
         scanner.nextLine();
     }
 
@@ -473,6 +475,7 @@ public class App {
                 System.out.println("Felaktig inmatning. Kan inte hantera för stora eller små tal. Kan inte hantera tal med mer än två decimaler.");
             }
         }
+        System.out.println("Tryck enter för att återgå till huvudmenyn.");
         scanner.nextLine();
     }
 
@@ -532,6 +535,7 @@ public class App {
                 System.out.println("Felaktig inmatning. Kan inte hantera för stora eller små tal. Kan inte hantera tal med mer än två decimaler.");
             }
         }
+        System.out.println("Tryck enter för att återgå till huvudmenyn.");
         scanner.nextLine();
     }
 
@@ -562,6 +566,7 @@ public class App {
                     counter++;
                     keepgoing = false;
                 }
+                System.out.println("Tryck enter för att återgå till huvudmenyn.");
                 scanner.nextLine();
             }
         }
@@ -602,7 +607,7 @@ public class App {
                                 + UnitConversion.convertToSek(newAccount.getBalance()) + " kr"
                         );
                         keepgoing = false;
-
+                        System.out.println("Tryck enter för att återgå till huvudmenyn.");
                         scanner.nextLine();
 
                     } else {
@@ -626,43 +631,60 @@ public class App {
      */
     private static void addNewCutomer() {
         boolean keepgoing = true;
+
         while (keepgoing) {
             try {
 
+                String firstname;
+                String lastname;
+                String ownerID;
+
                 System.out.println("Förnamn: ");
-                String firstname = scanner.nextLine();
+                firstname = scanner.nextLine();
 
                 System.out.println("Efternamn: ");
-                String lastname = scanner.nextLine();
+                lastname = scanner.nextLine();
 
                 System.out.println("Personnummer i formatet yyyymmdd-xxxx: ");
-                String ownerID = scanner.nextLine();
+                ownerID = scanner.nextLine();
 
-                String password;
-                while (true) {
-                    System.out.println("Ange ett lösenord som är minst 4 tecken långt: ");
-                    password = scanner.nextLine();
+                if (firstname.isEmpty() || lastname.isEmpty() || ownerID.isEmpty()) {
+                    System.out.println("Vänligen fyll i samtliga uppgifter! ");
+                } else {
 
-                    System.out.println("Upprepa lösenordet: ");
-                    String passwordRepeat = scanner.nextLine();
-                    if (password.equals(passwordRepeat)) {
-                        break;
+                    if (allCustomers.containsKey(ownerID)) {
+                        System.out.println("Tyvärr, den kunden finns redan i systemet.\nVänligen försök igen!\n");
                     } else {
-                        System.out.println("Du måste ange samma lösenord två gånger.");
+
+                        String password;
+                        while (true) {
+                            System.out.println("Ange ett lösenord som är minst 4 tecken långt: ");
+                            password = scanner.nextLine();
+
+                            System.out.println("Upprepa lösenordet: ");
+                            String passwordRepeat = scanner.nextLine();
+                            if (password.equals(passwordRepeat)) {
+                                break;
+                            } else {
+                                System.out.println("Du måste ange samma lösenord två gånger.");
+                            }
+                        }
+                        Customer newCustomer = new Customer(firstname, lastname, ownerID, password);
+                        allCustomers.put(ownerID, newCustomer);
+
+                        System.out.println("Nu skapas en ny kund i systemet:\n"
+                                + "Förnamn: "
+                                + newCustomer.getFirstName() + "\n"
+                                + "Efternamn: "
+                                + newCustomer.getLastName() + "\n"
+                                + "Personnummer: "
+                                + newCustomer.getOwnerID());
+                        keepgoing = false;
+
+                        System.out.println("Tryck enter för att återgå till huvudmenyn.");
+                        scanner.nextLine();
                     }
                 }
-
-                Customer newCustomer = new Customer(firstname, lastname, ownerID, password);
-                allCustomers.put(ownerID, newCustomer);
-
-                System.out.println("Nu skapas en ny kund i systemet:\n"
-                        + "Förnamn: "
-                        + newCustomer.getFirstName() + "\n"
-                        + "Efternamn: "
-                        + newCustomer.getLastName() + "\n"
-                        + "Personnummer: "
-                        + newCustomer.getOwnerID());
-                keepgoing = false;
             } catch (InvalidNameException invalidNameException) {
                 System.out.println("Ogiltigt namn\nVänligen försök igen!\n");
             } catch (InvalidOwnerIDException invalidOwnerIDException) {
