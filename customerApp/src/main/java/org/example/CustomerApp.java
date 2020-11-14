@@ -19,6 +19,9 @@ import org.example.DataClasses.Transfer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * CustomerApp får tillgång till common-modulen genom Maven
+ */
 public class CustomerApp extends Application {
     HashMap<String, Scene> myScenes = new HashMap<>();
     Stage primaryStage = null;
@@ -36,7 +39,7 @@ public class CustomerApp extends Application {
     }
 
     /**
-     * Använder struktur från Jons exempel för att skapa flera fönster
+     * Använder struktur från Jons exempel för att skapa flera fönster.
      *
      * @param primaryStage
      * @throws Exception

@@ -10,7 +10,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 /**
- * Hämtar gemensamma klasser från Common-modulen
+ * BackgroundApp får CustomerApp får tillgång till common-modulen genom Maven
  *
  * @author Alex
  */
