@@ -129,7 +129,7 @@ public class MainController {
     public void logOutAndQuit() {
         //Sparar alla ändringar
         saveEverything();
-        
+
         System.exit(0);
     }
 }
