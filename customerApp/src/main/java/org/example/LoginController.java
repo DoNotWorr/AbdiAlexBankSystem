@@ -42,6 +42,13 @@ public class LoginController {
     }
 
     /**
+     * Skapade en metod som rensar från personnummret och lösenordet efter man har loggat ut.
+     */
+    public void deleteUser() {
+        textField.clear();
+    }
+
+    /**
      * @param mouseEvent Eftersom jag gjorde bakgrunden transparent så behöver jag skapa mustryckning för att kunna avsluta fönstret.
      * @author Abdi
      */
